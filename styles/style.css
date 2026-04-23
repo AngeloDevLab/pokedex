@@ -1,0 +1,46 @@
+.max-content {
+    padding: 0 max(calc(50% - 720px), clamp(1rem, 4vw, 4rem));
+}
+
+.hide-mobile {
+    display: none;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    letter-spacing: 0.1rem;
+
+    width: 100%;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+
+    
+    text-transform: uppercase;
+
+    gap: 1rem;
+}
+
+.searching-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+    width: 100%;
+}
+
+.imprint-content {
+    padding: 0 4rem;
+}

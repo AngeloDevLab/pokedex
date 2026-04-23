@@ -1,0 +1,59 @@
+:root {
+    --primary-color: #262d79;
+    --secondary-color: #03045e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Orbitron';
+    color: #ffffff;
+    background-color: var(--primary-color);
+}
+
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    height: 4rem;
+}
+
+header {
+    background-color: var(--secondary-color);
+    height: 6rem;
+
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+}
+
+main {
+    min-height: calc(100vh - 6rem);
+}
+
+footer {
+    background-color: var(--secondary-color);
+    height: 6rem;
+
+    display: flex;
+    align-items: center;
+}
