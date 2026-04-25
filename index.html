@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./styles/fonts.css">
     <link rel="stylesheet" href="./styles/responsive.css">
 
+    <script type="module" src="./scripts/main.js"></script>
 
 </head>
 
@@ -34,17 +35,13 @@
 
     <main>
 
-        <!-- <div>
-            <p>Pkm name</p>
+        <div id="loader" class="loader hidden">
+            <img src="./assets/images/pokeball.png" alt="Loading">
+        </div>
 
-            <img src="./assets/images/pokeball.png" alt="">
+        <div id="pokemon-container" class="max-content"></div>
 
-            <div>
-                <img src="" alt="">
-                <img src="" alt="">
-                <img src="" alt="">
-            </div>
-        </div> -->
+        <button id="load-more-btn" class="load-more-btn">load more</button>
 
     </main>
 
@@ -54,6 +51,8 @@
             <a href="imprint.html" target="_blank">Imprint</a>
         </div>
     </footer>
+    
+    <script src="./scripts/ui.js"></script>
 
 </body>
 
