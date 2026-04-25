@@ -1,5 +1,6 @@
-const loader = document.getElementById("loader");
-const container = document.getElementById("pokemon-container");
+const LOADER = document.getElementById("loader");
+const PKM_CONTAINER = document.getElementById("pokemon-container");
+const PKM_DIALOG = document.getElementById("pokemon-dialog");
 
 const TYPE_COLORS = {
     fire: "#e62829",
@@ -26,17 +27,22 @@ function renderPokemon(pokemon) {
     const types = getTypes(pokemon);
 
     const data = {
+        id: pokemon.id,
         name: pokemon.name,
         image: pokemon.sprites.other["official-artwork"].front_default,
         gradient: getGradient(types),
-        icons: getTypeIconsHTML(types)
+        types
     };
 
-    container.innerHTML += getPokemonCardTemplate(data);
+    PKM_CONTAINER.innerHTML += getPokemonCardTemplate(data);
 }
 
 function getTypes(pokemon) {
     return pokemon.types.map(t => t.type.name);
+}
+
+function getTypeIcon(type) {
+    return `./assets/icons/types/${type}.png`;
 }
 
 function getGradient(types) {
@@ -47,20 +53,28 @@ function getGradient(types) {
         : `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
 }
 
-function getTypeIconsHTML(types) {
-    return types.map(t =>
-        `<img src="${getTypeIcon(t)}" alt="${t}">`
-    ).join("");
-}
-
-function getTypeIcon(type) {
-    return `../assets/icons/types/${type}.png`;
+function renderPokemonList(pokemonList) {
+    pokemonList.forEach(p => renderPokemon(p));
 }
 
 function showLoader() {
-    loader.classList.remove("hidden");
+    LOADER.classList.remove("hidden");
 }
 
 function hideLoader() {
-    loader.classList.add("hidden");
+    LOADER.classList.add("hidden");
 }
+
+function openDialog(pokemon) {
+    let dialogContent = document.getElementById("dialog-content");
+
+    dialogContent.innerHTML = getPokemonDialogTemplate(pokemon);
+
+    PKM_DIALOG.showModal();
+}
+
+
+
+// document.getElementById("close-btn").addEventListener("click", () => {
+//     PKM_DIALOG.close();
+// });

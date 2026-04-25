@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./styles/fonts.css">
     <link rel="stylesheet" href="./styles/responsive.css">
 
+    <script type="module" src="./scripts/api.js"></script>
     <script type="module" src="./scripts/main.js"></script>
 
 </head>
@@ -41,29 +42,15 @@
 
         <div id="pokemon-container" class="max-content"></div>
 
-        <div class="dialog-content">
-
-            <h2>Pokemon name</h2>
-
-            <div class="images">
-                <img src="" alt="">
-                <img src="" alt="">
-                <img src="" alt="">
-            </div>
-
-            <div>
-                <button></button>
-                <button></button>
-                <button></button>
-            </div>
-
-            <div></div>
-
-        </div>
-
         <button id="load-more-btn" class="load-more-btn">load more</button>
 
     </main>
+
+    <dialog id="pokemon-dialog" closedby="any">
+
+        <div id="dialog-content" class="dialog-content"></div>
+
+    </dialog>
 
     <footer>
         <div class="footer-content max-content">
@@ -71,7 +58,7 @@
             <a href="imprint.html" target="_blank">Imprint</a>
         </div>
     </footer>
-    
+
     <script src="./scripts/templates.js"></script>
     <script src="./scripts/ui.js"></script>
 

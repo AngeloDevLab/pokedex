@@ -11,8 +11,6 @@
     justify-content: space-between;
     align-items: center;
 
-    letter-spacing: 0.1rem;
-
     width: 100%;
 }
 
@@ -28,6 +26,7 @@
 .searching-content {
     display: flex;
     flex-direction: column;
+
     gap: 0.5rem;
 }
 
@@ -67,32 +66,10 @@
 }
 
 .load-more-btn {
-    margin: 0 auto;
-    padding: 1.2rem 2.4rem;
-    border: 1px solid var(--secondary-color);
-    border-radius: 0.8rem;
-
-    background: var(--primary-color);
-    color: #fff;
-
-    font-size: 1.6rem;
-    cursor: pointer;
-
-    transition: all 0.2s ease;
-}
-
-.load-more-btn:hover {
-    background: var(--secondary-color);
-    transform: translateY(-2px);
-}
-
-.load-more-btn:active {
-    transform: translateY(0);
+    padding: 1rem 2rem;
 }
 
 #pokemon-container {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
     display: flex;
     flex-wrap: wrap;
 
@@ -105,7 +82,15 @@
 .pokemon-card {
     width: 12rem;
     padding: 1rem;
-    border-radius: 1.2rem;
+    border-radius: 1.5rem;
+
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    cursor: pointer;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
 }
 
 .card-inner {
@@ -116,6 +101,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
     gap: 1rem;
 
     color: white;
@@ -125,7 +111,7 @@
     width: 6rem;
     height: 6rem;
 
-    filter: drop-shadow(0 0 1.2rem rgba(255 ,255 ,255 , 0.3))
+    filter: drop-shadow(0 0 1.2rem rgba(255, 255, 255, 0.3))
 }
 
 .type-icons {
@@ -138,12 +124,47 @@
     width: 2rem;
 }
 
+#pokemon-dialog {
+    width: clamp(30rem, 80vw, 60rem);
+
+    border: none;
+    border-radius: 1rem;
+    padding: 2rem;
+    background: #202020;
+    color: white;
+}
+
+#pokemon-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+.dialog-images img {
+    width: clamp(4rem, 20vw, 10rem);
+    height: clamp(4rem, 20vw, 10rem);
+
+    object-fit: contain;
+}
+
+.dialog-tabs {
+    align-self: flex-start;
+}
+
+.tab-btn {
+    padding: 0.5rem;
+}
 
 .footer-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
 
     width: 100%;
 }

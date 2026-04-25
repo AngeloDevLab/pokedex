@@ -1,6 +1,28 @@
 :root {
     --primary-color: #262d79;
     --secondary-color: #03045e;
+    --highlight-color: #475492;
+}
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--highlight-color);
+    border-radius: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 12px;
+    border: 2px solid var(--highlight-color);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    body {
+        scrollbar-color: var(--secondary-color) var(--primary-color);
+    }
 }
 
 * {
@@ -9,6 +31,8 @@
 
 html {
     font-size: 16px;
+
+    letter-spacing: 1px;
 }
 
 body {
@@ -40,6 +64,30 @@ img {
     height: 4rem;
 }
 
+button {
+    margin: 0 auto;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 1rem;
+
+    background: var(--primary-color);
+    color: #fff;
+
+    font-size: clamp(1rem, 2vw, 2rem);
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.tab-btn:active {
+    transform: translateY(0);
+}
+
 header {
     background-color: var(--secondary-color);
     height: 6rem;
@@ -51,6 +99,8 @@ header {
 }
 
 main {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     min-height: calc(100vh - 6rem);
     display: flex;
     flex-direction: column;
