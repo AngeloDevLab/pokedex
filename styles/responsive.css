@@ -1,5 +1,9 @@
-@media (min-width: 420px) {
+@media (min-width: 450px) {
     .hide-mobile {
         display: block;
+    }
+
+    .dialog-images {
+        grid-template-columns: repeat(4, 1fr)
     }
 }

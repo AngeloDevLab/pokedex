@@ -68,8 +68,12 @@ function hideLoader() {
 function openDialog(pokemon) {
     let dialogContent = document.getElementById("dialog-content");
 
+    const types = getTypes(pokemon);
+    const gradient = getGradient(types);
+
     dialogContent.innerHTML = getPokemonDialogTemplate(pokemon);
 
+    PKM_DIALOG.style.background = gradient;
     PKM_DIALOG.showModal();
 }
 
