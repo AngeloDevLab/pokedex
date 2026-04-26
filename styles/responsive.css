@@ -1,9 +1,17 @@
-@media (min-width: 450px) {
+@media (min-width: 460px) {
     .hide-mobile {
         display: block;
     }
 
+    .hide-desktop {
+        display: none;
+    }
+
     .dialog-images {
         grid-template-columns: repeat(4, 1fr)
+    }
+
+    .evo-chain {
+        flex-direction: row;
     }
 }

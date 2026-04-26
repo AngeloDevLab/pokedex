@@ -140,3 +140,51 @@ function getInfoTabTemplate(pokemon, entry) {
         <p class="flavor-text">${entry.text}</p>
     `;
 }
+
+function getStatsTabTemplate(stats) {
+    return `
+        <ul class="stats-list">
+            ${stats.map(stat => `
+                <li class="stat-row">
+                    <div class="stat-header">
+                        <span class="stat-name">${stat.name}</span>
+                        <span class="stat-value">${stat.value}</span>
+                    </div>
+
+                    <div class="stat-bar">
+                        <div class="stat-fill" 
+                             style="width: ${stat.percent}%; background: ${stat.color}">
+                        </div>
+                    </div>
+                </li>
+            `).join("")}
+        </ul>
+    `;
+}
+
+function getEvoTemplate(evoData) {
+    return `
+        <div class="evo-chain">
+            ${evoData.map((evo, index) => `
+                <div class="evo-item">
+                    ${evo.image ? `<img src="${evo.image}" alt="${evo.name}">` : ""}
+                    <p>${evo.name}</p>
+                </div>
+
+                ${index < evoData.length - 1 ? `
+                    <span class="arrow">
+                        <svg class="hide-desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+
+                        <svg class="hide-mobile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </span>
+                ` : ""}
+            `).join("")}
+        </div>
+    `;
+}

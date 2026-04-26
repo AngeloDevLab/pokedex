@@ -73,6 +73,7 @@ function openDialog(index) {
 
     renderDialog(pokemon);
     initDialogState(pokemon);
+    bindTabs(pokemon);
 }
 
 function renderDialog(pokemon) {
@@ -172,6 +173,25 @@ function bindDialogNavigation() {
     });
 }
 
+function bindTabs(pokemon) {
+    const tabs = document.querySelectorAll(".tab-btn");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+
+            // active reset
+            tabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            const type = tab.dataset.tab;
+
+            if (type === "flavor") renderInfoTab(pokemon);
+            if (type === "stats") renderStatsTab(pokemon);
+            if (type === "evo") renderEvoTab(pokemon);
+        });
+    });
+}
+
 function updateArrowState() {
     const left = document.getElementById("arrow-left");
     const right = document.getElementById("arrow-right");
@@ -209,4 +229,86 @@ function getFlavorEntry(species) {
             .replace(/\n/g, " "),
         edition: entry.version.name
     };
+}
+
+function renderStatsTab(pokemon) {
+    const tabContent = document.getElementById("tab-content");
+
+    const stats = prepareStats(pokemon);
+
+    tabContent.innerHTML = getStatsTabTemplate(stats);
+}
+
+function prepareStats(pokemon) {
+    return pokemon.stats.map(stat => {
+        const value = stat.base_stat;
+        const percent = (value / 200) * 100;
+
+        let color = "green";
+
+        if (value < 50) color = "red";
+        else if (value < 80) color = "orange";
+
+        return {
+            name: formatStatName(stat.stat.name),
+            value,
+            percent,
+            color
+        };
+    });
+}
+
+function formatStatName(name) {
+    return name
+        .replace("-", " ")
+        .replace("special", "sp.")
+        .toUpperCase();
+}
+
+async function getEvolutionData(pokemon) {
+    const species = await getPokemonSpecies(pokemon.id);
+    const evoData = await fetchEvolutionChain(species.evolution_chain.url);
+
+    const evoNames = parseEvolutionChain(evoData.chain);
+
+    return evoNames.map(name => {
+        const pkm = pokemonCache.find(p => p.name === name);
+
+        if (!pkm) {
+            return {
+                name,
+                image: null,
+                id: null
+            };
+        }
+
+        return {
+            name: pkm.name,
+            id: pkm.id,
+            image: pkm.sprites.other["official-artwork"].front_default
+        };
+    });
+}
+
+function parseEvolutionChain(chain) {
+    const result = [];
+
+    let current = chain;
+
+    while (current) {
+        result.push(current.species.name);
+        current = current.evolves_to[0];
+    }
+
+    return result;
+}
+
+async function renderEvoTab(pokemon) {
+    const tabContent = document.getElementById("tab-content");
+
+    tabContent.innerHTML = "Loading...";
+
+    const evoData = await getEvolutionData(pokemon);
+
+    tabContent.innerHTML = getEvoTemplate(evoData);
 }

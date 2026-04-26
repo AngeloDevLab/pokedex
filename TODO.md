@@ -39,10 +39,8 @@
 
 ---
 
-## 🔴 NICHT morgen
-- [ ] Evolution Chain komplett ❌  
-- [ ] Flavor Text ❌  
-- [ ] komplexe Search ❌  
+## 🔴 feature
+- [ ] Pokemon Sounds 
 
 ---
 
