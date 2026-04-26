@@ -21,6 +21,10 @@ const TYPE_COLORS = {
 
 let currentIndex = 0;
 
+function renderPokemonList(pokemonList) {
+    pokemonList.forEach(p => renderPokemon(p));
+}
+
 function renderPokemon(pokemon) {
     const pkmContainer = document.getElementById("pokemon-container");
     const types = getTypes(pokemon);
@@ -40,10 +44,6 @@ function getTypes(pokemon) {
     return pokemon.types.map(t => t.type.name);
 }
 
-function getTypeIcon(type) {
-    return `./assets/icons/types/${type}.png`;
-}
-
 function getGradient(types) {
     const colors = types.map(t => TYPE_COLORS[t]);
 
@@ -52,8 +52,8 @@ function getGradient(types) {
         : `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
 }
 
-function renderPokemonList(pokemonList) {
-    pokemonList.forEach(p => renderPokemon(p));
+function getTypeIcon(type) {
+    return `./assets/icons/types/${type}.png`;
 }
 
 function showLoader() {
@@ -67,23 +67,42 @@ function hideLoader() {
 }
 
 function openDialog(index) {
-    const pkmDialog = document.getElementById("pokemon-dialog");
-    const dialogContent = document.getElementById("dialog-content");
-
     currentIndex = index;
 
     const pokemon = pokemonCache[index];
+
+    renderDialog(pokemon);
+    initDialogState(pokemon);
+}
+
+function renderDialog(pokemon) {
+    const pkmDialog = document.getElementById("pokemon-dialog");
+
+    pkmDialog.innerHTML = getPokemonDialogTemplate(pokemon);
+
     const types = getTypes(pokemon);
     const gradient = getGradient(types);
 
+    pkmDialog.style.background = gradient;
+}
 
-
-    dialogContent.innerHTML = getPokemonDialogTemplate(pokemon);
-
+function initDialogState(pokemon) {
+    setDefaultTab();
+    renderInfoTab(pokemon);
     updateArrowState();
 
-    pkmDialog.style.background = gradient;
-    pkmDialog.showModal();
+    document.body.style.overflow = "hidden";
+
+    const dialog = document.getElementById("pokemon-dialog");
+    dialog.showModal();
+}
+
+function setDefaultTab() {
+    const infoTab = document.querySelector('[data-tab="flavor"]');
+
+    if (infoTab) {
+        infoTab.classList.add("active");
+    }
 }
 
 function bindUI() {
@@ -94,7 +113,7 @@ function bindUI() {
 }
 
 function bindOpenDialog() {
-    let pkmContainer = document.getElementById("pokemon-container");
+    const pkmContainer = document.getElementById("pokemon-container");
 
     pkmContainer.addEventListener("click", (e) => {
         const card = e.target.closest(".pokemon-card");
@@ -111,7 +130,7 @@ function bindOpenDialog() {
 }
 
 function bindCloseDialog() {
-    let pkmDialog = document.getElementById("pokemon-dialog");
+    const pkmDialog = document.getElementById("pokemon-dialog");
 
     pkmDialog.addEventListener("click", (e) => {
         const closeButton = e.target.closest("#close-dialog-button");
@@ -119,11 +138,12 @@ function bindCloseDialog() {
         if (!closeButton) return;
 
         pkmDialog.close();
+        document.body.style.overflow = "auto"
     });
 }
 
 function bindLoadMore() {
-    let loadMoreBtn = document.getElementById("load-more-btn");
+    const loadMoreBtn = document.getElementById("load-more-btn");
 
     loadMoreBtn.addEventListener("click", () => {
         loadPokemon();
@@ -131,7 +151,7 @@ function bindLoadMore() {
 }
 
 function bindDialogNavigation() {
-    let pkmDialog = document.getElementById("pokemon-dialog");
+    const pkmDialog = document.getElementById("pokemon-dialog");
 
     pkmDialog.addEventListener("click", (e) => {
 
@@ -160,4 +180,33 @@ function updateArrowState() {
 
     left.disabled = currentIndex === 0;
     right.disabled = currentIndex === pokemonCache.length - 1;
+}
+
+async function renderInfoTab(pokemon) {
+    const tabContent = document.getElementById("tab-content");
+
+    tabContent.innerHTML = "Loading...";
+
+    const species = await getPokemonSpecies(pokemon.id);
+    const entry = getFlavorEntry(species);
+
+    tabContent.innerHTML = getInfoTabTemplate(pokemon, entry);
+}
+
+function getFlavorEntry(species) {
+    const entry = species.flavor_text_entries.find(e => e.language.name === "en");
+
+    if (!entry) {
+        return {
+            text: "No description found.",
+            edition: "Unknown"
+        };
+    }
+
+    return {
+        text: entry.flavor_text
+            .replace(/\f/g, " ")
+            .replace(/\n/g, " "),
+        edition: entry.version.name
+    };
 }

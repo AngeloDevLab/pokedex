@@ -2,15 +2,15 @@
 
 ## 🟢 1. Dialog Basics fixen
 - [x] Close Button → `addEventListener` + `dialog.close()`
-- [ ] Pfeile (left / right) → durch Pokémon im Cache wechseln
+- [x] Pfeile (left / right) → durch Pokémon im Cache wechseln
 
 **Ziel:** Dialog fühlt sich benutzbar an
 
 ---
 
 ## 🟢 2. Tabs fertig machen
-- [ ] Info Tab standardmäßig aktiv
-- [ ] aktiver Button bekommt `.active` Klasse
+- [x] Info Tab standardmäßig aktiv
+- [x] aktiver Button bekommt `.active` Klasse
 - [ ] Tab Klick → Content wechseln
 
 **Umsetzung:**

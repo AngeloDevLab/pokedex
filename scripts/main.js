@@ -2,6 +2,7 @@ const LIMIT = 20;
 
 let offset = 0;
 let pokemonCache = [];
+let speciesCache = {};
 
 function init() {
     bindUI();

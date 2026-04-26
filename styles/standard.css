@@ -4,16 +4,16 @@
     --highlight-color: #475492;
 }
 
-body::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 12px;
 }
 
-body::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: var(--highlight-color);
     border-radius: 12px;
 }
 
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: var(--secondary-color);
     border-radius: 12px;
     border: 2px solid var(--highlight-color);

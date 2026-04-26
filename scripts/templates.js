@@ -26,25 +26,7 @@ function getPokemonDialogTemplate(pokemon) {
 
             <hr>
 
-            <nav>
-                <button id="arrow-left" class="svg-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m15 18-6-6 6-6" />
-                    </svg>
-                </button>
-
-                <button id="arrow-right" class="svg-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m9 18 6-6-6-6" />
-                    </svg>
-                </button>
-            </nav>
-
-            <hr>
-
-            <h2>${pokemon.name}</h2>
+            <h2>#${pokemon.id} ${pokemon.name}</h2>
 
             <hr>
 
@@ -119,8 +101,42 @@ function getPokemonDialogTemplate(pokemon) {
                 </button>
             </div>
 
-            <div id="dialog-content"></div>
+            <div id="tab-content" class="tab-content"></div>
+
+            <hr>
+
+            <nav>
+                <button id="arrow-left" class="svg-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                </button>
+
+                <button id="arrow-right" class="svg-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m9 18 6-6-6-6" />
+                    </svg>
+                </button>
+            </nav>
 
         </div>
+    `;
+}
+
+function getInfoTabTemplate(pokemon, entry) {
+    return `
+        <table class="info-table">
+            <tr><td>Types</td><td>${getTypes(pokemon).join(", ")}</td></tr>
+            <tr><td>Edition</td><td>${entry.edition}</td></tr>
+            <tr><td>Base XP</td><td>${pokemon.base_experience}</td></tr>
+            <tr><td>Height</td><td>${(pokemon.height / 10).toFixed(1)} m</td></tr>
+            <tr><td>Weight</td><td>${(pokemon.weight / 10).toFixed(1)} kg</td></tr>
+        </table>
+
+        <hr>
+
+        <p class="flavor-text">${entry.text}</p>
     `;
 }

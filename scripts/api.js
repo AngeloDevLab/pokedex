@@ -12,3 +12,16 @@ async function fetchPokemonDetails(list) {
 
     return await Promise.all(promises);
 }
+
+async function getPokemonSpecies(id) {
+    if (speciesCache[id]) {
+        return speciesCache[id];
+    }
+
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+    const data = await res.json();
+
+    speciesCache[id] = data;
+
+    return data;
+}
