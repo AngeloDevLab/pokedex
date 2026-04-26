@@ -7,11 +7,18 @@
         display: none;
     }
 
-    .dialog-images {
-        grid-template-columns: repeat(4, 1fr)
+    .artwork-images {
+        justify-content: center;
+        flex-direction: row;
     }
 
     .evo-chain {
         flex-direction: row;
+    }
+}
+
+@media (min-width: 620px) {
+    .hide-tab-text {
+        display: block;
     }
 }

@@ -12,7 +12,7 @@ function getPokemonCardTemplate({ id, name, image, gradient, types }) {
     `;
 }
 
-function getPokemonDialogTemplate(pokemon) {
+function getPokemonDialogTemplate(pokemon, entry) {
     return `
         <div class="dialog-inner">
 
@@ -30,19 +30,9 @@ function getPokemonDialogTemplate(pokemon) {
 
             <hr>
 
-            <div class="artwork-container">
-
-                <h3>artworks</h3>
-
-                <div class="dialog-images">
-                    <img src="${pokemon.sprites.other["official-artwork"].front_default}"
-                        alt="No official artwork of ${pokemon.name} found. Sorry">
-                    <img src="${pokemon.sprites.other["official-artwork"].front_shiny}"
-                        alt="No shiny official artwork of ${pokemon.name} found. Sorry">
-                    <img class="sprite-image" src="${pokemon.sprites.front_default}" alt="No ${pokemon.name} sprite found. Sorry">
-                    <img class="sprite-image" src="${pokemon.sprites.front_shiny}" alt="No ${pokemon.name} shiny sprite found. Sorry">
-                </div>
-
+            <div class="dialog-hero">
+                <img src="${pokemon.sprites.other["official-artwork"].front_default}" alt="${pokemon.name}">
+                <p class="flavor-text">${entry.text}</p>
             </div>
 
             <hr>
@@ -50,14 +40,13 @@ function getPokemonDialogTemplate(pokemon) {
             <div class="dialog-tabs">
 
                 <button class="tab-btn" data-tab="flavor">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-info-icon lucide-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10" />
                         <path d="M12 16v-4" />
                         <path d="M12 8h.01" />
                     </svg>
-                    <p class="hide-mobile">Info</p>
+                    <p class="hide-tab-text">Info</p>
                 </button>
 
                 <button class="tab-btn" data-tab="stats">
@@ -68,58 +57,71 @@ function getPokemonDialogTemplate(pokemon) {
                         <path d="M7 11h12" />
                         <path d="M7 6h3" />
                     </svg>
-                    <p class="hide-mobile">Stats</p>
+                    <p class="hide-tab-text">Stats</p>
                 </button>
 
                 <button class="tab-btn" data-tab="evo">
-
                     <div class="evo-chain-image">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" stroke="currentColor"
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12.1" cy="12.1" r="8" />
+                            <circle cx="12.1" cy="12.1" r="6" />
                         </svg>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m9 18 6-6-6-6" />
                         </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" stroke="currentColor"
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12.1" cy="12.1" r="8" />
+                            <circle cx="12.1" cy="12.1" r="6" />
                         </svg>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m9 18 6-6-6-6" />
                         </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" stroke="currentColor"
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12.1" cy="12.1" r="8" />
+                            <circle cx="12.1" cy="12.1" r="6" />
                         </svg>
                     </div>
 
-                    <p class="hide-mobile">Evolution</p>
-                    
+                    <p class="hide-tab-text">Evolution</p>
                 </button>
+
+                <button class="tab-btn" data-tab="artworks">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                        <circle cx="9" cy="9" r="2"/>
+                        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                    </svg>
+
+                    <p class="hide-tab-text">Artworks</p>
+                </button>
+
             </div>
 
             <div id="tab-content" class="tab-content"></div>
 
-            <hr>
 
-            <nav>
-                <button id="arrow-left" class="svg-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m15 18-6-6 6-6" />
-                    </svg>
-                </button>
+            <footer class="dialog-footer">
+                <hr>
 
-                <button id="arrow-right" class="svg-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m9 18 6-6-6-6" />
-                    </svg>
-                </button>
-            </nav>
+                <nav>
+                    <button id="arrow-left" class="svg-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m15 18-6-6 6-6" />
+                        </svg>
+                    </button>
+
+                    <button id="arrow-right" class="svg-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </button>
+                </nav>
+            </footer>
 
         </div>
     `;
@@ -134,10 +136,6 @@ function getInfoTabTemplate(pokemon, entry) {
             <tr><td>Height</td><td>${(pokemon.height / 10).toFixed(1)} m</td></tr>
             <tr><td>Weight</td><td>${(pokemon.weight / 10).toFixed(1)} kg</td></tr>
         </table>
-
-        <hr>
-
-        <p class="flavor-text">${entry.text}</p>
     `;
 }
 
@@ -185,6 +183,17 @@ function getEvoTemplate(evoData) {
                     </span>
                 ` : ""}
             `).join("")}
+        </div>
+    `;
+}
+
+function getArtworkTabTemplate(pokemon) {
+    return `
+        <div class="artwork-images">
+            <img src="${pokemon.sprites.other["official-artwork"].front_default}">
+            <img src="${pokemon.sprites.other["official-artwork"].front_shiny}">
+            <img src="${pokemon.sprites.front_default}">
+            <img src="${pokemon.sprites.front_shiny}">
         </div>
     `;
 }

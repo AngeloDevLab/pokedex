@@ -11,7 +11,7 @@
 ## 🟢 2. Tabs fertig machen
 - [x] Info Tab standardmäßig aktiv
 - [x] aktiver Button bekommt `.active` Klasse
-- [ ] Tab Klick → Content wechseln
+- [x] Tab Klick → Content wechseln
 
 **Umsetzung:**
 - einfache `if`-Abfragen (kein Switch nötig)

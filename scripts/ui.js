@@ -20,6 +20,8 @@ const TYPE_COLORS = {
 };
 
 let currentIndex = 0;
+let currentDialogPokemon = null;
+let currentDialogEntry = null;
 
 function renderPokemonList(pokemonList) {
     pokemonList.forEach(p => renderPokemon(p));
@@ -66,20 +68,22 @@ function hideLoader() {
     loader.classList.add("hidden");
 }
 
-function openDialog(index) {
+async function openDialog(index) {
     currentIndex = index;
+    currentDialogPokemon = pokemonCache[index];
 
-    const pokemon = pokemonCache[index];
+    const species = await getPokemonSpecies(currentDialogPokemon.id);
+    currentDialogEntry = getFlavorEntry(species);
 
-    renderDialog(pokemon);
-    initDialogState(pokemon);
-    bindTabs(pokemon);
+    renderDialog(currentDialogPokemon, currentDialogEntry);
+    initDialogState();
+    bindTabs();
 }
 
-function renderDialog(pokemon) {
+function renderDialog(pokemon, entry) {
     const pkmDialog = document.getElementById("pokemon-dialog");
 
-    pkmDialog.innerHTML = getPokemonDialogTemplate(pokemon);
+    pkmDialog.innerHTML = getPokemonDialogTemplate(pokemon, entry);
 
     const types = getTypes(pokemon);
     const gradient = getGradient(types);
@@ -139,7 +143,10 @@ function bindCloseDialog() {
         if (!closeButton) return;
 
         pkmDialog.close();
-        document.body.style.overflow = "auto"
+    });
+
+    pkmDialog.addEventListener("close", () => {
+        document.body.style.overflow = "auto";
     });
 }
 
@@ -173,21 +180,20 @@ function bindDialogNavigation() {
     });
 }
 
-function bindTabs(pokemon) {
+function bindTabs() {
     const tabs = document.querySelectorAll(".tab-btn");
 
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
-
-            // active reset
             tabs.forEach(t => t.classList.remove("active"));
             tab.classList.add("active");
 
             const type = tab.dataset.tab;
 
-            if (type === "flavor") renderInfoTab(pokemon);
-            if (type === "stats") renderStatsTab(pokemon);
-            if (type === "evo") renderEvoTab(pokemon);
+            if (type === "flavor") renderInfoTab();
+            if (type === "stats") renderStatsTab(currentDialogPokemon);
+            if (type === "evo") renderEvoTab(currentDialogPokemon);
+            if (type === "artworks") renderArtworkTab(currentDialogPokemon);
         });
     });
 }
@@ -202,15 +208,13 @@ function updateArrowState() {
     right.disabled = currentIndex === pokemonCache.length - 1;
 }
 
-async function renderInfoTab(pokemon) {
+function renderInfoTab() {
     const tabContent = document.getElementById("tab-content");
 
-    tabContent.innerHTML = "Loading...";
-
-    const species = await getPokemonSpecies(pokemon.id);
-    const entry = getFlavorEntry(species);
-
-    tabContent.innerHTML = getInfoTabTemplate(pokemon, entry);
+    tabContent.innerHTML = getInfoTabTemplate(
+        currentDialogPokemon,
+        currentDialogEntry
+    );
 }
 
 function getFlavorEntry(species) {
@@ -311,4 +315,9 @@ async function renderEvoTab(pokemon) {
     const evoData = await getEvolutionData(pokemon);
 
     tabContent.innerHTML = getEvoTemplate(evoData);
+}
+
+function renderArtworkTab(pokemon) {
+    const tabContent = document.getElementById("tab-content");
+    tabContent.innerHTML = getArtworkTabTemplate(pokemon);
 }

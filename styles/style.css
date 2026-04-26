@@ -10,6 +10,10 @@
     display: block;
 }
 
+.hide-tab-text {
+    display: none;
+}
+
 .svg-button {
     margin: 0;
     padding: 0.5rem;
@@ -171,7 +175,7 @@
 
 #pokemon-dialog {
     width: clamp(30rem, 80vw, 60rem);
-    max-height: 95vh;
+    height: 90vh;
 
     border: none;
     border-radius: 2rem;
@@ -181,10 +185,9 @@
 }
 
 .dialog-inner {
-    max-height: 90vh;
+    height: 100%;
     background: #202020;
     border-radius: 1rem;
-    padding: 2rem;
 
     padding: 0.5rem;
 
@@ -202,37 +205,26 @@
     align-self: flex-end;
 }
 
-.dialog-inner>nav {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.artwork-container {
-    width: 100%;
-    background-color: var(--primary-color);
-    padding: 0.5rem;
-
+.dialog-hero {
     display: flex;
     flex-direction: column;
+    align-items: center;
 
-    border-radius: 0.5rem;
-    border: 1px solid var(--secondary-color);
+    text-align: center;
 }
 
-.dialog-images {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr)
-}
-
-.dialog-images img {
+.dialog-hero>img {
     width: clamp(4rem, 15vw, 8rem);
     height: clamp(4rem, 15vw, 8rem);
+
+    filter: drop-shadow(0 0 1.2rem rgba(255, 255, 255, 0.3))
 }
 
 .dialog-tabs {
     display: flex;
     align-items: center;
+
+    align-self: flex-start;
 
     gap: 0.5rem;
 }
@@ -270,7 +262,6 @@
 
     display: flex;
     flex-direction: column;
-    flex: 1;
     overflow-y: auto;
     scroll-behavior: smooth;
 
@@ -324,7 +315,7 @@
 .stat-bar {
     width: 100%;
     height: 6px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -355,6 +346,33 @@
     align-items: center;
 }
 
+.artwork-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.artwork-images img {
+    width: clamp(4rem, 15vw, 8rem);
+    height: clamp(4rem, 15vw, 8rem);
+}
+
+.dialog-footer {
+    margin-top: auto;
+    width: 100%;
+    background-color: initial;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.dialog-footer nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .footer-content {
     display: flex;
     align-items: center;
@@ -364,5 +382,13 @@
 }
 
 .imprint-content {
-    padding: 0 4rem;
+    padding: 1rem 4rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.imprint-content h3 {
+    text-align: start
 }
