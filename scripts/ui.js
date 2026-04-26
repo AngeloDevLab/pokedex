@@ -1,7 +1,3 @@
-const LOADER = document.getElementById("loader");
-const PKM_CONTAINER = document.getElementById("pokemon-container");
-const PKM_DIALOG = document.getElementById("pokemon-dialog");
-
 const TYPE_COLORS = {
     fire: "#e62829",
     water: "#2980ef",
@@ -23,7 +19,10 @@ const TYPE_COLORS = {
     flying: "#81b9ef"
 };
 
+let currentIndex = 0;
+
 function renderPokemon(pokemon) {
+    const pkmContainer = document.getElementById("pokemon-container");
     const types = getTypes(pokemon);
 
     const data = {
@@ -34,7 +33,7 @@ function renderPokemon(pokemon) {
         types
     };
 
-    PKM_CONTAINER.innerHTML += getPokemonCardTemplate(data);
+    pkmContainer.innerHTML += getPokemonCardTemplate(data);
 }
 
 function getTypes(pokemon) {
@@ -58,27 +57,107 @@ function renderPokemonList(pokemonList) {
 }
 
 function showLoader() {
-    LOADER.classList.remove("hidden");
+    const loader = document.getElementById("loader");
+    loader.classList.remove("hidden");
 }
 
 function hideLoader() {
-    LOADER.classList.add("hidden");
+    const loader = document.getElementById("loader");
+    loader.classList.add("hidden");
 }
 
-function openDialog(pokemon) {
-    let dialogContent = document.getElementById("dialog-content");
+function openDialog(index) {
+    const pkmDialog = document.getElementById("pokemon-dialog");
+    const dialogContent = document.getElementById("dialog-content");
 
+    currentIndex = index;
+
+    const pokemon = pokemonCache[index];
     const types = getTypes(pokemon);
     const gradient = getGradient(types);
 
+
+
     dialogContent.innerHTML = getPokemonDialogTemplate(pokemon);
 
-    PKM_DIALOG.style.background = gradient;
-    PKM_DIALOG.showModal();
+    updateArrowState();
+
+    pkmDialog.style.background = gradient;
+    pkmDialog.showModal();
 }
 
+function bindUI() {
+    bindOpenDialog();
+    bindCloseDialog();
+    bindLoadMore();
+    bindDialogNavigation();
+}
 
+function bindOpenDialog() {
+    let pkmContainer = document.getElementById("pokemon-container");
 
-// document.getElementById("close-btn").addEventListener("click", () => {
-//     PKM_DIALOG.close();
-// });
+    pkmContainer.addEventListener("click", (e) => {
+        const card = e.target.closest(".pokemon-card");
+
+        if (!card) return;
+
+        const id = Number(card.dataset.id);
+        const index = pokemonCache.findIndex(p => p.id === id);
+
+        if (index === -1) return;
+
+        openDialog(index);
+    });
+}
+
+function bindCloseDialog() {
+    let pkmDialog = document.getElementById("pokemon-dialog");
+
+    pkmDialog.addEventListener("click", (e) => {
+        const closeButton = e.target.closest("#close-dialog-button");
+
+        if (!closeButton) return;
+
+        pkmDialog.close();
+    });
+}
+
+function bindLoadMore() {
+    let loadMoreBtn = document.getElementById("load-more-btn");
+
+    loadMoreBtn.addEventListener("click", () => {
+        loadPokemon();
+    });
+}
+
+function bindDialogNavigation() {
+    let pkmDialog = document.getElementById("pokemon-dialog");
+
+    pkmDialog.addEventListener("click", (e) => {
+
+        // LEFT
+        if (e.target.closest("#arrow-left")) {
+            if (currentIndex > 0) {
+                openDialog(currentIndex - 1);
+            }
+        }
+
+        // RIGHT
+        if (e.target.closest("#arrow-right")) {
+            if (currentIndex < pokemonCache.length - 1) {
+                openDialog(currentIndex + 1);
+            }
+        }
+
+    });
+}
+
+function updateArrowState() {
+    const left = document.getElementById("arrow-left");
+    const right = document.getElementById("arrow-right");
+
+    if (!left || !right) return;
+
+    left.disabled = currentIndex === 0;
+    right.disabled = currentIndex === pokemonCache.length - 1;
+}

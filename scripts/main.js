@@ -1,15 +1,10 @@
-import { fetchPokemonList, fetchPokemonDetails } from "./api.js";
-
-window.addEventListener("load", init)
-
-const LOAD_MORE_BUTTON = document.getElementById("load-more-btn");
-
 const LIMIT = 20;
 
 let offset = 0;
 let pokemonCache = [];
 
 function init() {
+    bindUI();
     loadPokemon();
 }
 
@@ -31,18 +26,6 @@ async function loadPokemon() {
     hideLoader();
 }
 
-LOAD_MORE_BUTTON.addEventListener("click", () => {
-    loadPokemon();
-});
-
-PKM_CONTAINER.addEventListener("click", (e) => {
-    const card = e.target.closest(".pokemon-card");
-
-    if (!card) return;
-
-    const id = Number(card.dataset.id);
-
-    const pokemon = pokemonCache.find(p => p.id === id);
-
-    openDialog(pokemon);
+document.addEventListener("DOMContentLoaded", () => {
+    init();
 });

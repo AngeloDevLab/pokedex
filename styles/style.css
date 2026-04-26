@@ -37,6 +37,11 @@
     transform: scale(1.1);
 }
 
+.svg-button:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
 .header-content {
     display: flex;
     justify-content: space-between;
@@ -110,9 +115,11 @@
 }
 
 .pokemon-card {
-    width: 12rem;
+    width: 14rem;
     padding: 1rem;
     border-radius: 1.5rem;
+
+    text-transform: uppercase;
 
     transition: transform 0.1s ease, box-shadow 0.1s ease;
     cursor: pointer;

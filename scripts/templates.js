@@ -16,7 +16,7 @@ function getPokemonDialogTemplate(pokemon) {
     return `
         <div class="dialog-inner">
 
-            <button class="svg-button close-dialog-button">
+            <button id="close-dialog-button" class="svg-button close-dialog-button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18 6 6 18" />
@@ -27,14 +27,14 @@ function getPokemonDialogTemplate(pokemon) {
             <hr>
 
             <nav>
-                <button class="svg-button">
+                <button id="arrow-left" class="svg-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m15 18-6-6 6-6" />
                     </svg>
                 </button>
 
-                <button class="svg-button">
+                <button id="arrow-right" class="svg-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m9 18 6-6-6-6" />
