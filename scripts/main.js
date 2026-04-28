@@ -3,6 +3,10 @@ const LIMIT = 20;
 let offset = 0;
 let pokemonCache = [];
 
+let visibleStart = 0;
+let visibleCount = 20;
+
+
 // ===== INIT =====
 document.addEventListener("DOMContentLoaded", init);
 
@@ -23,6 +27,8 @@ async function loadPokemon() {
         if (!details || details.length === 0) return;
 
         updatePokemonCache(details);
+        updateVisibleRange();
+        updateLoadButtons();
         renderPokemonList(details);
 
         offset += LIMIT;
@@ -35,6 +41,17 @@ async function loadPokemon() {
 
 function delay(ms) {
     return new Promise(r => setTimeout(r, ms));
+}
+
+function updateVisibleRange() {
+    const total = pokemonCache.length;
+
+    if (total <= visibleCount) {
+        visibleStart = 0;
+        return;
+    }
+
+    visibleStart = total - visibleCount;
 }
 
 // ===== DATA =====

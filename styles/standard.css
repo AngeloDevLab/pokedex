@@ -31,8 +31,9 @@
 
 html {
     font-size: 16px;
-
     letter-spacing: 1px;
+
+    scroll-behavior: smooth;
 }
 
 body {
@@ -42,7 +43,8 @@ body {
     background-color: var(--primary-color);
 }
 
-h3, h2 {
+h3,
+h2 {
     text-align: center;
     margin-block-start: 0;
     margin-block-end: 0;
