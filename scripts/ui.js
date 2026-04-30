@@ -148,7 +148,7 @@ function hideLoader() {
 
 
 // ===== POKEMON LIST =====
-function renderPokemonList(list = pokemonCache) {
+function renderPokemonList(list) {
     const container = document.getElementById("pokemon-container");
 
     const visiblePokemon = list.slice(
@@ -444,7 +444,18 @@ function updateLoadButtons() {
     if (!prevBtn || !nextBtn) return;
 
     const hasPrevious = visibleStart > 0;
-    const hasNext = visibleStart + visibleCount < pokemonCache.length || pokemonCache.length % LIMIT === 0;
+
+    let hasNext = false;
+
+    if (currentMode === "default") {
+        hasNext =
+            visibleStart + visibleCount < activeList.length ||
+            pokemonCache.length % LIMIT === 0;
+    }
+
+    if (currentMode === "search") {
+        hasNext = visibleStart + visibleCount < activeList.length;
+    }
 
     prevBtn.classList.toggle("hidden", !hasPrevious);
     nextBtn.classList.toggle("hidden", !hasNext);
@@ -457,7 +468,7 @@ function loadPrevious() {
         visibleStart = 0;
     }
 
-    renderPokemonList();
+    renderPokemonList(activeList);
     updateLoadButtons();
 }
 
@@ -474,13 +485,14 @@ async function loadNext() {
 async function loadNextDefault() {
     const nextStart = visibleStart + visibleCount;
 
-    if (nextStart < pokemonCache.length) {
+    if (nextStart < activeList.length) {
         visibleStart = nextStart;
     } else {
         await loadPokemon();
+        activeList = pokemonCache;
     }
 
-    renderPokemonList();
+    renderPokemonList(activeList);
     updateLoadButtons();
 
     window.scrollTo(0, 0);
@@ -494,8 +506,7 @@ async function loadNextSearch() {
 
         if (!newDetails.length) return;
 
-        // 👉 bestehende Ergebnisse erweitern
-        pokemonCache.push(...newDetails);
+        activeList.push(...newDetails);
 
         visibleStart += visibleCount;
 

@@ -1,4 +1,5 @@
 // ===== SEARCH STATE =====
+let activeList = [];
 let currentMode = "default";  // default | search | type
 let allPokemonList = [];
 let searchResults = [];
@@ -65,12 +66,14 @@ function handleSearchInput(e) {
 function resetSearch() {
     currentMode = "default";
 
+    activeList = pokemonCache;
+
     visibleStart = Math.max(
         0,
         pokemonCache.length - visibleCount
     );
 
-    renderPokemonList();
+    renderPokemonList(activeList);
     updateLoadButtons();
 }
 
@@ -82,9 +85,11 @@ async function runSearch(query) {
     try {
         const details = await searchPokemonByName(query);
 
+        activeList = details;
+        
         visibleStart = 0;
 
-        renderPokemonList(details);
+        renderPokemonList(activeList);
 
     } catch (err) {
         console.error("Search failed:", err);
