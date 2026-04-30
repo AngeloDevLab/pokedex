@@ -45,3 +45,28 @@ async function fetchEvolutionChain(url) {
 
     return res.json();
 }
+
+// ===== NEW =====
+async function fetchAllPokemonList() {
+    const res = await fetch(`${BASE_URL}?limit=100000&offset=0`);
+
+    if (!res.ok) throw new Error("Failed to fetch all pokemon");
+
+    return res.json();
+}
+
+async function fetchPokemonByUrl(url) {
+    const res = await fetch(url);
+
+    if (!res.ok) throw new Error("Failed to fetch pokemon details");
+
+    return res.json();
+}
+
+async function fetchPokemonByType(type) {
+    const res = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+
+    if (!res.ok) throw new Error("Failed to fetch pokemon type");
+
+    return res.json();
+}

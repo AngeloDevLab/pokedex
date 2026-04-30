@@ -27,11 +27,12 @@ const TAB_RENDERER = {
     artworks: renderArtworkTab
 };
 
-
 // ===== STATE =====
 let currentIndex = 0;
 let currentDialogPokemon = null;
 let currentDialogEntry = null;
+
+let searchOpen = false;
 
 
 // ===== DATA HELPERS =====
@@ -147,10 +148,10 @@ function hideLoader() {
 
 
 // ===== POKEMON LIST =====
-function renderPokemonList() {
+function renderPokemonList(list = pokemonCache) {
     const container = document.getElementById("pokemon-container");
 
-    const visiblePokemon = pokemonCache.slice(
+    const visiblePokemon = list.slice(
         visibleStart,
         visibleStart + visibleCount
     );
@@ -338,6 +339,7 @@ function bindUI() {
     bindLoadMore();
     bindDialogNavigation();
     bindLoadPrevious();
+    bindSearchUI();
 }
 
 function bindOpenDialog() {
@@ -426,6 +428,13 @@ function nextPokemon() {
     openDialog(currentIndex + 1);
 }
 
+function bindSearchUI() {
+    const searchToggle = document.getElementById("search-toggle");
+    const searchInput = document.getElementById("search-name");
+
+    searchToggle.addEventListener("click", toggleSearch);
+    searchInput.addEventListener("input", handleSearchInput);
+}
 
 // ===== LOAD NAVIGATION =====
 function updateLoadButtons() {
@@ -453,6 +462,16 @@ function loadPrevious() {
 }
 
 async function loadNext() {
+    if (currentMode === "default") {
+        return loadNextDefault();
+    }
+
+    if (currentMode === "search") {
+        return loadNextSearch();
+    }
+}
+
+async function loadNextDefault() {
     const nextStart = visibleStart + visibleCount;
 
     if (nextStart < pokemonCache.length) {
@@ -464,7 +483,30 @@ async function loadNext() {
     renderPokemonList();
     updateLoadButtons();
 
-    window.scrollTo({top: 0});
+    window.scrollTo(0, 0);
+}
+
+async function loadNextSearch() {
+    showLoader();
+
+    try {
+        const newDetails = await loadSearchBatch();
+
+        if (!newDetails.length) return;
+
+        // 👉 bestehende Ergebnisse erweitern
+        pokemonCache.push(...newDetails);
+
+        visibleStart += visibleCount;
+
+        renderPokemonList();
+        updateLoadButtons();
+
+    } catch (err) {
+        console.error("Search load more failed:", err);
+    } finally {
+        hideLoader();
+    }
 }
 
 function bindLoadPrevious() {
@@ -472,4 +514,26 @@ function bindLoadPrevious() {
     if (!btn) return;
 
     btn.addEventListener("click", loadPrevious);
+}
+
+// ===== SEARCH =====
+function toggleSearch() {
+    searchOpen = !searchOpen;
+
+    const panel = document.getElementById("search-panel");
+    const searchIcon = document.getElementById("search-icon");
+    const closeIcon = document.getElementById("close-icon");
+
+    panel.classList.toggle("open", searchOpen);
+    searchIcon.classList.toggle("hidden", searchOpen);
+    closeIcon.classList.toggle("hidden", !searchOpen);
+
+    if (searchOpen) {
+        document.getElementById("search-name").focus();
+    }
+}
+
+function showSearchWarning(show) {
+    const warning = document.getElementById("search-warning");
+    warning.classList.toggle("hidden", !show);
 }

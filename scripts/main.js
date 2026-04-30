@@ -6,7 +6,6 @@ let pokemonCache = [];
 let visibleStart = 0;
 let visibleCount = 20;
 
-
 // ===== INIT =====
 document.addEventListener("DOMContentLoaded", init);
 
@@ -19,24 +18,30 @@ function init() {
 async function loadPokemon() {
     showLoader();
     try {
-        const batch = loadPokemonBatch();
-        await delay(500);
+        const details = await getPokemonDetails();
 
-        const details = await batch;
+        if (!details.length) return;
 
-        if (!details || details.length === 0) return;
-
-        updatePokemonCache(details);
-        updateVisibleRange();
-        updateLoadButtons();
-        renderPokemonList(details);
-
+        handleNewPokemon(details);
         offset += LIMIT;
     } catch (err) {
         console.error("Load failed:", err);
     } finally {
         hideLoader();
     }
+}
+
+async function getPokemonDetails() {
+    const batch = loadPokemonBatch();
+    await delay(500);
+    return batch;
+}
+
+function handleNewPokemon(details) {
+    updatePokemonCache(details);
+    updateVisibleRange();
+    updateLoadButtons();
+    renderPokemonList(details);
 }
 
 function delay(ms) {

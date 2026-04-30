@@ -1,56 +1,88 @@
 # 🧭 TODO – Pokédex (Next Session)
 
-## 🟢 1. Dialog Basics fixen
-- [x] Close Button → `addEventListener` + `dialog.close()`
-- [x] Pfeile (left / right) → durch Pokémon im Cache wechseln
+---
 
-**Ziel:** Dialog fühlt sich benutzbar an
+## 🟢 MVP – Search System
+
+### 🔍 1. Global Search (Name)
+- [ ] Input Feld einbauen
+- [ ] min. 3 Zeichen required
+- [ ] unter 3 Zeichen:
+  - Warning anzeigen („min 3 characters“)
 
 ---
 
-## 🟢 2. Tabs fertig machen
-- [x] Info Tab standardmäßig aktiv
-- [x] aktiver Button bekommt `.active` Klasse
-- [x] Tab Klick → Content wechseln
-
-**Umsetzung:**
-- einfache `if`-Abfragen (kein Switch nötig)
-
-**Inhalt:**
-- Info → Basisdaten anzeigen  
-- Stats → Stats rendern  
-- Evo → Placeholder
+### 🌍 2. Alle Pokémon für Suche verfügbar machen
+- [ ] einmal alle Pokémon Namen laden  
+  → `pokemon?limit=100000`
+- [ ] nur Name + URL speichern (lightweight)
 
 ---
 
-## 🟢 3. Load All (Bonus)
-- [ ] Button einbauen
-- [ ] Hinweis: „may take a while ⚠️“
-- [ ] lädt in batches weiter
+### 🔎 3. Suche implementieren
+- [ ] Suche läuft über **alle Namen (nicht nur Cache)**
+- [ ] `includes()` / partial match
+- [ ] Ergebnisse anzeigen
 
 ---
 
-## 🟢 4. Load More verbessern (UX)
-- [ ] nach 2–3 Loads:
-  - Button „Load Previous“ anzeigen
-- [ ] nur z. B. 40 Pokémon gleichzeitig anzeigen
-
-**Ziel:** weniger Scrollen, bessere Übersicht
+### 📦 4. Details nachladen
+- [ ] bei Suchergebnis:
+  - Details fetchen (`fetchPokemonDetails`)
+- [ ] in bestehendes UI integrieren
 
 ---
 
-## 🔴 feature
-- [ ] Pokemon Sounds 
+### 🧠 5. State Handling
+- [ ] Search Mode vs Normal Mode trennen
+- [ ] bei aktiver Suche:
+  - Pagination deaktivieren ODER resetten
+
+---
+
+## 🟡 OPTIONAL (wenn Zeit)
+
+---
+
+### 🎯 6. Filter by Type
+- [ ] Dropdown mit Types
+- [ ] bei Auswahl:
+  - API: `/type/{type}`
+- [ ] Pokémon des Types anzeigen
+- [ ] in bestehendes Rendering integrieren
+
+---
+
+### 📀 7. Filter by Edition
+- [ ] Dropdown mit Editions
+- [ ] API basiert auf Species
+- [ ] Pokémon nach Edition filtern
+
+> Hinweis: etwas komplexer → eher Bonus
+
+---
+
+## 🔴 BONUS FEATURES
+
+- [ ] Pokémon Sounds 🔊  
+- [ ] „No results found“ Anzeige  
+- [ ] Loading State bei Suche  
 
 ---
 
 ## 🎯 Ziel
-👉 Dialog + Navigation fühlt sich fertig an
+
+👉 Suche fühlt sich „echt“ an:
+- global
+- schnell
+- sinnvoll gefiltert
 
 ---
 
 ## 💡 Reihenfolge
-1. Close + Arrow Navigation  
-2. Tabs  
-3. Load UX  
-4. Bonus Features  
+
+1. Global Name List holen  
+2. Search Input + Filter  
+3. Detail Fetch bei Ergebnis  
+4. UI Integration  
+5. Optional Filter
