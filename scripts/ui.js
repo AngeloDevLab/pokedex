@@ -88,7 +88,8 @@ function getStatColor(value) {
 
 function mapEvolutionToPokemon(names) {
     return names.map(name => {
-        const pkm = pokemonCache.find(p => p.name === name);
+        const pkm = activeList.find(p => p.name === name)
+            || pokemonCache.find(p => p.name === name);
 
         return pkm
             ? {
@@ -111,6 +112,16 @@ function parseEvolutionChain(chain) {
     }
 
     return result;
+}
+
+function getAbilities(pokemon) {
+    return pokemon.abilities.map(a => {
+        const name = a.ability.name;
+
+        return a.is_hidden
+            ? `${name} (hidden)`
+            : name;
+    });
 }
 
 // ===== UI HELPERS =====
@@ -144,10 +155,11 @@ function hideLoader() {
     loader.classList.add("hidden");
 }
 
-// ===== POKEMON LIST =====
+// ===== RENDER =====
 function renderPokemonList(list) {
     const container = document.getElementById("pokemon-container");
-
+    container.classList.remove("centered");
+    
     const visiblePokemon = list.slice(
         visibleStart,
         visibleStart + visibleCount
@@ -155,6 +167,7 @@ function renderPokemonList(list) {
 
     const html = visiblePokemon
         .map(p => createPokemonData(p))
+        .filter(Boolean)
         .map(data => getPokemonCardTemplate(data))
         .join("");
 
@@ -173,7 +186,7 @@ function createPokemonData(pokemon) {
     };
 }
 
-// ===== DIALOG FLOW =====
+// ===== DIALOG =====
 async function openDialog(index) {
     setCurrentDialogPokemon(index);
 
@@ -192,7 +205,6 @@ async function loadDialogData() {
     currentDialogEntry = getFlavorEntry(species);
 }
 
-// ===== DIALOG RENDER =====
 function renderDialogUI() {
     renderDialogContent();
     applyDialogStyles();
@@ -214,7 +226,6 @@ function applyDialogStyles() {
     dialog.style.background = getGradient(types);
 }
 
-// ===== DIALOG STATE =====
 function initDialog() {
     setDefaultTab();
     renderInfoTab();
@@ -226,10 +237,9 @@ function initDialog() {
 
 function setDefaultTab() {
     const infoTab = document.querySelector('[data-tab="flavor"]');
+    if (!infoTab) return;
 
-    if (infoTab) {
-        infoTab.classList.add("active");
-    }
+    setActiveTab(infoTab);
 }
 
 function updateArrowState() {
@@ -239,7 +249,7 @@ function updateArrowState() {
     if (!left || !right) return;
 
     left.disabled = currentIndex === 0;
-    right.disabled = currentIndex === pokemonCache.length - 1;
+    right.disabled = currentIndex === activeList.length - 1;
 }
 
 function lockScroll() {
@@ -249,6 +259,11 @@ function lockScroll() {
 function showDialog() {
     const dialog = document.getElementById("pokemon-dialog");
     dialog.showModal();
+}
+
+function closeDialog() {
+    const dialog = document.getElementById("pokemon-dialog");
+    dialog.close();
 }
 
 // ===== TAB SYSTEM =====
@@ -281,17 +296,6 @@ function renderTabContent(type) {
     render();
 }
 
-function getAbilities(pokemon) {
-    return pokemon.abilities.map(a => {
-        const name = a.ability.name;
-
-        return a.is_hidden
-            ? `${name} (hidden)`
-            : name;
-    });
-}
-
-// ===== TAB RENDER =====
 function renderInfoTab() {
     const tabContent = getTabContent();
     tabContent.innerHTML = getInfoTabTemplate(
@@ -320,16 +324,6 @@ async function renderEvoTab() {
 function renderArtworkTab() {
     const tabContent = getTabContent();
     tabContent.innerHTML = getArtworkTabTemplate(currentDialogPokemon);
-}
-
-// ===== EVOLUTION DATA =====
-async function getEvolutionData(pokemon) {
-    const species = await getPokemonSpecies(pokemon.id);
-    const evoData = await fetchEvolutionChain(species.evolution_chain.url);
-
-    const names = parseEvolutionChain(evoData.chain);
-
-    return mapEvolutionToPokemon(names);
 }
 
 // ===== EVENTS =====
@@ -388,17 +382,6 @@ function isCloseButton(e) {
     return e.target.closest("#close-dialog-button");
 }
 
-function closeDialog() {
-    const dialog = document.getElementById("pokemon-dialog");
-    dialog.close();
-}
-
-function bindLoadMore() {
-    const btn = document.getElementById("load-more-btn");
-    if (!btn) return;
-    btn.addEventListener("click", loadNext);
-}
-
 function bindDialogNavigation() {
     const pkmDialog = document.getElementById("pokemon-dialog");
 
@@ -424,21 +407,24 @@ function previousPokemon() {
 }
 
 function nextPokemon() {
-    if (currentIndex >= pokemonCache.length - 1) return;
+    if (currentIndex >= activeList.length - 1) return;
     openDialog(currentIndex + 1);
 }
 
-function bindSearchUI() {
-    const searchToggle = document.getElementById("search-toggle");
-    const searchInput = document.getElementById("search-name");
-    const typeInput = document.getElementById("filter-type");
-
-    searchToggle.addEventListener("click", toggleSearch);
-    searchInput.addEventListener("input", handleSearchInput);
-    typeInput.addEventListener("input", handleTypeInput);
+// ===== LOAD BUTTON UI =====
+function bindLoadMore() {
+    const btn = document.getElementById("load-more-btn");
+    if (!btn) return;
+    btn.addEventListener("click", loadNext);
 }
 
-// ===== LOAD NAVIGATION =====
+function bindLoadPrevious() {
+    const btn = document.getElementById("load-previous-btn");
+    if (!btn) return;
+
+    btn.addEventListener("click", loadPrevious);
+}
+
 function updateLoadButtons() {
     const prevBtn = document.getElementById("load-previous-btn");
     const nextBtn = document.getElementById("load-more-btn");
@@ -455,94 +441,24 @@ function updateLoadButtons() {
 function checkHasNext() {
     if (hasMoreVisible()) return true;
 
-    return hasMoreData();
+    return hasMoreData(); // checks if more data can be loaded (handled in main.js)
 }
 
 function hasMoreVisible() {
     return visibleStart + visibleCount < activeList.length;
 }
 
-function hasMoreData() {
-    if (currentMode === "default") {
-        return pokemonCache.length % LIMIT === 0;
-    }
+// ===== SEARCH UI =====
+function bindSearchUI() {
+    const searchToggle = document.getElementById("search-toggle");
+    const searchInput = document.getElementById("search-name");
+    const typeInput = document.getElementById("filter-type");
 
-    if (currentMode === "search" || currentMode === "type") {
-        return searchOffset < searchResults.length;
-    }
-
-    return false;
+    searchToggle.addEventListener("click", toggleSearch);
+    searchInput.addEventListener("input", handleSearchInput);
+    typeInput.addEventListener("input", handleTypeInput);
 }
 
-function loadPrevious() {
-    visibleStart -= visibleCount;
-
-    if (visibleStart < 0) {
-        visibleStart = 0;
-    }
-
-    renderPokemonList(activeList);
-    updateLoadButtons();
-}
-
-async function loadNext() {
-    const nextStart = visibleStart + visibleCount;
-
-    if (nextStart < activeList.length) {
-        visibleStart = nextStart;
-    } else {
-        await loadMoreData(nextStart);
-    }
-
-    updateView();
-}
-
-async function loadMoreData(nextStart) {
-    if (currentMode === "default") {
-        return loadMoreDefault();
-    }
-
-    if (currentMode === "search" || currentMode === "type") {
-        return loadMoreSearch(nextStart);
-    }
-}
-
-async function loadMoreDefault() {
-    await loadPokemon();
-    activeList = pokemonCache;
-}
-
-async function loadMoreSearch(nextStart) {
-    showLoader();
-
-    try {
-        const newDetails = await loadSearchBatch();
-        if (!newDetails.length) return;
-
-        activeList = [...activeList, ...newDetails];
-        visibleStart = nextStart;
-
-    } catch (err) {
-        console.error("Search load more failed:", err);
-    } finally {
-        hideLoader();
-    }
-}
-
-function updateView() {
-    renderPokemonList(activeList);
-    updateLoadButtons();
-    window.scrollTo(0, 0);
-}
-
-function bindLoadPrevious() {
-    const btn = document.getElementById("load-previous-btn");
-    if (!btn) return;
-
-    btn.addEventListener("click", loadPrevious);
-}
-
-// ===== SEARCH =====
 function toggleSearch() {
     searchOpen = !searchOpen;
 

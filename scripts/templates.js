@@ -198,3 +198,11 @@ function getArtworkTabTemplate(pokemon) {
         </div>
     `;
 }
+
+function getNoResultTemplate() {
+    return `
+        <div class="no-results">
+            No results found
+        </div>
+    `;
+}

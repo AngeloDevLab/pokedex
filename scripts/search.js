@@ -1,11 +1,11 @@
-// ===== SEARCH STATE =====
+// ===== STATE =====
 let activeList = [];
 let currentMode = "default";  // default | search | type
 let allPokemonList = [];
 let searchResults = [];
 let searchOffset = 0;
 
-// ===== DATA LOAD =====
+// ===== DATA (LOAD) =====
 async function loadAllPokemonForSearch() {
     if (allPokemonList.length > 0) return;
 
@@ -13,7 +13,7 @@ async function loadAllPokemonForSearch() {
     allPokemonList = data.results;
 }
 
-// ===== SEARCH LOGIC =====
+// ===== SEARCH (LOGIC) =====
 async function searchPokemonByName(query) {
     await loadAllPokemonForSearch();
 
@@ -38,7 +38,7 @@ async function searchPokemonByType(type) {
     return loadSearchBatch();
 }
 
-// ===== PAGINATION (SEARCH MODE) =====
+// ===== PAGINATION =====
 async function loadSearchBatch() {
     const batch = searchResults.slice(
         searchOffset,
@@ -56,40 +56,45 @@ async function loadSearchBatch() {
 
 // ===== INPUT HANDLING =====
 function handleSearchInput(e) {
-    const query = e.target.value.trim().toLowerCase();
-    const typeInput = document.getElementById("filter-type");
+    const query = getInputValue(e);
 
-    if (query.length === 0) {
-        showSearchWarning(false);
-        resetSearch();
-        return;
-    }
+    if (!validateSearchQuery(query)) return;
 
-    if (isShortQuery(query)) {
-        showSearchWarning(true);
-        return;
-    }
-
-    typeInput.value = "";
+    resetOtherInput("filter-type");
 
     currentMode = "search";
     showSearchWarning(false);
+
     runNameSearch(query);
 }
 
 function handleTypeInput(e) {
-    const type = e.target.value.trim().toLowerCase();
-    const searchInput = document.getElementById("search-name");
+    const type = getInputValue(e);
 
     if (!type) {
         resetSearch();
         return;
     }
 
-    searchInput.value = "";
+    resetOtherInput("search-name");
 
     currentMode = "type";
     runTypeSearch(type);
+}
+
+function validateSearchQuery(query) {
+    if (!query) {
+        showSearchWarning(false);
+        resetSearch();
+        return false;
+    }
+
+    if (isShortQuery(query)) {
+        showSearchWarning(true);
+        return false;
+    }
+
+    return true;
 }
 
 // ===== SEARCH FLOW =====
@@ -107,47 +112,55 @@ function resetSearch() {
     updateLoadButtons();
 }
 
-async function runNameSearch(query) {
-    showLoader();
-    try {
-        const details = await searchPokemonByName(query);
+async function runSearch(fetchFn) {
+    await withLoader(async () => {
+        const details = await fetchFn();
+
+        if (!details.length) {
+            activeList = [];
+            renderNoResults();
+            updateLoadButtons();
+            return;
+        }
 
         activeList = details;
-
         visibleStart = 0;
 
         renderPokemonList(activeList);
         updateLoadButtons();
-
-    } catch (err) {
-        console.error("Search failed:", err);
-    } finally {
-        hideLoader();
-    }
+    });
 }
 
-async function runTypeSearch(type) {
+function runNameSearch(query) {
+    currentMode = "search";
+    showSearchWarning(false);
+
+    return runSearch(() => searchPokemonByName(query));
+}
+
+function runTypeSearch(type) {
     currentMode = "type";
 
-    showLoader();
-
-    try {
-        const details = await searchPokemonByType(type);
-
-        activeList = details;
-        visibleStart = 0;
-
-        renderPokemonList(activeList);
-        updateLoadButtons();
-
-    } catch (err) {
-        console.error("Type search failed:", err);
-    } finally {
-        hideLoader();
-    }
+    return runSearch(() => searchPokemonByType(type));
 }
 
 // ===== HELPERS =====
 function isShortQuery(query) {
     return query.length > 0 && query.length < 3;
+}
+
+function getInputValue(e) {
+    return e.target.value.trim().toLowerCase();
+}
+
+function resetOtherInput(id) {
+    const input = document.getElementById(id);
+    if (input) input.value = "";
+}
+
+function renderNoResults() {
+    const container = document.getElementById("pokemon-container");
+    container.classList.add("centered");
+
+    container.innerHTML = getNoResultTemplate();
 }

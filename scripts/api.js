@@ -1,72 +1,67 @@
 // ===== CONFIG =====
-const BASE_URL = "https://pokeapi.co/api/v2/pokemon";
+const API_BASE = "https://pokeapi.co/api/v2";
 
+// ===== HELPERS =====
+async function fetchJSON(url, errorMessage) {
+    const res = await fetch(url);
 
-// ===== CACHE =====
-let speciesCache = {};
-
-
-// ===== POKEMON =====
-async function fetchPokemonList(limit, offset) {
-    const res = await fetch(`${BASE_URL}?limit=${limit}&offset=${offset}`);
-
-    if (!res.ok) throw new Error("Failed to fetch pokemon list");
+    if (!res.ok) throw new Error(errorMessage);
 
     return res.json();
 }
 
-async function fetchPokemonDetails(list) {
-    return Promise.all(
-        list.results.map(p => fetch(p.url).then(r => r.json()))
+// ===== CACHE =====
+let speciesCache = {};
+
+// ===== POKEMON =====
+async function fetchPokemonList(limit, offset) {
+    return fetchJSON(
+        `${API_BASE}/pokemon?limit=${limit}&offset=${offset}`,
+        "Failed to fetch pokemon list"
     );
 }
 
+async function fetchPokemonDetails(list) {
+    return Promise.all(
+        list.results.map(p =>
+            fetchJSON(p.url, "Failed to fetch pokemon details")
+        )
+    );
+}
 
 // ===== SPECIES =====
 async function getPokemonSpecies(id) {
     if (speciesCache[id]) return speciesCache[id];
 
-    const res = await fetch(`${BASE_URL}-species/${id}`);
+    const data = await fetchJSON(
+        `${API_BASE}/pokemon-species/${id}`,
+        "Failed to fetch species"
+    );
 
-    if (!res.ok) throw new Error("Failed to fetch species");
-
-    const data = await res.json();
     speciesCache[id] = data;
-
     return data;
 }
 
-
 // ===== EVOLUTION =====
 async function fetchEvolutionChain(url) {
-    const res = await fetch(url);
-
-    if (!res.ok) throw new Error("Failed to fetch evolution chain");
-
-    return res.json();
+    return fetchJSON(url, "Failed to fetch evolution chain");
 }
 
-// ===== NEW =====
+// ===== SEARCH / FILTER =====
 async function fetchAllPokemonList() {
-    const res = await fetch(`${BASE_URL}?limit=100000&offset=0`);
-
-    if (!res.ok) throw new Error("Failed to fetch all pokemon");
-
-    return res.json();
+    return fetchJSON(
+        `${API_BASE}/pokemon?limit=100000&offset=0`,
+        "Failed to fetch all pokemon"
+    );
 }
 
 async function fetchPokemonByUrl(url) {
-    const res = await fetch(url);
-
-    if (!res.ok) throw new Error("Failed to fetch pokemon details");
-
-    return res.json();
+    return fetchJSON(url, "Failed to fetch pokemon details");
 }
 
 async function fetchPokemonByType(type) {
-    const res = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
-
-    if (!res.ok) throw new Error("Failed to fetch pokemon type");
-
-    return res.json();
+    return fetchJSON(
+        `${API_BASE}/type/${type}`,
+        "Failed to fetch pokemon type"
+    );
 }
