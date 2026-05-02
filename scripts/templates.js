@@ -135,6 +135,7 @@ function getInfoTabTemplate(pokemon, entry) {
             <tr><td>Base XP</td><td>${pokemon.base_experience}</td></tr>
             <tr><td>Height</td><td>${(pokemon.height / 10).toFixed(1)} m</td></tr>
             <tr><td>Weight</td><td>${(pokemon.weight / 10).toFixed(1)} kg</td></tr>
+            <tr><td>Abilities</td><td>${getAbilities(pokemon).join(", ")}</td></tr>
         </table>
     `;
 }

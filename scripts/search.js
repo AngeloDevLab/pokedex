@@ -27,6 +27,17 @@ async function searchPokemonByName(query) {
     return loadSearchBatch();
 }
 
+async function searchPokemonByType(type) {
+    const data = await fetchPokemonByType(type);
+
+    const results = data.pokemon.map(p => p.pokemon);
+
+    searchResults = results;
+    searchOffset = 0;
+
+    return loadSearchBatch();
+}
+
 // ===== PAGINATION (SEARCH MODE) =====
 async function loadSearchBatch() {
     const batch = searchResults.slice(
@@ -46,6 +57,7 @@ async function loadSearchBatch() {
 // ===== INPUT HANDLING =====
 function handleSearchInput(e) {
     const query = e.target.value.trim().toLowerCase();
+    const typeInput = document.getElementById("filter-type");
 
     if (query.length === 0) {
         showSearchWarning(false);
@@ -58,8 +70,26 @@ function handleSearchInput(e) {
         return;
     }
 
+    typeInput.value = "";
+
+    currentMode = "search";
     showSearchWarning(false);
-    runSearch(query);
+    runNameSearch(query);
+}
+
+function handleTypeInput(e) {
+    const type = e.target.value.trim().toLowerCase();
+    const searchInput = document.getElementById("search-name");
+
+    if (!type) {
+        resetSearch();
+        return;
+    }
+
+    searchInput.value = "";
+
+    currentMode = "type";
+    runTypeSearch(type);
 }
 
 // ===== SEARCH FLOW =====
@@ -77,22 +107,41 @@ function resetSearch() {
     updateLoadButtons();
 }
 
-async function runSearch(query) {
-    currentMode = "search";
-
+async function runNameSearch(query) {
     showLoader();
-
     try {
         const details = await searchPokemonByName(query);
 
         activeList = details;
-        
+
         visibleStart = 0;
 
         renderPokemonList(activeList);
+        updateLoadButtons();
 
     } catch (err) {
         console.error("Search failed:", err);
+    } finally {
+        hideLoader();
+    }
+}
+
+async function runTypeSearch(type) {
+    currentMode = "type";
+
+    showLoader();
+
+    try {
+        const details = await searchPokemonByType(type);
+
+        activeList = details;
+        visibleStart = 0;
+
+        renderPokemonList(activeList);
+        updateLoadButtons();
+
+    } catch (err) {
+        console.error("Type search failed:", err);
     } finally {
         hideLoader();
     }
