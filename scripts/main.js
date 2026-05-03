@@ -127,8 +127,19 @@ function delay(ms) {
 
 // ===== EVOLUTION =====
 async function getEvolutionData(pokemon) {
-    const species = await getPokemonSpecies(pokemon.id);
-    const evoData = await fetchEvolutionChain(species.evolution_chain.url);
+    const species = await getPokemonSpecies(pokemon.species.url);
+
+    if (!species || !species.evolution_chain) {
+        console.warn("No evolution data");
+        return null;
+    }
+
+    const evoData = await fetchEvolutionChain(
+        species.evolution_chain.url
+    );
+
+    if (!evoData) return null;
+
     const names = parseEvolutionChain(evoData.chain);
     return mapEvolutionToPokemon(names);
 }

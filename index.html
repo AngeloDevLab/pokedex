@@ -17,8 +17,8 @@
     <script src="./scripts/api.js"></script>
     <script src="./scripts/search.js"></script>
     <script src="./scripts/templates.js"></script>
+    <script src="./scripts/dialog.js"></script>
     <script src="./scripts/ui.js"></script>
-
 
 </head>
 
@@ -58,7 +58,7 @@
 
     <div class="search-panel" id="search-panel">
 
-        <div class=" max-content">
+        <div class="search-content max-content">
             <div class="search-group">
                 <label for="search-name">Search by Name</label>
                 <input type="text" id="search-name" placeholder="Enter name...">
@@ -91,6 +91,8 @@
                     <option value="fairy">
                 </datalist>
             </div>
+
+            <button id="search-reset">Clear Search</button>
         </div>
 
 

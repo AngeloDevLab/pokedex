@@ -92,8 +92,18 @@
     opacity: 1;
 }
 
+.search-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#search-reset {
+    margin: 0;
+    align-self: flex-end;
+}
+
 .search-group {
-    margin-top: 0.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -170,7 +180,7 @@
 }
 
 #pokemon-container {
-    min-height: calc(100vh - 12rem);
+    min-height: calc(100vh - 20rem);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

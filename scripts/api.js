@@ -28,14 +28,20 @@ async function fetchPokemonDetails(list) {
 }
 
 // ===== SPECIES =====
-async function getPokemonSpecies(id) {
-    if (speciesCache[id]) return speciesCache[id];
-    const data = await fetchJSON(
-        `${API_BASE}/pokemon-species/${id}`,
-        "Failed to fetch species"
-    );
-    speciesCache[id] = data;
-    return data;
+async function getPokemonSpecies(url) {
+    if (speciesCache[url]) return speciesCache[url];
+
+    try {
+        const data = await fetchJSON(
+            url,
+            "Failed to fetch species"
+        );
+        speciesCache[url] = data;
+        return data;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
 }
 
 // ===== EVOLUTION =====

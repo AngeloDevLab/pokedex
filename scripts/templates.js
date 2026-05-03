@@ -242,10 +242,17 @@ function getEvoTemplate(evoData) {
 function getArtworkTabTemplate(pokemon) {
     return `
         <div class="artwork-images">
-            <img src="${pokemon.sprites.other["official-artwork"].front_default}">
-            <img src="${pokemon.sprites.other["official-artwork"].front_shiny}">
-            <img src="${pokemon.sprites.front_default}">
-            <img src="${pokemon.sprites.front_shiny}">
+            <img src="${pokemon.sprites.other["official-artwork"].front_default || ''}" 
+                 alt="${pokemon.name} official artwork">
+
+            <img src="${pokemon.sprites.other["official-artwork"].front_shiny || ''}" 
+                 alt="${pokemon.name} shiny official artwork">
+
+            <img src="${pokemon.sprites.front_default || ''}" 
+                 alt="${pokemon.name} sprite">
+
+            <img src="${pokemon.sprites.front_shiny || ''}" 
+                 alt="${pokemon.name} shiny sprite">
         </div>
     `;
 }
