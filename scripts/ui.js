@@ -201,6 +201,10 @@ async function openDialog(index) {
 function setCurrentDialogPokemon(index) {
     currentIndex = index;
     currentDialogPokemon = activeList[index];
+
+    if (currentIndex >= activeList.length) {
+        currentIndex = activeList.length - 1;
+    }
 }
 
 async function loadDialogData() {
@@ -218,6 +222,7 @@ function renderDialogUI() {
     applyDialogStyles();
 
     if (!currentDialogEntry) {
+        updateArrowState();
         showDialog();
         return;
     }
@@ -265,8 +270,8 @@ function updateArrowState() {
     const left = document.getElementById("arrow-left");
     const right = document.getElementById("arrow-right");
     if (!left || !right) return;
-    left.disabled = currentIndex === 0;
-    right.disabled = currentIndex === activeList.length - 1;
+    left.disabled = currentIndex <= 0;
+    right.disabled = currentIndex >= activeList.length - 1;
 }
 
 function lockScroll() {
@@ -435,7 +440,7 @@ function updateLoadButtons() {
     const hasNext = checkHasNext();
 
     if (LOAD_MODE === "append") {
-        prevBtn.classList.add("hidden"); // ❗ immer verstecken
+        prevBtn.classList.add("hidden");
     } else {
         const hasPrevious = visibleStart > 0;
         prevBtn.classList.toggle("hidden", !hasPrevious);
@@ -445,8 +450,12 @@ function updateLoadButtons() {
 }
 
 function checkHasNext() {
+    if (LOAD_MODE === "append") {
+        return hasMoreData();
+    }
+
     if (hasMoreVisible()) return true;
-    return hasMoreData(); // checks if more data can be loaded (handled in main.js)
+    return hasMoreData();
 }
 
 function hasMoreVisible() {
