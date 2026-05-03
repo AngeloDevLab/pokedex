@@ -8,7 +8,6 @@ let searchOffset = 0;
 // ===== DATA (LOAD) =====
 async function loadAllPokemonForSearch() {
     if (allPokemonList.length > 0) return;
-
     const data = await fetchAllPokemonList();
     allPokemonList = data.results;
 }
@@ -16,11 +15,9 @@ async function loadAllPokemonForSearch() {
 // ===== SEARCH (LOGIC) =====
 async function searchPokemonByName(query) {
     await loadAllPokemonForSearch();
-
     const matches = allPokemonList.filter(pokemon =>
         pokemon.name.includes(query)
     );
-
     searchResults = matches;
     searchOffset = 0;
 
@@ -29,9 +26,7 @@ async function searchPokemonByName(query) {
 
 async function searchPokemonByType(type) {
     const data = await fetchPokemonByType(type);
-
     const results = data.pokemon.map(p => p.pokemon);
-
     searchResults = results;
     searchOffset = 0;
 
@@ -44,11 +39,9 @@ async function loadSearchBatch() {
         searchOffset,
         searchOffset + LIMIT
     );
-
     const details = await Promise.all(
         batch.map(pokemon => fetchPokemonByUrl(pokemon.url))
     );
-
     searchOffset += LIMIT;
 
     return details;
@@ -57,14 +50,10 @@ async function loadSearchBatch() {
 // ===== INPUT HANDLING =====
 function handleSearchInput(e) {
     const query = getInputValue(e);
-
     if (!validateSearchQuery(query)) return;
-
     resetOtherInput("filter-type");
-
     currentMode = "search";
     showSearchWarning(false);
-
     runNameSearch(query);
 }
 
@@ -77,7 +66,6 @@ function handleTypeInput(e) {
     }
 
     resetOtherInput("search-name");
-
     currentMode = "type";
     runTypeSearch(type);
 }
@@ -100,21 +88,18 @@ function validateSearchQuery(query) {
 // ===== SEARCH FLOW =====
 function resetSearch() {
     currentMode = "default";
-
     activeList = pokemonCache;
-
     visibleStart = Math.max(
         0,
         pokemonCache.length - visibleCount
     );
-
     renderPokemonList(activeList);
     updateLoadButtons();
 }
 
-async function runSearch(fetchFn) {
+async function runSearch(task) {
     await withLoader(async () => {
-        const details = await fetchFn();
+        const details = await task();
 
         if (!details.length) {
             activeList = [];
@@ -125,7 +110,6 @@ async function runSearch(fetchFn) {
 
         activeList = details;
         visibleStart = 0;
-
         renderPokemonList(activeList);
         updateLoadButtons();
     });
@@ -161,6 +145,5 @@ function resetOtherInput(id) {
 function renderNoResults() {
     const container = document.getElementById("pokemon-container");
     container.classList.add("centered");
-
     container.innerHTML = getNoResultTemplate();
 }

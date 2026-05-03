@@ -5,7 +5,6 @@ const LOADER_MIN_TIME = 500;
 // ===== STATE =====
 let offset = 0;
 let pokemonCache = [];
-
 let visibleStart = 0;
 let visibleCount = 20;
 
@@ -22,7 +21,6 @@ async function loadPokemon() {
     await withLoader(async () => {
         const details = await loadPokemonBatch();
         if (!details.length) return;
-
         handleNewPokemon(details);
         offset += LIMIT;
     });
@@ -31,7 +29,6 @@ async function loadPokemon() {
 function handleNewPokemon(details) {
     updatePokemonCache(details);
     activeList = pokemonCache;
-
     updateVisibleRange();
     updateLoadButtons();
     renderPokemonList(activeList);
@@ -79,7 +76,6 @@ async function loadMoreSearch(nextStart) {
     await withLoader(async () => {
         const newDetails = await loadSearchBatch();
         if (!newDetails.length) return;
-
         activeList = [...activeList, ...newDetails];
         visibleStart = nextStart;
     });
@@ -125,20 +121,19 @@ function delay(ms) {
 async function getEvolutionData(pokemon) {
     const species = await getPokemonSpecies(pokemon.id);
     const evoData = await fetchEvolutionChain(species.evolution_chain.url);
-
     const names = parseEvolutionChain(evoData.chain);
     return mapEvolutionToPokemon(names);
 }
 
 // ===== LOADER =====
-async function withLoader(fn, minTime = LOADER_MIN_TIME) {
+async function withLoader(task, minTime = LOADER_MIN_TIME) {
     showLoader();
     const start = Date.now();
-
     try {
-        return await fn();
+        return await task();
     } catch (err) {
         console.error(err);
+        throw err;
     } finally {
         const elapsed = Date.now() - start;
 

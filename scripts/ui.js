@@ -31,14 +31,12 @@ const TAB_RENDERER = {
 let currentIndex = 0;
 let currentDialogPokemon = null;
 let currentDialogEntry = null;
-
 let searchOpen = false;
 
 // ===== DATA HELPERS =====
 function getFlavorEntry(species) {
     const entry = species.flavor_text_entries
         .find(e => e.language.name === "en");
-
     if (!entry) return getDefaultFlavor();
 
     return {
@@ -83,6 +81,7 @@ function formatStatName(name) {
 function getStatColor(value) {
     if (value < 50) return "red";
     if (value < 80) return "orange";
+
     return "green";
 }
 
@@ -103,7 +102,6 @@ function mapEvolutionToPokemon(names) {
 
 function parseEvolutionChain(chain) {
     const result = [];
-
     let current = chain;
 
     while (current) {
@@ -159,12 +157,10 @@ function hideLoader() {
 function renderPokemonList(list) {
     const container = document.getElementById("pokemon-container");
     container.classList.remove("centered");
-    
     const visiblePokemon = list.slice(
         visibleStart,
         visibleStart + visibleCount
     );
-
     const html = visiblePokemon
         .map(p => createPokemonData(p))
         .filter(Boolean)
@@ -189,9 +185,7 @@ function createPokemonData(pokemon) {
 // ===== DIALOG =====
 async function openDialog(index) {
     setCurrentDialogPokemon(index);
-
     await loadDialogData();
-
     renderDialogUI();
 }
 
@@ -238,16 +232,13 @@ function initDialog() {
 function setDefaultTab() {
     const infoTab = document.querySelector('[data-tab="flavor"]');
     if (!infoTab) return;
-
     setActiveTab(infoTab);
 }
 
 function updateArrowState() {
     const left = document.getElementById("arrow-left");
     const right = document.getElementById("arrow-right");
-
     if (!left || !right) return;
-
     left.disabled = currentIndex === 0;
     right.disabled = currentIndex === activeList.length - 1;
 }
@@ -269,7 +260,6 @@ function closeDialog() {
 // ===== TAB SYSTEM =====
 function bindTabs() {
     const tabs = document.querySelectorAll(".tab-btn");
-
     tabs.forEach(tab => {
         tab.addEventListener("click", handleTabClick);
     });
@@ -277,14 +267,12 @@ function bindTabs() {
 
 function handleTabClick(e) {
     const tab = e.currentTarget;
-
     setActiveTab(tab);
     renderTabContent(tab.dataset.tab);
 }
 
 function setActiveTab(activeTab) {
     const tabs = document.querySelectorAll(".tab-btn");
-
     tabs.forEach(t => t.classList.remove("active"));
     activeTab.classList.add("active");
 }
@@ -292,7 +280,6 @@ function setActiveTab(activeTab) {
 function renderTabContent(type) {
     const render = TAB_RENDERER[type];
     if (!render) return;
-
     render();
 }
 
@@ -307,17 +294,13 @@ function renderInfoTab() {
 function renderStatsTab() {
     const tabContent = getTabContent();
     const stats = prepareStats(currentDialogPokemon);
-
     tabContent.innerHTML = getStatsTabTemplate(stats);
 }
 
 async function renderEvoTab() {
     const tabContent = getTabContent();
-
     tabContent.innerHTML = "Loading...";
-
     const evoData = await getEvolutionData(currentDialogPokemon);
-
     tabContent.innerHTML = getEvoTemplate(evoData);
 }
 
@@ -338,17 +321,14 @@ function bindUI() {
 
 function bindOpenDialog() {
     const pkmContainer = document.getElementById("pokemon-container");
-
     pkmContainer.addEventListener("click", handlePokemonClick);
 }
 
 function handlePokemonClick(e) {
     const card = getPokemonCard(e);
     if (!card) return;
-
     const index = getPokemonIndex(card);
     if (index === -1) return;
-
     openDialog(index);
 }
 
@@ -363,14 +343,12 @@ function getPokemonIndex(card) {
 
 function bindCloseDialog() {
     const pkmDialog = document.getElementById("pokemon-dialog");
-
     pkmDialog.addEventListener("click", handleDialogClick);
     pkmDialog.addEventListener("close", handleDialogClose);
 }
 
 function handleDialogClick(e) {
     if (!isCloseButton(e)) return;
-
     closeDialog();
 }
 
@@ -384,7 +362,6 @@ function isCloseButton(e) {
 
 function bindDialogNavigation() {
     const pkmDialog = document.getElementById("pokemon-dialog");
-
     pkmDialog.addEventListener("click", handleDialogNavigation);
 }
 
@@ -421,26 +398,21 @@ function bindLoadMore() {
 function bindLoadPrevious() {
     const btn = document.getElementById("load-previous-btn");
     if (!btn) return;
-
     btn.addEventListener("click", loadPrevious);
 }
 
 function updateLoadButtons() {
     const prevBtn = document.getElementById("load-previous-btn");
     const nextBtn = document.getElementById("load-more-btn");
-
     if (!prevBtn || !nextBtn) return;
-
     const hasPrevious = visibleStart > 0;
     const hasNext = checkHasNext();
-
     prevBtn.classList.toggle("hidden", !hasPrevious);
     nextBtn.classList.toggle("hidden", !hasNext);
 }
 
 function checkHasNext() {
     if (hasMoreVisible()) return true;
-
     return hasMoreData(); // checks if more data can be loaded (handled in main.js)
 }
 
@@ -453,7 +425,6 @@ function bindSearchUI() {
     const searchToggle = document.getElementById("search-toggle");
     const searchInput = document.getElementById("search-name");
     const typeInput = document.getElementById("filter-type");
-
     searchToggle.addEventListener("click", toggleSearch);
     searchInput.addEventListener("input", handleSearchInput);
     typeInput.addEventListener("input", handleTypeInput);
@@ -461,15 +432,12 @@ function bindSearchUI() {
 
 function toggleSearch() {
     searchOpen = !searchOpen;
-
     const panel = document.getElementById("search-panel");
     const searchIcon = document.getElementById("search-icon");
     const closeIcon = document.getElementById("close-icon");
-
     panel.classList.toggle("open", searchOpen);
     searchIcon.classList.toggle("hidden", searchOpen);
     closeIcon.classList.toggle("hidden", !searchOpen);
-
     if (searchOpen) {
         document.getElementById("search-name").focus();
     }

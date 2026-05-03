@@ -4,9 +4,7 @@ const API_BASE = "https://pokeapi.co/api/v2";
 // ===== HELPERS =====
 async function fetchJSON(url, errorMessage) {
     const res = await fetch(url);
-
     if (!res.ok) throw new Error(errorMessage);
-
     return res.json();
 }
 
@@ -32,12 +30,10 @@ async function fetchPokemonDetails(list) {
 // ===== SPECIES =====
 async function getPokemonSpecies(id) {
     if (speciesCache[id]) return speciesCache[id];
-
     const data = await fetchJSON(
         `${API_BASE}/pokemon-species/${id}`,
         "Failed to fetch species"
     );
-
     speciesCache[id] = data;
     return data;
 }
