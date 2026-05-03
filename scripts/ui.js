@@ -27,6 +27,8 @@ const TAB_RENDERER = {
     artworks: renderArtworkTab
 };
 
+const LOAD_MODE = "append"; // "append" | "pagination"
+
 // ===== STATE =====
 let currentIndex = 0;
 let currentDialogPokemon = null;
@@ -157,10 +159,17 @@ function hideLoader() {
 function renderPokemonList(list) {
     const container = document.getElementById("pokemon-container");
     container.classList.remove("centered");
-    const visiblePokemon = list.slice(
-        visibleStart,
-        visibleStart + visibleCount
-    );
+    let visiblePokemon;
+
+    if (LOAD_MODE === "append") {
+        visiblePokemon = list;
+    } else {
+        visiblePokemon = list.slice(
+            visibleStart,
+            visibleStart + visibleCount
+        );
+    }
+
     const html = visiblePokemon
         .map(p => createPokemonData(p))
         .filter(Boolean)
@@ -422,9 +431,16 @@ function updateLoadButtons() {
     const prevBtn = document.getElementById("load-previous-btn");
     const nextBtn = document.getElementById("load-more-btn");
     if (!prevBtn || !nextBtn) return;
-    const hasPrevious = visibleStart > 0;
+
     const hasNext = checkHasNext();
-    prevBtn.classList.toggle("hidden", !hasPrevious);
+
+    if (LOAD_MODE === "append") {
+        prevBtn.classList.add("hidden"); // ❗ immer verstecken
+    } else {
+        const hasPrevious = visibleStart > 0;
+        prevBtn.classList.toggle("hidden", !hasPrevious);
+    }
+
     nextBtn.classList.toggle("hidden", !hasNext);
 }
 

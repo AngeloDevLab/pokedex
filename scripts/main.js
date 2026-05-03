@@ -46,12 +46,16 @@ function updatePokemonCache(details) {
 
 // ===== PAGINATION =====
 async function loadNext() {
-    const nextStart = visibleStart + visibleCount;
-    
-    if (nextStart < activeList.length) {
-        visibleStart = nextStart;
+    if (LOAD_MODE === "append") {
+        await loadMoreData();
     } else {
-        await loadMoreData(nextStart);
+        const nextStart = visibleStart + visibleCount;
+
+        if (nextStart < activeList.length) {
+            visibleStart = nextStart;
+        } else {
+            await loadMoreData(nextStart);
+        }
     }
 
     updateView();
@@ -77,7 +81,9 @@ async function loadMoreSearch(nextStart) {
         const newDetails = await loadSearchBatch();
         if (!newDetails.length) return;
         activeList = [...activeList, ...newDetails];
-        visibleStart = nextStart;
+        if (LOAD_MODE === "pagination") {
+            visibleStart = nextStart;
+        }
     });
 }
 
@@ -90,7 +96,9 @@ function loadPrevious() {
 function updateView() {
     renderPokemonList(activeList);
     updateLoadButtons();
-    window.scrollTo(0, 0);
+    if (LOAD_MODE === "pagination") {
+        window.scrollTo(0, 0);
+    }
 }
 
 // ===== HELPERS =====
