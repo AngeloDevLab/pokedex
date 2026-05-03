@@ -87,12 +87,18 @@ function validateSearchQuery(query) {
 
 // ===== SEARCH FLOW =====
 function resetSearch() {
+    const searchInput = document.getElementById("search-name");
+    const typeInput = document.getElementById("filter-type");
+    searchInput.value = "";
+    typeInput.value = "";
+    showSearchWarning(false);
     currentMode = "default";
     activeList = pokemonCache;
     visibleStart = Math.max(
         0,
-        pokemonCache.length - visibleCount
+        activeList.length - visibleCount
     );
+    
     renderPokemonList(activeList);
     updateLoadButtons();
 }

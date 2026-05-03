@@ -368,15 +368,3 @@ function closeSearch() {
     searchIcon.classList.remove("hidden");
     closeIcon.classList.add("hidden");
 }
-
-function resetSearch() {
-    const searchInput = document.getElementById("search-name");
-    const typeInput = document.getElementById("filter-type");
-    searchInput.value = "";
-    typeInput.value = "";
-    showSearchWarning(false);
-    currentMode = "default";
-    activeList = pokemonCache;
-    renderPokemonList(activeList);
-    closeSearch();
-}
