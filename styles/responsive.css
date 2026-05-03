@@ -15,6 +15,10 @@
     .evo-chain {
         flex-direction: row;
     }
+
+    .abilities-row {
+        display: table-row;
+    }
 }
 
 @media (min-width: 620px) {

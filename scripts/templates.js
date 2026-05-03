@@ -102,6 +102,57 @@ function getPokemonDialogTemplate(pokemon, entry) {
 
             <div id="tab-content" class="tab-content"></div>
 
+            <footer class="dialog-footer">
+                <hr>
+
+                <nav>
+                    <button id="arrow-left" class="svg-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m15 18-6-6 6-6" />
+                        </svg>
+                    </button>
+
+                    <button id="arrow-right" class="svg-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </button>
+                </nav>
+            </footer>
+
+        </div>
+    `;
+}
+
+function getFallbackDialogTemplate(pokemon) {
+    return `
+        <div class="dialog-inner">
+
+            <button id="close-dialog-button" class="svg-button close-dialog-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
+            </button>
+
+            <hr>
+
+            <h2>#${pokemon.id} ${pokemon.name}</h2>
+
+            <hr>
+
+            <div>
+                    ${pokemon.sprites?.other["official-artwork"]?.front_default
+                ? `<img class="fallback-image" src="${pokemon.sprites.other["official-artwork"].front_default}" alt="${pokemon.name}">`
+                : ""}
+            </div>
+
+            <hr>
+
+            <p>No more details available</p>
 
             <footer class="dialog-footer">
                 <hr>
@@ -135,7 +186,7 @@ function getInfoTabTemplate(pokemon, entry) {
             <tr><td>Base XP</td><td>${pokemon.base_experience}</td></tr>
             <tr><td>Height</td><td>${(pokemon.height / 10).toFixed(1)} m</td></tr>
             <tr><td>Weight</td><td>${(pokemon.weight / 10).toFixed(1)} kg</td></tr>
-            <tr><td>Abilities</td><td>${getAbilities(pokemon).join(", ")}</td></tr>
+            <tr class="abilities-row"><td>Abilities</td><td>${getAbilities(pokemon).join(",<br>")}</td></tr>
         </table>
     `;
 }

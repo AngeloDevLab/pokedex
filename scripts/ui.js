@@ -195,18 +195,35 @@ function setCurrentDialogPokemon(index) {
 }
 
 async function loadDialogData() {
-    const species = await getPokemonSpecies(currentDialogPokemon.id);
-    currentDialogEntry = getFlavorEntry(species);
+    try {
+        const species = await getPokemonSpecies(currentDialogPokemon.id);
+        currentDialogEntry = getFlavorEntry(species);
+    } catch (err) {
+        console.warn("No species data available");
+        currentDialogEntry = null;
+    }
 }
 
 function renderDialogUI() {
     renderDialogContent();
     applyDialogStyles();
+
+    if (!currentDialogEntry) {
+        showDialog();
+        return;
+    }
+
     initDialog();
 }
 
 function renderDialogContent() {
     const dialog = document.getElementById("pokemon-dialog");
+
+    if (!currentDialogEntry) {
+        dialog.innerHTML = getFallbackDialogTemplate(currentDialogPokemon);
+        return;
+    }
+
     dialog.innerHTML = getPokemonDialogTemplate(
         currentDialogPokemon,
         currentDialogEntry
