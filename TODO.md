@@ -56,10 +56,12 @@
 
 **Ziel:** Kleinigkeiten im bestehenden UI verfeinern, bevor Navigation/Architektur (Session 4) und weitere Features draufgesetzt werden
 
-- [x] Hover-States durchgegangen (Pokémon-Karten, Buttons, Lang-Toggle, Tabs) — konsistent, kein Fix nötig
-- [x] `css/variables.css` angelegt: Farben, Spacing-, Radius- und Transition-Skala zentralisiert (vorher über `standard.css`/`style.css` verstreut hartcodiert)
-- [ ] Farbpalette/Kontraste inhaltlich bewerten (Werte sind jetzt zentral in `variables.css`, aber noch nicht auf Kontrast/Wirkung geprüft — v. a. Stat-Farben `--stat-low`/`--stat-mid`/`--stat-high`, aktuell noch `red`/`orange`/`green`)
+- [x] Hover-States durchgegangen und vereinheitlicht — Buttons hatten 5 verschiedene Hover/Active-Stile (Fill+Scale, nur Fill, nur Border, …); jetzt ein gemeinsames Modell: Hover = Border-Color `--accent-color` + Scale, Active/Selected = nur Border-Color, nie ein Hintergrund-Fill (wichtig wegen weißer Schrift überall — Border-Farbe braucht keinen Kontrast-Check, ein Fill schon)
+- [x] `css/variables.css` angelegt: Farben, Spacing-, Radius- und Transition-Skala zentralisiert (vorher über `standard.css`/`style.css` verstreut hartcodiert); `style.css` komplett in `css/components/*.css` aufgeteilt (buttons, inputs, search, cards, dialog)
+- [x] Farbpalette neu gewählt: 4 Farben (`--primary-color #1d1234`, `--secondary-color #1f1e33`, `--accent-color #5500ff`, `--muted-color #dadada`) statt der alten 3 (+ ungenutzter Rest einer 7er-Palette)
+- [ ] Stat-Farben (`--stat-low`/`--stat-mid`/`--stat-high`, aktuell noch `red`/`orange`/`green`) inhaltlich auf Kontrast/Wirkung prüfen — sind jetzt zentral in `variables.css`, aber noch nicht bewertet
 - [x] Spacing/Abstände im Header gegengecheckt — Bug gefunden + gefixt: `.search-panel` war bei `top: 80px` während Header `6rem` (96px) hoch ist, dadurch 16px Überlappung beim Öffnen; jetzt beide an `var(--header-height)` gekoppelt
+- [x] Bug gefunden + gefixt: Such-Toggle-Button hatte Klasse `search-button` statt `svg-button` und sah dadurch eckig statt rund/konsistent zu den anderen Icon-Buttons aus
 - [ ] Weitere kleinere visuelle Unstimmigkeiten sammeln und fixen
 
 ---

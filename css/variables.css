@@ -1,8 +1,9 @@
 :root {
     /* brand colors */
-    --primary-color: #262d79;
-    --secondary-color: #03045e;
-    --highlight-color: #475492;
+    --primary-color: #1d1234;
+    --secondary-color: #1f1e33;
+    --accent-color: #5500ff;
+    --muted-color: #dadada;
 
     /* neutrals */
     --color-white: #ffffff;
