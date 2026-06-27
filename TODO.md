@@ -56,10 +56,11 @@
 
 **Ziel:** Kleinigkeiten im bestehenden UI verfeinern, bevor Navigation/Architektur (Session 4) und weitere Features draufgesetzt werden
 
-- [ ] Hover-States durchgehen (Pokémon-Karten, Buttons, Lang-Toggle, Tabs) — konsistent?
-- [ ] Farbpalette/Kontraste prüfen (`--primary-color` / `--secondary-color`, Stat-Farben rot/orange/grün)
-- [ ] Spacing/Abstände im Header (Logo, Lang-Toggle, Search) nochmal gegenchecken
-- [ ] Kleinere visuelle Unstimmigkeiten sammeln und fixen
+- [x] Hover-States durchgegangen (Pokémon-Karten, Buttons, Lang-Toggle, Tabs) — konsistent, kein Fix nötig
+- [x] `css/variables.css` angelegt: Farben, Spacing-, Radius- und Transition-Skala zentralisiert (vorher über `standard.css`/`style.css` verstreut hartcodiert)
+- [ ] Farbpalette/Kontraste inhaltlich bewerten (Werte sind jetzt zentral in `variables.css`, aber noch nicht auf Kontrast/Wirkung geprüft — v. a. Stat-Farben `--stat-low`/`--stat-mid`/`--stat-high`, aktuell noch `red`/`orange`/`green`)
+- [x] Spacing/Abstände im Header gegengecheckt — Bug gefunden + gefixt: `.search-panel` war bei `top: 80px` während Header `6rem` (96px) hoch ist, dadurch 16px Überlappung beim Öffnen; jetzt beide an `var(--header-height)` gekoppelt
+- [ ] Weitere kleinere visuelle Unstimmigkeiten sammeln und fixen
 
 ---
 

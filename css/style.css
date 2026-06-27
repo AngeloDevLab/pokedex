@@ -16,24 +16,24 @@
 
 .svg-button {
     margin: 0;
-    padding: 0.5rem;
-    width: 2rem;
-    height: 2rem;
+    padding: var(--space-2);
+    width: var(--space-5);
+    height: var(--space-5);
     border: none;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     background: var(--primary-color);
     border: 1px solid var(--secondary-color);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-base);
 }
 
 .svg-button svg {
-    width: 1rem;
-    height: 1rem;
-    stroke: white;
+    width: var(--space-3);
+    height: var(--space-3);
+    stroke: var(--color-white);
 }
 
 .svg-button:hover {
@@ -68,19 +68,19 @@
 
 .lang-toggle {
     display: flex;
-    gap: 0.25rem;
+    gap: var(--space-1);
 }
 
 .lang-btn {
     margin: 0;
-    padding: 0.25rem 0.5rem;
+    padding: var(--space-1) var(--space-2);
     border: 1px solid var(--secondary-color);
-    border-radius: 0.25rem;
+    border-radius: var(--radius-sm);
     background: var(--primary-color);
-    color: white;
+    color: var(--color-white);
     font-size: 0.75rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-base);
 }
 
 .lang-btn:hover {
@@ -99,18 +99,18 @@
 
 .search-panel {
     position: fixed;
-    top: 80px;
+    top: var(--header-height);
     left: 0;
     width: 100%;
     background: var(--secondary-color);
-    padding: 1rem;
+    padding: var(--space-3);
     z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-3);
     transform: translatex(100%);
     opacity: 0;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    transition: transform var(--transition-slow), opacity var(--transition-slow);
 }
 
 .search-panel.open {
@@ -121,7 +121,7 @@
 .search-content {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 #search-reset {
@@ -132,17 +132,17 @@
 .search-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .search-group input {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
     border: none;
     outline: none;
     background: var(--primary-color);
-    color: white;
-    caret-color: white;
+    color: var(--color-white);
+    caret-color: var(--color-white);
 }
 
 .search-group input:focus {
@@ -150,12 +150,12 @@
 }
 
 .search-group input::placeholder {
-    color: white;
+    color: var(--color-white);
     opacity: 1;
 }
 
 #search-warning {
-    color: #ff6b6b;
+    color: var(--color-danger);
 }
 
 .no-results {
@@ -177,13 +177,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--overlay-loader);
     z-index: 1;
 }
 
 .loader img {
-    width: 6rem;
-    height: 6rem;
+    width: var(--space-7);
+    height: var(--space-7);
     animation: spin 1s linear infinite;
 }
 
@@ -202,7 +202,7 @@
 }
 
 .load-btn {
-    padding: 1rem 2rem;
+    padding: var(--space-3) var(--space-5);
 }
 
 #pokemon-container {
@@ -210,67 +210,67 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: var(--space-3);
 }
 
 .pokemon-card {
     width: 14rem;
     height: 20rem;
-    padding: 1rem;
-    border-radius: 1.5rem;
+    padding: var(--space-3);
+    border-radius: var(--radius-xl);
     text-transform: uppercase;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
     cursor: pointer;
 }
 
 .pokemon-card:hover {
     transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.4);
+    box-shadow: 0 1rem 2rem var(--shadow-card);
 }
 
 .card-inner {
     height: 100%;
-    background: #202020;
-    border-radius: 1rem;
-    padding: 0.5rem;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2);
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    color: white;
+    gap: var(--space-3);
+    color: var(--color-white);
 }
 
 .card-inner>img {
-    width: 6rem;
-    height: 6rem;
-    filter: drop-shadow(0 0 1.2rem rgba(255, 255, 255, 0.3))
+    width: var(--space-7);
+    height: var(--space-7);
+    filter: drop-shadow(0 0 1.2rem var(--glow-color))
 }
 
 .type-icons {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .type-icons img {
-    height: 2rem;
-    width: 2rem;
+    height: var(--space-5);
+    width: var(--space-5);
 }
 
 #pokemon-dialog {
     width: clamp(30rem, 80vw, 60rem);
     height: 80vh;
     border: none;
-    border-radius: 2rem;
-    color: white;
+    border-radius: var(--radius-2xl);
+    color: var(--color-white);
     overflow: hidden;
 }
 
 .dialog-inner {
     height: 100%;
-    background: #202020;
-    border-radius: 1rem;
-    padding: 0.5rem;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -282,7 +282,7 @@
 }
 
 #pokemon-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--overlay-backdrop);
 }
 
 .close-dialog-button {
@@ -300,32 +300,32 @@
 .dialog-hero>img {
     width: clamp(4rem, 15vw, 8rem);
     height: clamp(4rem, 15vw, 8rem);
-    filter: drop-shadow(0 0 1.2rem rgba(255, 255, 255, 0.3))
+    filter: drop-shadow(0 0 1.2rem var(--glow-color))
 }
 
 .fallback-image {
     width: clamp(12rem, 24vw + 1rem, 32rem);
     height: clamp(12rem, 24vw + 1rem, 32rem);
-    filter: drop-shadow(0 0 1.2rem rgba(255, 255, 255, 0.3))
+    filter: drop-shadow(0 0 1.2rem var(--glow-color))
 }
 
 .dialog-tabs {
     display: flex;
     align-items: center;
     align-self: flex-start;
-    gap: 0.25rem;
+    gap: var(--space-1);
 }
 
 .dialog-tabs svg {
-    width: 1rem;
-    height: 1rem;
+    width: var(--space-3);
+    height: var(--space-3);
 }
 
 .tab-btn {
     display: flex;
     align-items: center;
-    padding: 0.5rem;
-    gap: 0.5rem;
+    padding: var(--space-2);
+    gap: var(--space-2);
 }
 
 .tab-btn.active {
@@ -338,14 +338,14 @@
 
 .tab-content {
     width: 100%;
-    margin-top: 0.25rem;
-    padding: 0.5rem;
+    margin-top: var(--space-1);
+    padding: var(--space-2);
     background-color: var(--primary-color);
     border: 1px solid var(--secondary-color);
-    border-radius: 0.5rem;
+    border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: var(--space-1);
 }
 
 .info-table {
@@ -384,7 +384,7 @@
 .stat-row {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: var(--space-1);
 }
 
 .stat-value {
@@ -400,7 +400,7 @@
 .stat-bar {
     width: 100%;
     height: 6px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--stat-track-color);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -409,7 +409,7 @@
     height: 100%;
     background: var(--secondary-color);
     border-radius: 10px;
-    transition: width 0.3s ease;
+    transition: width var(--transition-slow);
 }
 
 .evo-chain {
@@ -417,12 +417,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .evo-chain svg {
-    height: 2rem;
-    width: 2rem;
+    height: var(--space-5);
+    width: var(--space-5);
 }
 
 .evo-item {
@@ -465,10 +465,10 @@
 }
 
 .imprint-content {
-    padding: 1rem 4rem;
+    padding: var(--space-3) var(--space-6);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
 }
 
 .imprint-content h2,

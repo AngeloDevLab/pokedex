@@ -96,10 +96,10 @@ function formatStatName(name) {
 }
 
 function getStatColor(value) {
-    if (value < 50) return "red";
-    if (value < 80) return "orange";
+    if (value < 50) return "var(--stat-low)";
+    if (value < 80) return "var(--stat-mid)";
 
-    return "green";
+    return "var(--stat-high)";
 }
 
 function mapEvolutionToPokemon(names) {
