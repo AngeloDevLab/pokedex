@@ -3,7 +3,7 @@
     border-radius: var(--radius-md);
     border: none;
     outline: none;
-    background: var(--primary-color);
+    background: var(--secondary-color);
     color: var(--color-white);
     caret-color: var(--color-white);
 }

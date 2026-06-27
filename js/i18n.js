@@ -23,9 +23,9 @@ export async function initI18n() {
 async function loadTranslations() {
     try {
         const [en, de, ja] = await Promise.all([
-            fetchJSON("./locales/en.json", "Failed to fetch en locale"),
-            fetchJSON("./locales/de.json", "Failed to fetch de locale"),
-            fetchJSON("./locales/ja.json", "Failed to fetch ja locale")
+            fetchJSON("/locales/en.json", "Failed to fetch en locale"),
+            fetchJSON("/locales/de.json", "Failed to fetch de locale"),
+            fetchJSON("/locales/ja.json", "Failed to fetch ja locale")
         ]);
         translations = { en, de, ja };
     } catch (err) {
