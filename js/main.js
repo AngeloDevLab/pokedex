@@ -1,12 +1,30 @@
+import { initI18n } from './i18n.js';
+import {
+    LOAD_MODE,
+    bindUI,
+    renderPokemonList,
+    updateLoadButtons,
+    showLoader,
+    hideLoader,
+    parseEvolutionChain,
+    mapEvolutionToPokemon
+} from './ui.js';
+import { fetchPokemonList, fetchPokemonDetails, getPokemonSpecies, fetchEvolutionChain } from './api.js';
+import { activeList, currentMode, searchOffset, searchResults, loadSearchBatch, setActiveList } from './search.js';
+
 // ===== CONFIG =====
-const LIMIT = 20;
+export const LIMIT = 20;
 const LOADER_MIN_TIME = 500;
 
 // ===== STATE =====
 let offset = 0;
-let pokemonCache = [];
-let visibleStart = 0;
-let visibleCount = 20;
+export let pokemonCache = [];
+export let visibleStart = 0;
+export let visibleCount = 20;
+
+export function setVisibleStart(value) {
+    visibleStart = value;
+}
 
 // ===== INIT =====
 document.addEventListener("DOMContentLoaded", init);
@@ -29,7 +47,7 @@ async function loadPokemon() {
 
 function handleNewPokemon(details) {
     updatePokemonCache(details);
-    activeList = pokemonCache;
+    setActiveList(pokemonCache);
     updateVisibleRange();
     updateLoadButtons();
     renderPokemonList(activeList);
@@ -46,7 +64,7 @@ function updatePokemonCache(details) {
 }
 
 // ===== PAGINATION =====
-async function loadNext() {
+export async function loadNext() {
     if (LOAD_MODE === "append") {
         await loadMoreData();
     } else {
@@ -74,21 +92,21 @@ async function loadMoreData(nextStart) {
 
 async function loadMoreDefault() {
     await loadPokemon();
-    activeList = pokemonCache;
+    setActiveList(pokemonCache);
 }
 
 async function loadMoreSearch(nextStart) {
     await withLoader(async () => {
         const newDetails = await loadSearchBatch();
         if (!newDetails.length) return;
-        activeList = [...activeList, ...newDetails];
+        setActiveList([...activeList, ...newDetails]);
         if (LOAD_MODE === "pagination") {
             visibleStart = nextStart;
         }
     });
 }
 
-function loadPrevious() {
+export function loadPrevious() {
     visibleStart = Math.max(0, visibleStart - visibleCount);
     updateView();
 }
@@ -110,7 +128,7 @@ function updateVisibleRange() {
     );
 }
 
-function hasMoreData() {
+export function hasMoreData() {
     if (currentMode === "default") {
         return pokemonCache.length % LIMIT === 0;
     }
@@ -127,7 +145,7 @@ function delay(ms) {
 }
 
 // ===== EVOLUTION =====
-async function getEvolutionData(pokemon) {
+export async function getEvolutionData(pokemon) {
     const species = await getPokemonSpecies(pokemon.species.url);
 
     if (!species || !species.evolution_chain) {
@@ -146,7 +164,7 @@ async function getEvolutionData(pokemon) {
 }
 
 // ===== LOADER =====
-async function withLoader(task, minTime = LOADER_MIN_TIME) {
+export async function withLoader(task, minTime = LOADER_MIN_TIME) {
     showLoader();
     const start = Date.now();
     try {

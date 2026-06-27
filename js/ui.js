@@ -1,3 +1,9 @@
+import { activeList, currentMode, handleSearchInput, handleTypeInput, resetSearch } from './search.js';
+import { visibleStart, visibleCount, hasMoreData, loadNext, loadPrevious, pokemonCache } from './main.js';
+import { openDialog, closeDialog, currentIndex, renderInfoTab, renderStatsTab, renderEvoTab, renderArtworkTab } from './dialog.js';
+import { t } from './i18n.js';
+import { getPokemonCardTemplate } from './templates.js';
+
 // ===== CONFIG =====
 const TYPE_COLORS = {
     fire: "#e62829",
@@ -20,7 +26,11 @@ const TYPE_COLORS = {
     flying: "#81b9ef"
 };
 
-const TAB_RENDERER = {
+// dialog.js imports TAB_RENDERER back from here, while this object references
+// dialog.js's own render*Tab functions — a circular import, but a safe one:
+// function declarations are hoisted, so they're already bound when either
+// module's body runs, regardless of which side of the cycle evaluates first.
+export const TAB_RENDERER = {
     flavor: renderInfoTab,
     stats: renderStatsTab,
     evo: renderEvoTab,
@@ -45,16 +55,13 @@ const STAT_NAME_KEY = {
     speed: "stats.speed"
 };
 
-const LOAD_MODE = "append"; // "append" | "pagination"
+export const LOAD_MODE = "append"; // "append" | "pagination"
 
 // ===== STATE =====
-let currentIndex = 0;
-let currentDialogPokemon = null;
-let currentDialogEntry = null;
 let searchOpen = false;
 
 // ===== DATA HELPERS =====
-function getFlavorEntry(species) {
+export function getFlavorEntry(species) {
     const entry = species.flavor_text_entries
         .find(e => e.language.name === "en");
     if (!entry) return getDefaultFlavor();
@@ -78,7 +85,7 @@ function cleanFlavorText(text) {
         .replace(/\n/g, " ");
 }
 
-function prepareStats(pokemon) {
+export function prepareStats(pokemon) {
     return pokemon.stats.map(stat => {
         const value = stat.base_stat;
 
@@ -102,7 +109,7 @@ function getStatColor(value) {
     return "var(--stat-high)";
 }
 
-function mapEvolutionToPokemon(names) {
+export function mapEvolutionToPokemon(names) {
     return names.map(name => {
         const pkm = activeList.find(p => p.name === name)
             || pokemonCache.find(p => p.name === name);
@@ -117,7 +124,7 @@ function mapEvolutionToPokemon(names) {
     });
 }
 
-function parseEvolutionChain(chain) {
+export function parseEvolutionChain(chain) {
     const result = [];
     let current = chain;
 
@@ -129,7 +136,7 @@ function parseEvolutionChain(chain) {
     return result;
 }
 
-function getAbilities(pokemon) {
+export function getAbilities(pokemon) {
     return pokemon.abilities.map(a => {
         const name = a.ability.name;
 
@@ -140,11 +147,11 @@ function getAbilities(pokemon) {
 }
 
 // ===== UI HELPERS =====
-function getTypes(pokemon) {
+export function getTypes(pokemon) {
     return pokemon.types.map(t => t.type.name);
 }
 
-function getGradient(types) {
+export function getGradient(types) {
     const colors = types.map(t => TYPE_COLORS[t]);
 
     return colors.length === 1
@@ -152,26 +159,26 @@ function getGradient(types) {
         : `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
 }
 
-function getTypeIcon(type) {
+export function getTypeIcon(type) {
     return `./assets/icons/types/${type}.png`;
 }
 
-function getTabContent() {
+export function getTabContent() {
     return document.getElementById("tab-content");
 }
 
-function showLoader() {
+export function showLoader() {
     const loader = document.getElementById("loader");
     loader.classList.remove("hidden");
 }
 
-function hideLoader() {
+export function hideLoader() {
     const loader = document.getElementById("loader");
     loader.classList.add("hidden");
 }
 
 // ===== RENDER =====
-function renderPokemonList(list = []) {
+export function renderPokemonList(list = []) {
     const container = document.getElementById("pokemon-container");
     container.classList.remove("centered");
 
@@ -211,7 +218,7 @@ function createPokemonData(pokemon) {
 }
 
 // ===== EVENTS =====
-function bindUI() {
+export function bindUI() {
     bindOpenDialog();
     bindCloseDialog();
     bindLoadMore();
@@ -302,7 +309,7 @@ function bindLoadPrevious() {
     btn.addEventListener("click", loadPrevious);
 }
 
-function updateLoadButtons() {
+export function updateLoadButtons() {
     const prevBtn = document.getElementById("load-previous-btn");
     const nextBtn = document.getElementById("load-more-btn");
     if (!prevBtn || !nextBtn) return;
@@ -358,7 +365,7 @@ function toggleSearch() {
     }
 }
 
-function showSearchWarning(show) {
+export function showSearchWarning(show) {
     const warning = document.getElementById("search-warning");
     warning.classList.toggle("hidden", !show);
 }
