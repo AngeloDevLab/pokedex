@@ -90,10 +90,27 @@
 
 ---
 
-## Session 5 — Statuswert-Rechner (Stats Tab)
+## Zwischenschritt — Muster für Pokémon-Tool-Seiten
 
-**Ziel:** Den bestehenden Stats-Tab zum vollständigen IV/EV/Nature-Rechner ausbauen
+**Kurswechsel (nach Session 4 entschieden):** Der Dialog bekommt **keine weiteren neuen Tabs** mehr (bleibt bei Info/Stats/Evolution/Artworks). Alles, was ursprünglich als neuer Dialog-Tab geplant war (Sessions 5, 6, 7, 9, 11 — und tendenziell auch 12, 14, siehe dort), wird stattdessen eine **eigene Seite**, verlinkt aus der Sidebar neben „Search". Hintergrund: diese Inhalte sind eher eigenständige Werkzeuge/Referenzen als Detailinfos zum gerade offenen Pokémon, und der Dialog würde mit 6+ Tabs unübersichtlich.
 
+**Gemeinsames Muster für jede dieser Seiten:**
+- Eigene Pokémon-Suche/Auswahl direkt auf der Seite (wie schon für `calc.html`/Session 8 geplant)
+- Zusätzlich aus dem Dialog heraus verlinkt (Button/Icon bei der jeweiligen Pokémon-Karte), mit vorausgefülltem Pokémon
+- Sonderfälle (Session 12 Regionalformen, Session 14 Fundorte) sind aktuell auch als eigene Seite vorgesehen, aber das ist nicht in Stein gemeißelt — wenn sich bei der jeweiligen Session ein Dialog-Tab doch sinnvoller anfühlt, können wir das dann nochmal anders entscheiden.
+
+**Vorarbeit — Cache für die Pokémon-Liste:** Jede dieser Seiten braucht ihre eigene Pokémon-Suche, die intern `fetchAllPokemonList()` nutzt (die große ~1300-Einträge-Liste). Aktuell wird die bei jedem Seitenwechsel neu geladen, weil der In-Memory-Cache (`allPokemonList` in `search.js`) nicht über Seitenwechsel hinweg besteht. Bevor mehrere neue Seiten das brauchen:
+- [ ] `localStorage`-Cache für die Liste aus `fetchAllPokemonList()` (nur `{name, url}`-Paare, ~130 KB — passt locker ins Limit)
+- [ ] Bewusst **nicht** die vollen Pokémon-Detail-Objekte cachen (würden bei ~1300 Stück mehrere MB werden, sprengt das übliche 5–10 MB-Limit) — die sind ohnehin schon über den normalen Browser-HTTP-Cache bei wiederholten Requests an dieselbe URL abgedeckt
+- [ ] Bei Bedarf später: falls doch mehr Detail-Daten dauerhaft gecacht werden sollen, dafür IndexedDB statt `localStorage` nutzen (höheres Quota, dafür gemacht) — nicht jetzt nötig
+
+---
+
+## Session 5 — Statuswert-Rechner (eigene Seite)
+
+**Ziel:** Eigene Seite `pages/stats-calc.html` für den vollständigen IV/EV/Nature-Rechner (siehe Zwischenschritt oben — kein Dialog-Tab mehr)
+
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] IV-Eingabefelder (0–31, Standard: 31) für alle 6 Stats
 - [ ] EV-Eingabefelder (0–252, Standard: 0) mit Live-Summen-Counter (≤ 510)
 - [ ] Nature-Dropdown (alle 25 Wesen, positiver Stat grün / negativer rot markiert)
@@ -108,11 +125,11 @@
 
 ---
 
-## Session 6 — Typ-Matchup Tab
+## Session 6 — Typ-Matchup (eigene Seite)
 
-**Ziel:** Im Dialog auf einen Blick sehen welche Typen wie viel Schaden machen
+**Ziel:** Eigene Seite `pages/matchup.html` — auf einen Blick sehen welche Typen wie viel Schaden gegen ein gewähltes Pokémon machen
 
-- [ ] Neuer Tab im Dialog: „Matchup"
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] Tabelle: alle 18 Typen mit Schadens-Multiplikator gegen dieses Pokémon
   - 4× / 2× / 1× / 0,5× / 0,25× / 0× (Immunität)
 - [ ] Dual-Typ-Berechnung automatisch (z.B. Wasser/Boden = Gras trifft 4×)
@@ -121,17 +138,18 @@
 
 ---
 
-## Session 7 — Learnset Tab
+## Session 7 — Lernset (eigene Seite)
 
-**Ziel:** Alle Attacken die ein Pokémon lernen kann übersichtlich anzeigen
+**Ziel:** Eigene Seite `pages/learnset.html` — alle Attacken, die ein gewähltes Pokémon lernen kann
 
-- [ ] Neuer Tab im Dialog: „Moves"
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] Anzeige nach Lernmethode gruppiert: Level-up / TM / Egg Move / Tutor
 - [ ] Level-up: Level + Move-Name + Typ-Icon + Kategorie-Icon
 - [ ] Egg Moves farblich hervorheben (competitive relevant)
 - [ ] Move-Details on click: Power, Accuracy, PP, Kategorie, Effekt-Text
 - [ ] Move-Namen sprachabhängig (i18n aus Session 2 nutzen)
 - [ ] Datenquelle: PokéAPI `/pokemon/{id}` liefert komplettes Learnset
+- [ ] Abgrenzung zu Session 16 (`moves.html`): diese Seite zeigt das Lernset **eines gewählten Pokémon**, Session 16 ist die allgemeine Move-Datenbank ohne Pokémon-Bezug
 
 ---
 
@@ -150,15 +168,15 @@
 
 ---
 
-## Session 9 — Breeding Guide
+## Session 9 — Breeding Guide (eigene Seite)
 
-**Ziel:** Alles was man für kompetitive Zucht wissen muss, direkt am Pokémon
+**Ziel:** Alles was man für kompetitive Zucht wissen muss — eigene Seite `pages/breeding.html`, kein Dialog-Tab mehr (siehe Zwischenschritt vor Session 5)
 
-- [ ] Neuer Tab im Dialog: „Breeding"
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] Ei-Gruppe(n) anzeigen (mit welchen Pokémon kann es züchten)
 - [ ] Egg Moves Liste (aus Learnset, Lernmethode `egg`)
 - [ ] Für jeden Egg Move: welche anderen Pokémon vererben ihn (Zucht-Kette)
-- [ ] Zucht-Guide Seite `breeding.html`:
+- [ ] Allgemeiner Teil (Pokémon-unabhängig, gleiche Seite):
   - Schritt-für-Schritt IV-Zucht-Anleitung (Destino-Knoten, Items)
   - Nature-Tabelle: alle 25 Wesen mit +/− Stats
   - Hidden Ability: wie bekommt man sie (Max-Raid, Ability Patch)
@@ -178,11 +196,11 @@
 
 ---
 
-## Session 11 — Competitive Tab (Smogon)
+## Session 11 — Competitive (eigene Seite)
 
-**Ziel:** Smogon-Tier und Beispiel-Sets direkt am Pokémon anzeigen
+**Ziel:** Eigene Seite `pages/competitive.html` — Smogon-Tier und Beispiel-Sets zu einem gewählten Pokémon (kein Dialog-Tab mehr, siehe Zwischenschritt vor Session 5)
 
-- [ ] Neuer Tab im Dialog: „Competitive"
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] Smogon-Tier anzeigen (OU / UU / RU / NU / Ubers / NFE / LC)
   - Datenquelle: eigene `smogon-tiers.json` (manuell gepflegt oder geskrapt)
 - [ ] 1–2 Beispiel-Sets im Showdown-Export-Format:
@@ -193,11 +211,14 @@
 
 ---
 
-## Session 12 — Regionale Formen & Megas
+## Session 12 — Regionale Formen & Megas (eigene Seite, vorläufig)
 
-**Ziel:** Alola/Galar/Hisui/Paldea-Formen und Mega-Entwicklungen im Dialog
+**Ziel:** Alola/Galar/Hisui/Paldea-Formen und Mega-Entwicklungen zu einem gewählten Pokémon
 
-- [ ] Varianten-Tabs im Dialog wenn Formen vorhanden (z.B. „Alola" / „Galar")
+> Vorläufig als eigene Seite `pages/forms.html` eingeplant, analog zu den anderen Sessions oben. Da das hier am stärksten an "genau dieses eine Pokémon gerade offen" hängt, nochmal neu bewerten, wenn diese Session tatsächlich anfängt — ein Dialog-Tab könnte hier am Ende doch die bessere Wahl sein.
+
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus (oder doch Dialog-Tab — siehe Hinweis oben)
+- [ ] Varianten-Auswahl wenn Formen vorhanden (z.B. „Alola" / „Galar")
   - PokéAPI: eigene Einträge wie `rattata-alola`, `mewtwo-mega-x`
 - [ ] Stats, Typ, Ability der Form korrekt laden und anzeigen
 - [ ] Mega-Entwicklungen: Stats-Unterschied zur Basis-Form visualisieren
@@ -219,14 +240,14 @@
 
 ---
 
-## Session 14 — Fundorte & Shiny Hunting
+## Session 14 — Fundorte & Shiny Hunting (eigene Seite)
 
-**Ziel:** Wo finde ich dieses Pokémon, wie shinye ich es effizient
+**Ziel:** Wo finde ich dieses Pokémon, wie shinye ich es effizient — eigene Seite `pages/shiny.html`, kein Dialog-Tab mehr (Fundorte-Teil wandert mit dazu statt eigener Dialog-Tab „Finden", siehe Zwischenschritt vor Session 5)
 
-- [ ] Neuer Tab im Dialog: „Finden"
-  - Fundorte je Spielversion (PokéAPI `/pokemon/{id}/encounters`)
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [ ] Fundorte je Spielversion (PokéAPI `/pokemon/{id}/encounters`)
   - Hinweis wenn nur über Zucht / Trade / Event
-- [ ] Shiny Hunting Seite `shiny.html`:
+- [ ] Allgemeiner Teil (Pokémon-unabhängig, gleiche Seite):
   - Methoden-Übersicht je Generation (Masuda, Radar-Kette, DexNav, Max-Raids, Massenausbrüche)
   - Wahrscheinlichkeits-Tabelle (1/4096 Basis, mit Shiny Charm, mit Methode)
   - Für jedes Pokémon: effizienteste Methode
