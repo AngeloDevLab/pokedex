@@ -42,11 +42,29 @@
     transition: all var(--transition-base);
 }
 
+.lang-btn:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
 .lang-btn.active {
     border-color: var(--accent-color);
     font-weight: bold;
 }
 
 .load-btn {
-    padding: var(--space-3) var(--space-5);
+    margin: 0 auto;
+    padding: var(--space-1) var(--space-2);
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--radius-sm);
+    background: var(--secondary-color);
+    color: var(--color-white);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.load-btn:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
 }

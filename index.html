@@ -11,10 +11,9 @@
     <link rel="stylesheet" href="./css/variables.css">
     <link rel="stylesheet" href="./css/standard.css">
     <link rel="stylesheet" href="./css/components/buttons.css">
-    <link rel="stylesheet" href="./css/components/inputs.css">
-    <link rel="stylesheet" href="./css/components/search.css">
     <link rel="stylesheet" href="./css/components/cards.css">
     <link rel="stylesheet" href="./css/components/dialog.css">
+    <link rel="stylesheet" href="./css/components/nav.css">
     <link rel="stylesheet" href="./css/fonts.css">
     <link rel="stylesheet" href="./css/responsive.css">
 
@@ -31,78 +30,27 @@
                 <p class="hide-mobile">Pokédex</p>
             </div>
 
-            <div class="lang-toggle" id="lang-toggle">
-                <button type="button" class="lang-btn" data-lang="en">EN</button>
-                <button type="button" class="lang-btn" data-lang="de">DE</button>
-                <button type="button" class="lang-btn" data-lang="ja">JA</button>
-            </div>
+            <button id="nav-toggle" class="svg-button">
 
-            <div class="searching-content">
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 5h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 19h16" />
+                </svg>
 
-                <p data-i18n="common.search">Search</p>
+                <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
 
-                <button id="search-toggle" class="svg-button">
-
-                    <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="m21 21-4.34-4.34" />
-                        <circle cx="11" cy="11" r="8" />
-                    </svg>
-
-                    <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M18 6 6 18" />
-                        <path d="m6 6 12 12" />
-                    </svg>
-
-                </button>
-            </div>
-
+            </button>
         </div>
     </header>
 
-    <div class="search-panel" id="search-panel">
-
-        <div class="search-content max-content">
-            <div class="search-group">
-                <label for="search-name" data-i18n="searchPanel.nameLabel">Search by Name</label>
-                <input type="search" id="search-name" data-i18n-placeholder="searchPanel.namePlaceholder" placeholder="Enter name...">
-                <small id="search-warning" class="hidden" data-i18n="searchPanel.warning">
-                    min. 3 characters
-                </small>
-            </div>
-
-            <div class="search-group">
-                <label for="filter-type" data-i18n="searchPanel.typeLabel">Filter by Type</label>
-                <input list="type-list" id="filter-type" data-i18n-placeholder="searchPanel.typePlaceholder" placeholder="Select type...">
-
-                <datalist id="type-list">
-                    <option value="fire">
-                    <option value="water">
-                    <option value="grass">
-                    <option value="electric">
-                    <option value="ice">
-                    <option value="fighting">
-                    <option value="poison">
-                    <option value="ground">
-                    <option value="flying">
-                    <option value="psychic">
-                    <option value="bug">
-                    <option value="rock">
-                    <option value="ghost">
-                    <option value="dragon">
-                    <option value="dark">
-                    <option value="steel">
-                    <option value="fairy">
-                </datalist>
-            </div>
-
-            <button id="search-reset" data-i18n="searchPanel.clear">Clear Search</button>
-        </div>
-
-
-    </div>
+    <div class="sidebar" id="sidebar"></div>
 
     <main>
 

@@ -40,21 +40,24 @@ The focus was on understanding how to structure a frontend application without f
 
 ```
 index.html          → home page (stays at root — required by GitHub Pages)
-pages/               → secondary pages (e.g. imprint.html)
+pages/               → secondary pages (search.html, imprint.html, ...)
 js/
   api.js             → API calls and data fetching
-  main.js            → application state and core logic (pagination, evolution loading)
+  pagination.js      → shared pagination/loading state (used by index.html and search.html)
+  main.js            → index.html entry point (default browse view bootstrap)
+  search-page.js     → pages/search.html entry point
   search.js          → search and type-filter logic
+  nav.js             → burger + sidebar nav shell (shared across pages)
   templates.js        → HTML template strings for cards/dialog
   dialog.js          → Pokémon detail dialog logic
   ui.js              → rendering and DOM interactions
   i18n.js            → translation loading, language switching
-css/                 → variables.css (design tokens), standard.css (base/reset), components/ (buttons, inputs, search, cards, dialog), fonts.css, responsive.css
+css/                 → variables.css (design tokens), standard.css (base/reset), components/ (buttons, inputs, search, cards, dialog, nav), fonts.css, responsive.css
 locales/             → UI translation strings (en.json, de.json, ja.json)
 assets/              → images, icons, fonts
 ```
 
-Plain `<script>` tags (no bundler, no ES modules yet) — load order in `index.html` matters, since the files share state via global functions/variables rather than `import`/`export`.
+ES Modules (`<script type="module">`) — each page loads a single entry script (`main.js` or `search-page.js`), which pulls in everything else via `import`/`export`. Shared modules with cross-page side effects (page bootstrapping) are deliberately kept side-effect-free at the module level, since importing a module for its exports also runs its top-level code.
 
 ---
 

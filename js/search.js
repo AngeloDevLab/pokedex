@@ -1,5 +1,5 @@
 import { fetchAllPokemonList, fetchPokemonByType, fetchPokemonByUrl } from './api.js';
-import { LIMIT, pokemonCache, visibleCount, withLoader, setVisibleStart } from './main.js';
+import { LIMIT, pokemonCache, visibleCount, withLoader, setVisibleStart } from './pagination.js';
 import { renderPokemonList, updateLoadButtons, showSearchWarning } from './ui.js';
 import { getNoResultTemplate } from './templates.js';
 

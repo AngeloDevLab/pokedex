@@ -1,6 +1,6 @@
 import { activeList } from './search.js';
 import { getPokemonSpecies } from './api.js';
-import { getEvolutionData } from './main.js';
+import { getEvolutionData } from './pagination.js';
 import {
     getPokemonDialogTemplate,
     getFallbackDialogTemplate,

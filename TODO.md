@@ -77,11 +77,16 @@
 - [x] Umstieg auf ES Modules (`<script type="module">`, `import`/`export` statt globaler Funktionen/Variablen) — `index.html` lädt jetzt nur noch `js/main.js`, der Rest wird über den Import-Graphen automatisch nachgeladen. Zwei echte Blocker dabei gefunden und behoben: `currentIndex`/`currentDialogPokemon`/`currentDialogEntry` wurden aus `ui.js` nach `dialog.js` verschoben (waren dort eigentlich beheimatet, wurden aber von einer anderen Datei reassigned, was ES Modules nicht erlaubt); `visibleStart` bekam einen `setVisibleStart()`-Setter in `main.js`, weil `search.js` es von außen reassigned hat. Zwei verbleibende zirkuläre Imports (`ui.js`↔`dialog.js`, `ui.js`↔`search.js`) sind unkritisch, da nur Funktions-Deklarationen (gehoistet) betroffen sind und alle Zugriffe erst innerhalb von Funktionsaufrufen passieren, nie auf Modul-Ebene — mit `node --check` und einem Lade-Test des kompletten Modul-Graphen verifiziert.
 
 ### Navigation-Shell
-- [ ] Burger-Menü (Mobile) / Sidebar (Desktop) für Navigation zwischen Features
-- [ ] Default-Ansicht bleibt der bestehende Pokémon-Grid-Scroll
-- [ ] Menü verlinkt zu künftigen Seiten (`pages/calc.html`, `pages/items.html`, `pages/moves.html`, …) sobald sie existieren
-- [ ] Language-Toggle ins Menü verschieben (Header bleibt schlank: Logo + Menü-Toggle + Search)
-- [ ] Header-Layout entsprechend aufräumen
+- [x] Burger-Menü (`#nav-toggle`) öffnet eine Sidebar, die von rechts reinfliegt (`js/nav.js` + `css/components/nav.css`) — gleiches Verhalten auf Mobile, nur volle Breite statt 320px (Media-Query in `responsive.css`)
+- [x] Sidebar wird zur Laufzeit per JS in einen `<div id="sidebar">`-Platzhalter injiziert (gleiches Template-String-Muster wie `templates.js`), statt das Markup in jeder Seite zu duplizieren
+- [x] Default-Ansicht bleibt der bestehende Pokémon-Grid-Scroll
+- [x] Menü verlinkt zu `pages/search.html` (siehe unten); weitere Seiten (`calc.html`, `items.html`, …) werden erst eingetragen, wenn sie existieren — keine toten Links auf Vorrat
+- [x] Language-Toggle ins Menü verschoben
+- [x] Header aufgeräumt: nur noch Logo + Burger-Toggle (Search ist komplett raus, siehe unten)
+- [x] **Suche wurde zur eigenen Seite** (`pages/search.html`, eigener Entry-Point `js/search-page.js`) statt nur ins Menü verschoben — Header brauchte dafür keinen Such-Button/Such-Panel mehr. `js/ui.js`s monolithisches `bindUI()`/`bindSearchUI()` wurden dafür in einzelne `bind*`-Funktionen aufgeteilt, die jede Seite selbst zusammensetzt (index.html: Dialog + Pagination + Nav-Shell; search.html: zusätzlich `bindSearchInputs()`, kein automatischer Default-Load)
+- [x] Bug beim Umbau gefunden + gefixt: `js/main.js`s `DOMContentLoaded`-Bootstrap (inkl. `loadPokemon()` für die Default-Browse-Ansicht) wurde transitiv mitgeladen, sobald `pages/search.html` über `ui.js` irgendwas aus `main.js` importierte — die geteilte Pagination-Logik (`LIMIT`, `pokemonCache`, `loadNext`/`loadPrevious`, `getEvolutionData`, `withLoader`, …) wanderte deshalb in ein neues, seiteneffektfreies `js/pagination.js`; `main.js` ist jetzt nur noch der schlanke Entry-Point für index.html
+- [x] Basis-`button`-Regel in `standard.css` komplett entfernt — jede Button-Klasse (`svg-button`, `lang-btn`, `load-btn`, `tab-btn`) hat jetzt ihr eigenes vollständiges Regelwerk inkl. eigenem `:hover` (Border-Color `--accent-color` + `scale(1.05)`, gleiches Muster wie bisher), da nichts mehr geerbt wird
+- [x] Bug gefunden + gefixt: `getTypeIcon()` in `js/ui.js` baute einen seitenrelativen Pfad (`./assets/...`) — auf `pages/search.html` zeigte das auf `pages/assets/...` (404). Jetzt root-relativ (`/assets/...`), funktioniert unabhängig von der Seitentiefe (sicher, weil die Seite an der Domain-Root deployed wird)
 
 ---
 
@@ -231,6 +236,8 @@
 ## Session 15 — Suche & Filter erweitern
 
 **Ziel:** Suche um sinnvolle Parameter ergänzen
+
+> Hinweis: Die Suche ist bereits in Session 4 auf eine eigene Seite (`pages/search.html`) umgezogen, vorgezogen im Zuge des Nav-Shell-Umbaus. Die Punkte hier sind die noch offenen Erweiterungen.
 
 - [ ] Filter nach Generation (Gen 1–9) — PokéAPI `/generation/{id}`
 - [ ] Filter nach Ei-Gruppe
