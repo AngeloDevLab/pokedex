@@ -1,21 +1,21 @@
 # Pokémon Guide – Roadmap
 
-**Ziel:** pokedex.guide — ein vollständiger, competitive-tauglicher Pokémon Guide  
-**Hosting:** GitHub Pages + Custom Domain (pokedex.guide)  
+**Ziel:** pokedex.angelodevelopment.de — ein vollständiger, competitive-tauglicher Pokémon Guide  
+**Hosting:** GitHub Pages + Custom Domain (pokedex.angelodevelopment.de)  
 **Stack:** Vanilla JS, kein Framework, kein Build-Tool
 
 ---
 
 ## Session 1 — Deployment
 
-**Ziel:** Seite live schalten unter pokedex.guide
+**Ziel:** Seite live schalten unter pokedex.angelodevelopment.de
 
 - [x] GitHub Pages aktivieren (Branch: `main`, Root `/`)
-- [x] `CNAME`-Datei ins Repo (Inhalt: `pokedex.guide`)
+- [x] `CNAME`-Datei ins Repo (Inhalt: `pokedex.angelodevelopment.de`)
 - [x] Custom Domain in GitHub Repo-Settings eintragen
 - [x] DNS beim Registrar konfigurieren (A-Records auf GitHub IPs)
 - [x] HTTPS erzwingen (GitHub-Setting)
-- [x] Testen: pokedex.guide lädt korrekt
+- [x] Testen: pokedex.angelodevelopment.de lädt korrekt
 
 ---
 
@@ -52,7 +52,37 @@
 
 ---
 
-## Session 3 — Statuswert-Rechner (Stats Tab)
+## Session 3 — UI Polish (Zwischenschritt)
+
+**Ziel:** Kleinigkeiten im bestehenden UI verfeinern, bevor Navigation/Architektur (Session 4) und weitere Features draufgesetzt werden
+
+- [ ] Hover-States durchgehen (Pokémon-Karten, Buttons, Lang-Toggle, Tabs) — konsistent?
+- [ ] Farbpalette/Kontraste prüfen (`--primary-color` / `--secondary-color`, Stat-Farben rot/orange/grün)
+- [ ] Spacing/Abstände im Header (Logo, Lang-Toggle, Search) nochmal gegenchecken
+- [ ] Kleinere visuelle Unstimmigkeiten sammeln und fixen
+
+---
+
+## Session 4 — Navigation & Architektur
+
+**Ziel:** Grundgerüst schaffen, bevor weitere Seiten/Tabs (Sessions 5+) den Header/die Codebasis überladen
+
+### Architektur-Entscheidungen
+- [x] MPA bestätigt (passt zur bestehenden Roadmap — `calc.html`, `items.html`, etc. sind bereits als eigene Seiten geplant — sowie zu „kein Build-Tool" + GitHub-Pages-Hosting)
+- [ ] Umstieg auf ES Modules (`<script type="module">`, `import`/`export` statt globaler Funktionen/Variablen)
+  - Vermeidet Namespace-Kollisionen bei wachsender Dateizahl
+  - Erfordert lokalen Server zum Testen (kein `file://`, wie schon bei `locales/*.json`)
+
+### Navigation-Shell
+- [ ] Burger-Menü (Mobile) / Sidebar (Desktop) für Navigation zwischen Features
+- [ ] Default-Ansicht bleibt der bestehende Pokémon-Grid-Scroll
+- [ ] Menü verlinkt zu künftigen Seiten (`calc.html`, `items.html`, `moves.html`, …) sobald sie existieren
+- [ ] Language-Toggle ins Menü verschieben (Header bleibt schlank: Logo + Menü-Toggle + Search)
+- [ ] Header-Layout entsprechend aufräumen
+
+---
+
+## Session 5 — Statuswert-Rechner (Stats Tab)
 
 **Ziel:** Den bestehenden Stats-Tab zum vollständigen IV/EV/Nature-Rechner ausbauen
 
@@ -70,7 +100,7 @@
 
 ---
 
-## Session 4 — Typ-Matchup Tab
+## Session 6 — Typ-Matchup Tab
 
 **Ziel:** Im Dialog auf einen Blick sehen welche Typen wie viel Schaden machen
 
@@ -83,7 +113,7 @@
 
 ---
 
-## Session 5 — Learnset Tab
+## Session 7 — Learnset Tab
 
 **Ziel:** Alle Attacken die ein Pokémon lernen kann übersichtlich anzeigen
 
@@ -97,7 +127,7 @@
 
 ---
 
-## Session 6 — Schadensrechner
+## Session 8 — Schadensrechner
 
 **Ziel:** Eigene Seite `calc.html` + Integration im Dialog als Schnell-Check
 
@@ -112,7 +142,7 @@
 
 ---
 
-## Session 7 — Breeding Guide
+## Session 9 — Breeding Guide
 
 **Ziel:** Alles was man für kompetitive Zucht wissen muss, direkt am Pokémon
 
@@ -128,7 +158,7 @@
 
 ---
 
-## Session 8 — Speed-Tier-Übersicht
+## Session 10 — Speed-Tier-Übersicht
 
 **Ziel:** Seite `speed-tiers.html` — wer überholt wen beim Teambuilding
 
@@ -140,7 +170,7 @@
 
 ---
 
-## Session 9 — Competitive Tab (Smogon)
+## Session 11 — Competitive Tab (Smogon)
 
 **Ziel:** Smogon-Tier und Beispiel-Sets direkt am Pokémon anzeigen
 
@@ -155,7 +185,7 @@
 
 ---
 
-## Session 10 — Regionale Formen & Megas
+## Session 12 — Regionale Formen & Megas
 
 **Ziel:** Alola/Galar/Hisui/Paldea-Formen und Mega-Entwicklungen im Dialog
 
@@ -168,7 +198,7 @@
 
 ---
 
-## Session 11 — Items-Übersicht
+## Session 13 — Items-Übersicht
 
 **Ziel:** Seite `items.html` mit Fokus auf competitive relevante Items
 
@@ -181,7 +211,7 @@
 
 ---
 
-## Session 12 — Fundorte & Shiny Hunting
+## Session 14 — Fundorte & Shiny Hunting
 
 **Ziel:** Wo finde ich dieses Pokémon, wie shinye ich es effizient
 
@@ -195,7 +225,7 @@
 
 ---
 
-## Session 13 — Suche & Filter erweitern
+## Session 15 — Suche & Filter erweitern
 
 **Ziel:** Suche um sinnvolle Parameter ergänzen
 
@@ -207,7 +237,7 @@
 
 ---
 
-## Session 14 — Moves & Abilities Seiten
+## Session 16 — Moves & Abilities Seiten
 
 **Ziel:** Vollständige Referenz für Moves und Abilities
 
@@ -219,7 +249,7 @@
 
 ---
 
-## Session 15 — Guide-Inhalte (VGC & Wetter-Teams)
+## Session 17 — Guide-Inhalte (VGC & Wetter-Teams)
 
 **Ziel:** Redaktionelle Guide-Inhalte für Einsteiger ins Competitive
 
@@ -233,7 +263,7 @@
 
 ---
 
-## Session 16 — UI/UX Polish
+## Session 18 — UI/UX Polish (Feinschliff)
 
 **Ziel:** Feinschliff, bevor der Guide als „fertig" gilt
 
@@ -242,7 +272,6 @@
 - [ ] Mobile: Swipe-Geste im Dialog (links/rechts)
 - [ ] Pokémon-Cry abspielen (PokéAPI liefert `.ogg`)
 - [ ] Favoriten-Liste (LocalStorage)
-- [ ] Navigation zwischen allen Seiten (Header-Menü)
 
 ---
 
@@ -259,7 +288,7 @@
 | Regionale Formen / Megas | PokéAPI (eigene Einträge, z.B. `rattata-alola`) |
 | Typ-Matchup-Matrix | Statisch als JS-Objekt |
 | Nature-Tabelle | Statisch (25 Wesen, unveränderlich) |
-| UI-Strings (EN/DE/JA) | `locales/*.json` — JA initial via DeepL |
+| UI-Strings (EN/DE/JA) | `locales/*.json` — JA initial manuell übersetzt |
 | Smogon Tiers | Eigene `smogon-tiers.json` |
 | Competitive Sets / Counter | Eigene `sets.json` / `counters.json` |
 | Shiny-Wahrscheinlichkeiten | Statisch je Generation |
