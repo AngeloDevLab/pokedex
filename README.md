@@ -49,7 +49,7 @@ js/
   dialog.js          → Pokémon detail dialog logic
   ui.js              → rendering and DOM interactions
   i18n.js            → translation loading, language switching
-css/                 → stylesheets (standard, layout, fonts, responsive)
+css/                 → variables.css (design tokens), standard.css (base/reset), components/ (buttons, inputs, search, cards, dialog), fonts.css, responsive.css
 locales/             → UI translation strings (en.json, de.json, ja.json)
 assets/              → images, icons, fonts
 ```
