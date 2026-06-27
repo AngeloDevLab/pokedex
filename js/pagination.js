@@ -1,24 +1,38 @@
+// Pagination/loading state shared across pages (index.html's default browse
+// view and pages/search.html's search results both page through their data
+// the same way). Deliberately has no top-level side effects (no
+// DOMContentLoaded listener, no init logic) — main.js and search-page.js both
+// import from here, and a side effect at module-evaluation time would run on
+// every page that transitively imports this file, not just its "owner".
+
+import {
+    LOAD_MODE,
+    renderPokemonList,
+    updateLoadButtons,
+    showLoader,
+    hideLoader,
+    parseEvolutionChain,
+    mapEvolutionToPokemon
+} from './ui.js';
+import { fetchPokemonList, fetchPokemonDetails, getPokemonSpecies, fetchEvolutionChain } from './api.js';
+import { activeList, currentMode, searchOffset, searchResults, loadSearchBatch, setActiveList } from './search.js';
+
 // ===== CONFIG =====
-const LIMIT = 20;
+export const LIMIT = 20;
 const LOADER_MIN_TIME = 500;
 
 // ===== STATE =====
 let offset = 0;
-let pokemonCache = [];
-let visibleStart = 0;
-let visibleCount = 20;
+export let pokemonCache = [];
+export let visibleStart = 0;
+export let visibleCount = 20;
 
-// ===== INIT =====
-document.addEventListener("DOMContentLoaded", init);
-
-async function init() {
-    await initI18n();
-    bindUI();
-    loadPokemon();
+export function setVisibleStart(value) {
+    visibleStart = value;
 }
 
 // ===== LOAD =====
-async function loadPokemon() {
+export async function loadPokemon() {
     await withLoader(async () => {
         const details = await loadPokemonBatch();
         if (!details.length) return;
@@ -29,7 +43,7 @@ async function loadPokemon() {
 
 function handleNewPokemon(details) {
     updatePokemonCache(details);
-    activeList = pokemonCache;
+    setActiveList(pokemonCache);
     updateVisibleRange();
     updateLoadButtons();
     renderPokemonList(activeList);
@@ -46,7 +60,7 @@ function updatePokemonCache(details) {
 }
 
 // ===== PAGINATION =====
-async function loadNext() {
+export async function loadNext() {
     if (LOAD_MODE === "append") {
         await loadMoreData();
     } else {
@@ -74,21 +88,21 @@ async function loadMoreData(nextStart) {
 
 async function loadMoreDefault() {
     await loadPokemon();
-    activeList = pokemonCache;
+    setActiveList(pokemonCache);
 }
 
 async function loadMoreSearch(nextStart) {
     await withLoader(async () => {
         const newDetails = await loadSearchBatch();
         if (!newDetails.length) return;
-        activeList = [...activeList, ...newDetails];
+        setActiveList([...activeList, ...newDetails]);
         if (LOAD_MODE === "pagination") {
             visibleStart = nextStart;
         }
     });
 }
 
-function loadPrevious() {
+export function loadPrevious() {
     visibleStart = Math.max(0, visibleStart - visibleCount);
     updateView();
 }
@@ -110,7 +124,7 @@ function updateVisibleRange() {
     );
 }
 
-function hasMoreData() {
+export function hasMoreData() {
     if (currentMode === "default") {
         return pokemonCache.length % LIMIT === 0;
     }
@@ -127,7 +141,7 @@ function delay(ms) {
 }
 
 // ===== EVOLUTION =====
-async function getEvolutionData(pokemon) {
+export async function getEvolutionData(pokemon) {
     const species = await getPokemonSpecies(pokemon.species.url);
 
     if (!species || !species.evolution_chain) {
@@ -146,7 +160,7 @@ async function getEvolutionData(pokemon) {
 }
 
 // ===== LOADER =====
-async function withLoader(task, minTime = LOADER_MIN_TIME) {
+export async function withLoader(task, minTime = LOADER_MIN_TIME) {
     showLoader();
     const start = Date.now();
     try {

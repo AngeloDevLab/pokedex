@@ -25,7 +25,7 @@
 
 ### Architektur
 - [x] `locales/en.json`, `locales/de.json`, `locales/ja.json` anlegen
-- [x] `scripts/i18n.js` schreiben:
+- [x] `js/i18n.js` schreiben:
   - `t('key')` Funktion für UI-Strings
   - Sprachpräferenz in LocalStorage speichern
   - Fallback auf `en` wenn Key fehlt
@@ -56,10 +56,13 @@
 
 **Ziel:** Kleinigkeiten im bestehenden UI verfeinern, bevor Navigation/Architektur (Session 4) und weitere Features draufgesetzt werden
 
-- [ ] Hover-States durchgehen (Pokémon-Karten, Buttons, Lang-Toggle, Tabs) — konsistent?
-- [ ] Farbpalette/Kontraste prüfen (`--primary-color` / `--secondary-color`, Stat-Farben rot/orange/grün)
-- [ ] Spacing/Abstände im Header (Logo, Lang-Toggle, Search) nochmal gegenchecken
-- [ ] Kleinere visuelle Unstimmigkeiten sammeln und fixen
+- [x] Hover-States durchgegangen und vereinheitlicht — Buttons hatten 5 verschiedene Hover/Active-Stile (Fill+Scale, nur Fill, nur Border, …); jetzt ein gemeinsames Modell: Hover = Border-Color `--accent-color` + Scale, Active/Selected = nur Border-Color, nie ein Hintergrund-Fill (wichtig wegen weißer Schrift überall — Border-Farbe braucht keinen Kontrast-Check, ein Fill schon)
+- [x] `css/variables.css` angelegt: Farben, Spacing-, Radius- und Transition-Skala zentralisiert (vorher über `standard.css`/`style.css` verstreut hartcodiert); `style.css` komplett in `css/components/*.css` aufgeteilt (buttons, inputs, search, cards, dialog)
+- [x] Farbpalette neu gewählt: 4 Farben (`--primary-color #1d1234`, `--secondary-color #1f1e33`, `--accent-color #5500ff`, `--muted-color #dadada`) statt der alten 3 (+ ungenutzter Rest einer 7er-Palette)
+- [ ] Stat-Farben (`--stat-low`/`--stat-mid`/`--stat-high`, aktuell noch `red`/`orange`/`green`) inhaltlich auf Kontrast/Wirkung prüfen — sind jetzt zentral in `variables.css`, aber noch nicht bewertet
+- [x] Spacing/Abstände im Header gegengecheckt — Bug gefunden + gefixt: `.search-panel` war bei `top: 80px` während Header `6rem` (96px) hoch ist, dadurch 16px Überlappung beim Öffnen; jetzt beide an `var(--header-height)` gekoppelt
+- [x] Bug gefunden + gefixt: Such-Toggle-Button hatte Klasse `search-button` statt `svg-button` und sah dadurch eckig statt rund/konsistent zu den anderen Icon-Buttons aus
+- [ ] Weitere kleinere visuelle Unstimmigkeiten sammeln und fixen
 
 ---
 
@@ -69,42 +72,64 @@
 
 ### Architektur-Entscheidungen
 - [x] MPA bestätigt (passt zur bestehenden Roadmap — `calc.html`, `items.html`, etc. sind bereits als eigene Seiten geplant — sowie zu „kein Build-Tool" + GitHub-Pages-Hosting)
-- [ ] Umstieg auf ES Modules (`<script type="module">`, `import`/`export` statt globaler Funktionen/Variablen)
-  - Vermeidet Namespace-Kollisionen bei wachsender Dateizahl
-  - Erfordert lokalen Server zum Testen (kein `file://`, wie schon bei `locales/*.json`)
+- [x] Ordnerstruktur: `scripts/` → `js/`, `styles/` → `css/`; neue Seiten außer `index.html` (das aus GitHub-Pages-Gründen im Root bleiben muss) wandern in `pages/` (z. B. `pages/imprint.html`)
+- [x] Konvention für künftige Seiten (Sessions 5+): pro Seite eine `js/<seite>.js` + `css/<seite>.css`, flach in `js/`/`css/` (kein Unterordner pro Seite, solange es nur wenige sind). Gemeinsam genutzter Code (`api.js`, `i18n.js`, ggf. `ui.js`-Helfer) bleibt zentral und wird von mehreren Seiten eingebunden. Aufteilung in Unterordner (z. B. `js/core/`, `js/pages/`) erst, wenn die flache Liste unübersichtlich wird (~8–10 Dateien) — nicht vorab anlegen.
+- [x] Umstieg auf ES Modules (`<script type="module">`, `import`/`export` statt globaler Funktionen/Variablen) — `index.html` lädt jetzt nur noch `js/main.js`, der Rest wird über den Import-Graphen automatisch nachgeladen. Zwei echte Blocker dabei gefunden und behoben: `currentIndex`/`currentDialogPokemon`/`currentDialogEntry` wurden aus `ui.js` nach `dialog.js` verschoben (waren dort eigentlich beheimatet, wurden aber von einer anderen Datei reassigned, was ES Modules nicht erlaubt); `visibleStart` bekam einen `setVisibleStart()`-Setter in `main.js`, weil `search.js` es von außen reassigned hat. Zwei verbleibende zirkuläre Imports (`ui.js`↔`dialog.js`, `ui.js`↔`search.js`) sind unkritisch, da nur Funktions-Deklarationen (gehoistet) betroffen sind und alle Zugriffe erst innerhalb von Funktionsaufrufen passieren, nie auf Modul-Ebene — mit `node --check` und einem Lade-Test des kompletten Modul-Graphen verifiziert.
 
 ### Navigation-Shell
-- [ ] Burger-Menü (Mobile) / Sidebar (Desktop) für Navigation zwischen Features
-- [ ] Default-Ansicht bleibt der bestehende Pokémon-Grid-Scroll
-- [ ] Menü verlinkt zu künftigen Seiten (`calc.html`, `items.html`, `moves.html`, …) sobald sie existieren
-- [ ] Language-Toggle ins Menü verschieben (Header bleibt schlank: Logo + Menü-Toggle + Search)
-- [ ] Header-Layout entsprechend aufräumen
+- [x] Burger-Menü (`#nav-toggle`) öffnet eine Sidebar, die von rechts reinfliegt (`js/nav.js` + `css/components/nav.css`) — gleiches Verhalten auf Mobile, nur volle Breite statt 320px (Media-Query in `responsive.css`)
+- [x] Sidebar wird zur Laufzeit per JS in einen `<div id="sidebar">`-Platzhalter injiziert (gleiches Template-String-Muster wie `templates.js`), statt das Markup in jeder Seite zu duplizieren
+- [x] Default-Ansicht bleibt der bestehende Pokémon-Grid-Scroll
+- [x] Menü verlinkt zu `pages/search.html` (siehe unten); weitere Seiten (`calc.html`, `items.html`, …) werden erst eingetragen, wenn sie existieren — keine toten Links auf Vorrat
+- [x] Language-Toggle ins Menü verschoben
+- [x] Header aufgeräumt: nur noch Logo + Burger-Toggle (Search ist komplett raus, siehe unten)
+- [x] **Suche wurde zur eigenen Seite** (`pages/search.html`, eigener Entry-Point `js/search-page.js`) statt nur ins Menü verschoben — Header brauchte dafür keinen Such-Button/Such-Panel mehr. `js/ui.js`s monolithisches `bindUI()`/`bindSearchUI()` wurden dafür in einzelne `bind*`-Funktionen aufgeteilt, die jede Seite selbst zusammensetzt (index.html: Dialog + Pagination + Nav-Shell; search.html: zusätzlich `bindSearchInputs()`, kein automatischer Default-Load)
+- [x] Bug beim Umbau gefunden + gefixt: `js/main.js`s `DOMContentLoaded`-Bootstrap (inkl. `loadPokemon()` für die Default-Browse-Ansicht) wurde transitiv mitgeladen, sobald `pages/search.html` über `ui.js` irgendwas aus `main.js` importierte — die geteilte Pagination-Logik (`LIMIT`, `pokemonCache`, `loadNext`/`loadPrevious`, `getEvolutionData`, `withLoader`, …) wanderte deshalb in ein neues, seiteneffektfreies `js/pagination.js`; `main.js` ist jetzt nur noch der schlanke Entry-Point für index.html
+- [x] Basis-`button`-Regel in `standard.css` komplett entfernt — jede Button-Klasse (`svg-button`, `lang-btn`, `load-btn`, `tab-btn`) hat jetzt ihr eigenes vollständiges Regelwerk inkl. eigenem `:hover` (Border-Color `--accent-color` + `scale(1.05)`, gleiches Muster wie bisher), da nichts mehr geerbt wird
+- [x] Bug gefunden + gefixt: `getTypeIcon()` in `js/ui.js` baute einen seitenrelativen Pfad (`./assets/...`) — auf `pages/search.html` zeigte das auf `pages/assets/...` (404). Jetzt root-relativ (`/assets/...`), funktioniert unabhängig von der Seitentiefe (sicher, weil die Seite an der Domain-Root deployed wird)
 
 ---
 
-## Session 5 — Statuswert-Rechner (Stats Tab)
+## Zwischenschritt — Muster für Pokémon-Tool-Seiten
 
-**Ziel:** Den bestehenden Stats-Tab zum vollständigen IV/EV/Nature-Rechner ausbauen
+**Kurswechsel (nach Session 4 entschieden):** Der Dialog bekommt **keine weiteren neuen Tabs** mehr (bleibt bei Info/Stats/Evolution/Artworks). Alles, was ursprünglich als neuer Dialog-Tab geplant war (Sessions 5, 6, 7, 9, 11 — und tendenziell auch 12, 14, siehe dort), wird stattdessen eine **eigene Seite**, verlinkt aus der Sidebar neben „Search". Hintergrund: diese Inhalte sind eher eigenständige Werkzeuge/Referenzen als Detailinfos zum gerade offenen Pokémon, und der Dialog würde mit 6+ Tabs unübersichtlich.
 
-- [ ] IV-Eingabefelder (0–31, Standard: 31) für alle 6 Stats
-- [ ] EV-Eingabefelder (0–252, Standard: 0) mit Live-Summen-Counter (≤ 510)
-- [ ] Nature-Dropdown (alle 25 Wesen, positiver Stat grün / negativer rot markiert)
-- [ ] Endwert live berechnen nach offizieller Formel (Level 100):
+**Gemeinsames Muster für jede dieser Seiten:**
+- Eigene Pokémon-Suche/Auswahl direkt auf der Seite (wie schon für `calc.html`/Session 8 geplant)
+- Zusätzlich aus dem Dialog heraus verlinkt (Button/Icon bei der jeweiligen Pokémon-Karte), mit vorausgefülltem Pokémon
+- Sonderfälle (Session 12 Regionalformen, Session 14 Fundorte) sind aktuell auch als eigene Seite vorgesehen, aber das ist nicht in Stein gemeißelt — wenn sich bei der jeweiligen Session ein Dialog-Tab doch sinnvoller anfühlt, können wir das dann nochmal anders entscheiden.
+
+**Vorarbeit — Cache für die Pokémon-Liste:** Jede dieser Seiten braucht ihre eigene Pokémon-Suche, die intern `fetchAllPokemonList()` nutzt (die große ~1300-Einträge-Liste). Aktuell wird die bei jedem Seitenwechsel neu geladen, weil der In-Memory-Cache (`allPokemonList` in `search.js`) nicht über Seitenwechsel hinweg besteht. Bevor mehrere neue Seiten das brauchen:
+- [x] `localStorage`-Cache für die Liste aus `fetchAllPokemonList()` (nur `{name, url}`-Paare, ~130 KB — passt locker ins Limit) — direkt in `js/api.js` verdrahtet (versionierter Key `pokedex:allPokemonList:v1`), damit jeder Aufrufer automatisch profitiert, nicht nur `search.js`
+- [x] Bewusst **nicht** die vollen Pokémon-Detail-Objekte gecacht (würden bei ~1300 Stück mehrere MB werden, sprengt das übliche 5–10 MB-Limit) — die sind ohnehin schon über den normalen Browser-HTTP-Cache bei wiederholten Requests an dieselbe URL abgedeckt
+- [ ] Bei Bedarf später: falls doch mehr Detail-Daten dauerhaft gecacht werden sollen, dafür IndexedDB statt `localStorage` nutzen (höheres Quota, dafür gemacht) — nicht jetzt nötig
+
+---
+
+## Session 5 — Statuswert-Rechner (eigene Seite)
+
+**Ziel:** Eigene Seite `pages/stats-calc.html` für den vollständigen IV/EV/Nature-Rechner (siehe Zwischenschritt oben — kein Dialog-Tab mehr)
+
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] IV-Eingabefelder (0–31, Standard: 31) für alle 6 Stats
+- [x] EV-Eingabefelder (0–252, Standard: 0) mit Live-Summen-Counter (≤ 510)
+- [x] Nature-Dropdown (alle 25 Wesen, positiver Stat grün / negativer rot markiert)
+- [x] Endwert live berechnen nach offizieller Formel (Level 100):
   - KP: `⌊(2·AS + IS + ⌊EV/4⌋) · 1⌋ + 110`
   - Rest: `⌊(⌊(2·AS + IS + ⌊EV/4⌋) + 5⌋ · Nature⌋`
-- [ ] Endwert groß neben Balken anzeigen, Balken reagiert live
-- [ ] Farbcodierung Endwert: grün ≥ 100 / orange 60–99 / rot < 60
-- [ ] Schnell-Button „Reset" (EVs 0, IVs 31, Nature neutral)
-- [ ] Gesamt-BST der Endwerte unten anzeigen
-- [ ] Info-Tabelle Kampfstufen (−6 bis +6) mit Multiplikator
+- [x] Endwert groß neben Balken anzeigen, Balken reagiert live
+- [x] Farbcodierung Endwert: grün ≥ 100 / orange 60–99 / rot < 60
+- [x] Schnell-Button „Reset" (EVs 0, IVs 31, Nature neutral)
+- [x] Gesamt-BST der Endwerte unten anzeigen
+- [x] Info-Tabelle Kampfstufen (−6 bis +6) mit Multiplikator
 
 ---
 
-## Session 6 — Typ-Matchup Tab
+## Session 6 — Typ-Matchup (eigene Seite)
 
-**Ziel:** Im Dialog auf einen Blick sehen welche Typen wie viel Schaden machen
+**Ziel:** Eigene Seite `pages/matchup.html` — auf einen Blick sehen welche Typen wie viel Schaden gegen ein gewähltes Pokémon machen
 
-- [ ] Neuer Tab im Dialog: „Matchup"
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] Tabelle: alle 18 Typen mit Schadens-Multiplikator gegen dieses Pokémon
   - 4× / 2× / 1× / 0,5× / 0,25× / 0× (Immunität)
 - [ ] Dual-Typ-Berechnung automatisch (z.B. Wasser/Boden = Gras trifft 4×)
@@ -113,17 +138,18 @@
 
 ---
 
-## Session 7 — Learnset Tab
+## Session 7 — Lernset (eigene Seite)
 
-**Ziel:** Alle Attacken die ein Pokémon lernen kann übersichtlich anzeigen
+**Ziel:** Eigene Seite `pages/learnset.html` — alle Attacken, die ein gewähltes Pokémon lernen kann
 
-- [ ] Neuer Tab im Dialog: „Moves"
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] Anzeige nach Lernmethode gruppiert: Level-up / TM / Egg Move / Tutor
 - [ ] Level-up: Level + Move-Name + Typ-Icon + Kategorie-Icon
 - [ ] Egg Moves farblich hervorheben (competitive relevant)
 - [ ] Move-Details on click: Power, Accuracy, PP, Kategorie, Effekt-Text
 - [ ] Move-Namen sprachabhängig (i18n aus Session 2 nutzen)
 - [ ] Datenquelle: PokéAPI `/pokemon/{id}` liefert komplettes Learnset
+- [ ] Abgrenzung zu Session 16 (`moves.html`): diese Seite zeigt das Lernset **eines gewählten Pokémon**, Session 16 ist die allgemeine Move-Datenbank ohne Pokémon-Bezug
 
 ---
 
@@ -142,15 +168,15 @@
 
 ---
 
-## Session 9 — Breeding Guide
+## Session 9 — Breeding Guide (eigene Seite)
 
-**Ziel:** Alles was man für kompetitive Zucht wissen muss, direkt am Pokémon
+**Ziel:** Alles was man für kompetitive Zucht wissen muss — eigene Seite `pages/breeding.html`, kein Dialog-Tab mehr (siehe Zwischenschritt vor Session 5)
 
-- [ ] Neuer Tab im Dialog: „Breeding"
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] Ei-Gruppe(n) anzeigen (mit welchen Pokémon kann es züchten)
 - [ ] Egg Moves Liste (aus Learnset, Lernmethode `egg`)
 - [ ] Für jeden Egg Move: welche anderen Pokémon vererben ihn (Zucht-Kette)
-- [ ] Zucht-Guide Seite `breeding.html`:
+- [ ] Allgemeiner Teil (Pokémon-unabhängig, gleiche Seite):
   - Schritt-für-Schritt IV-Zucht-Anleitung (Destino-Knoten, Items)
   - Nature-Tabelle: alle 25 Wesen mit +/− Stats
   - Hidden Ability: wie bekommt man sie (Max-Raid, Ability Patch)
@@ -170,11 +196,11 @@
 
 ---
 
-## Session 11 — Competitive Tab (Smogon)
+## Session 11 — Competitive (eigene Seite)
 
-**Ziel:** Smogon-Tier und Beispiel-Sets direkt am Pokémon anzeigen
+**Ziel:** Eigene Seite `pages/competitive.html` — Smogon-Tier und Beispiel-Sets zu einem gewählten Pokémon (kein Dialog-Tab mehr, siehe Zwischenschritt vor Session 5)
 
-- [ ] Neuer Tab im Dialog: „Competitive"
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
 - [ ] Smogon-Tier anzeigen (OU / UU / RU / NU / Ubers / NFE / LC)
   - Datenquelle: eigene `smogon-tiers.json` (manuell gepflegt oder geskrapt)
 - [ ] 1–2 Beispiel-Sets im Showdown-Export-Format:
@@ -185,11 +211,14 @@
 
 ---
 
-## Session 12 — Regionale Formen & Megas
+## Session 12 — Regionale Formen & Megas (eigene Seite, vorläufig)
 
-**Ziel:** Alola/Galar/Hisui/Paldea-Formen und Mega-Entwicklungen im Dialog
+**Ziel:** Alola/Galar/Hisui/Paldea-Formen und Mega-Entwicklungen zu einem gewählten Pokémon
 
-- [ ] Varianten-Tabs im Dialog wenn Formen vorhanden (z.B. „Alola" / „Galar")
+> Vorläufig als eigene Seite `pages/forms.html` eingeplant, analog zu den anderen Sessions oben. Da das hier am stärksten an "genau dieses eine Pokémon gerade offen" hängt, nochmal neu bewerten, wenn diese Session tatsächlich anfängt — ein Dialog-Tab könnte hier am Ende doch die bessere Wahl sein.
+
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus (oder doch Dialog-Tab — siehe Hinweis oben)
+- [ ] Varianten-Auswahl wenn Formen vorhanden (z.B. „Alola" / „Galar")
   - PokéAPI: eigene Einträge wie `rattata-alola`, `mewtwo-mega-x`
 - [ ] Stats, Typ, Ability der Form korrekt laden und anzeigen
 - [ ] Mega-Entwicklungen: Stats-Unterschied zur Basis-Form visualisieren
@@ -211,14 +240,14 @@
 
 ---
 
-## Session 14 — Fundorte & Shiny Hunting
+## Session 14 — Fundorte & Shiny Hunting (eigene Seite)
 
-**Ziel:** Wo finde ich dieses Pokémon, wie shinye ich es effizient
+**Ziel:** Wo finde ich dieses Pokémon, wie shinye ich es effizient — eigene Seite `pages/shiny.html`, kein Dialog-Tab mehr (Fundorte-Teil wandert mit dazu statt eigener Dialog-Tab „Finden", siehe Zwischenschritt vor Session 5)
 
-- [ ] Neuer Tab im Dialog: „Finden"
-  - Fundorte je Spielversion (PokéAPI `/pokemon/{id}/encounters`)
+- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [ ] Fundorte je Spielversion (PokéAPI `/pokemon/{id}/encounters`)
   - Hinweis wenn nur über Zucht / Trade / Event
-- [ ] Shiny Hunting Seite `shiny.html`:
+- [ ] Allgemeiner Teil (Pokémon-unabhängig, gleiche Seite):
   - Methoden-Übersicht je Generation (Masuda, Radar-Kette, DexNav, Max-Raids, Massenausbrüche)
   - Wahrscheinlichkeits-Tabelle (1/4096 Basis, mit Shiny Charm, mit Methode)
   - Für jedes Pokémon: effizienteste Methode
@@ -228,6 +257,8 @@
 ## Session 15 — Suche & Filter erweitern
 
 **Ziel:** Suche um sinnvolle Parameter ergänzen
+
+> Hinweis: Die Suche ist bereits in Session 4 auf eine eigene Seite (`pages/search.html`) umgezogen, vorgezogen im Zuge des Nav-Shell-Umbaus. Die Punkte hier sind die noch offenen Erweiterungen.
 
 - [ ] Filter nach Generation (Gen 1–9) — PokéAPI `/generation/{id}`
 - [ ] Filter nach Ei-Gruppe

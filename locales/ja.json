@@ -37,6 +37,7 @@
         },
         "flavorFallback": "説明文が見つかりません。",
         "editionUnknown": "不明",
+        "statsCalcLink": "ステータス計算機を開く",
         "artwork": {
             "official": "{name}の公式アートワーク",
             "officialShiny": "{name}の色違い公式アートワーク",
@@ -54,5 +55,20 @@
     },
     "footer": {
         "imprint": "法的表示"
+    },
+    "statsCalc": {
+        "title": "ステータス計算機",
+        "navLink": "ステータス計算機",
+        "pickerLabel": "ポケモンを選択",
+        "pickerPlaceholder": "名前を入力...",
+        "natureLabel": "性格",
+        "reset": "リセット",
+        "evTotal": "努力値合計",
+        "bstTotal": "合計",
+        "stageTable": "ランク補正倍率",
+        "stage": "ランク",
+        "multiplier": "倍率",
+        "iv": "個体値",
+        "ev": "努力値"
     }
 }

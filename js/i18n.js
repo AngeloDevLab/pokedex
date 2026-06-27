@@ -1,3 +1,8 @@
+import { fetchJSON } from './api.js';
+import { renderPokemonList } from './ui.js';
+import { openDialog, currentIndex } from './dialog.js';
+import { activeList } from './search.js';
+
 // ===== CONFIG =====
 const SUPPORTED_LANGS = ["en", "de", "ja"];
 const LANG_STORAGE_KEY = "lang";
@@ -7,7 +12,7 @@ let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || "en";
 let translations = {};
 
 // ===== INIT =====
-async function initI18n() {
+export async function initI18n() {
     await loadTranslations();
     applyTranslations();
     bindLanguageToggle();
@@ -18,9 +23,9 @@ async function initI18n() {
 async function loadTranslations() {
     try {
         const [en, de, ja] = await Promise.all([
-            fetchJSON("./locales/en.json", "Failed to fetch en locale"),
-            fetchJSON("./locales/de.json", "Failed to fetch de locale"),
-            fetchJSON("./locales/ja.json", "Failed to fetch ja locale")
+            fetchJSON("/locales/en.json", "Failed to fetch en locale"),
+            fetchJSON("/locales/de.json", "Failed to fetch de locale"),
+            fetchJSON("/locales/ja.json", "Failed to fetch ja locale")
         ]);
         translations = { en, de, ja };
     } catch (err) {
@@ -30,7 +35,7 @@ async function loadTranslations() {
 }
 
 // ===== TRANSLATE =====
-function t(key, vars, fallback) {
+export function t(key, vars, fallback) {
     const value = getNested(translations[currentLang], key)
         ?? getNested(translations.en, key)
         ?? fallback;

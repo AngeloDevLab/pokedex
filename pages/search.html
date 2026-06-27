@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex | Search</title>
+
+    <link rel="icon" href="../assets/images/pokeball.png">
+
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/standard.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/inputs.css">
+    <link rel="stylesheet" href="../css/components/search.css">
+    <link rel="stylesheet" href="../css/components/cards.css">
+    <link rel="stylesheet" href="../css/components/dialog.css">
+    <link rel="stylesheet" href="../css/components/stats.css">
+    <link rel="stylesheet" href="../css/components/nav.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <script type="module" src="../js/search-page.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content max-content">
+            <div class="header-brand">
+                <a href="../index.html"><img src="../assets/images/pokeball.png" alt="Pokeball Image"></a>
+                <p class="hide-mobile">Pokédex</p>
+            </div>
+
+            <button id="nav-toggle" class="svg-button">
+
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 5h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 19h16" />
+                </svg>
+
+                <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
+
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar"></div>
+
+    <main>
+
+        <div id="loader" class="loader hidden">
+            <img src="../assets/images/pokeball.png" alt="Loading">
+        </div>
+
+        <div class="search-content max-content">
+            <div class="search-group">
+                <label for="search-name" data-i18n="searchPanel.nameLabel">Search by Name</label>
+                <input type="search" id="search-name" data-i18n-placeholder="searchPanel.namePlaceholder" placeholder="Enter name...">
+                <small id="search-warning" class="hidden" data-i18n="searchPanel.warning">
+                    min. 3 characters
+                </small>
+            </div>
+
+            <div class="search-group">
+                <label for="filter-type" data-i18n="searchPanel.typeLabel">Filter by Type</label>
+                <input list="type-list" id="filter-type" data-i18n-placeholder="searchPanel.typePlaceholder" placeholder="Select type...">
+
+                <datalist id="type-list">
+                    <option value="fire">
+                    <option value="water">
+                    <option value="grass">
+                    <option value="electric">
+                    <option value="ice">
+                    <option value="fighting">
+                    <option value="poison">
+                    <option value="ground">
+                    <option value="flying">
+                    <option value="psychic">
+                    <option value="bug">
+                    <option value="rock">
+                    <option value="ghost">
+                    <option value="dragon">
+                    <option value="dark">
+                    <option value="steel">
+                    <option value="fairy">
+                </datalist>
+            </div>
+
+            <button id="search-reset" data-i18n="searchPanel.clear">Clear Search</button>
+        </div>
+
+        <button id="load-previous-btn" class="load-btn hidden" data-i18n="load.previous">load previous</button>
+
+        <div id="pokemon-container" class="max-content"></div>
+
+        <button id="load-more-btn" class="load-btn hidden" data-i18n="load.more">load more</button>
+
+    </main>
+
+    <dialog id="pokemon-dialog" closedby="any"></dialog>
+
+    <footer>
+        <div class="footer-content max-content">
+            <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+            <a href="imprint.html" data-i18n="footer.imprint">Imprint</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

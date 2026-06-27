@@ -1,6 +1,24 @@
+import { activeList } from './search.js';
+import { getPokemonSpecies } from './api.js';
+import { getEvolutionData } from './pagination.js';
+import {
+    getPokemonDialogTemplate,
+    getFallbackDialogTemplate,
+    getInfoTabTemplate,
+    getStatsTabTemplate,
+    getEvoTemplate,
+    getArtworkTabTemplate
+} from './templates.js';
+import { getTypes, getGradient, getTabContent, prepareStats, getFlavorEntry, TAB_RENDERER } from './ui.js';
+import { t } from './i18n.js';
+
+// ===== STATE =====
+export let currentIndex = 0;
+let currentDialogPokemon = null;
+let currentDialogEntry = null;
 
 // ===== DIALOG =====
-async function openDialog(index) {
+export async function openDialog(index) {
     setCurrentDialogPokemon(index);
     await loadDialogData();
     renderDialogUI();
@@ -92,7 +110,7 @@ function showDialog() {
     dialog.showModal();
 }
 
-function closeDialog() {
+export function closeDialog() {
     const dialog = document.getElementById("pokemon-dialog");
     dialog.close();
 }
@@ -123,7 +141,7 @@ function renderTabContent(type) {
     render();
 }
 
-function renderInfoTab() {
+export function renderInfoTab() {
     const tabContent = getTabContent();
     tabContent.innerHTML = getInfoTabTemplate(
         currentDialogPokemon,
@@ -131,20 +149,20 @@ function renderInfoTab() {
     );
 }
 
-function renderStatsTab() {
+export function renderStatsTab() {
     const tabContent = getTabContent();
     const stats = prepareStats(currentDialogPokemon);
-    tabContent.innerHTML = getStatsTabTemplate(stats);
+    tabContent.innerHTML = getStatsTabTemplate(stats, currentDialogPokemon.name);
 }
 
-async function renderEvoTab() {
+export async function renderEvoTab() {
     const tabContent = getTabContent();
     tabContent.innerHTML = t('dialog.loading', null, 'Loading...');
     const evoData = await getEvolutionData(currentDialogPokemon);
     tabContent.innerHTML = getEvoTemplate(evoData);
 }
 
-function renderArtworkTab() {
+export function renderArtworkTab() {
     const tabContent = getTabContent();
     tabContent.innerHTML = getArtworkTabTemplate(currentDialogPokemon);
 }

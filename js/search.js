@@ -1,9 +1,18 @@
+import { fetchAllPokemonList, fetchPokemonByType, fetchPokemonByUrl } from './api.js';
+import { LIMIT, pokemonCache, visibleCount, withLoader, setVisibleStart } from './pagination.js';
+import { renderPokemonList, updateLoadButtons, showSearchWarning } from './ui.js';
+import { getNoResultTemplate } from './templates.js';
+
 // ===== STATE =====
-let activeList = [];
-let currentMode = "default";  // default | search | type
+export let activeList = [];
+export let currentMode = "default";  // default | search | type
 let allPokemonList = [];
-let searchResults = [];
-let searchOffset = 0;
+export let searchOffset = 0;
+export let searchResults = [];
+
+export function setActiveList(list) {
+    activeList = list;
+}
 
 // ===== DATA (LOAD) =====
 async function loadAllPokemonForSearch() {
@@ -34,7 +43,7 @@ async function searchPokemonByType(type) {
 }
 
 // ===== PAGINATION =====
-async function loadSearchBatch() {
+export async function loadSearchBatch() {
     const batch = searchResults.slice(
         searchOffset,
         searchOffset + LIMIT
@@ -48,7 +57,7 @@ async function loadSearchBatch() {
 }
 
 // ===== INPUT HANDLING =====
-function handleSearchInput(e) {
+export function handleSearchInput(e) {
     const query = getInputValue(e);
     if (!validateSearchQuery(query)) return;
     resetOtherInput("filter-type");
@@ -57,7 +66,7 @@ function handleSearchInput(e) {
     runNameSearch(query);
 }
 
-function handleTypeInput(e) {
+export function handleTypeInput(e) {
     const type = getInputValue(e);
 
     if (!type) {
@@ -86,7 +95,7 @@ function validateSearchQuery(query) {
 }
 
 // ===== SEARCH FLOW =====
-function resetSearch() {
+export function resetSearch() {
     const searchInput = document.getElementById("search-name");
     const typeInput = document.getElementById("filter-type");
     searchInput.value = "";
@@ -94,11 +103,11 @@ function resetSearch() {
     showSearchWarning(false);
     currentMode = "default";
     activeList = pokemonCache;
-    visibleStart = Math.max(
+    setVisibleStart(Math.max(
         0,
         activeList.length - visibleCount
-    );
-    
+    ));
+
     renderPokemonList(activeList);
     updateLoadButtons();
 }
@@ -115,7 +124,7 @@ async function runSearch(task) {
         }
 
         activeList = details;
-        visibleStart = 0;
+        setVisibleStart(0);
         renderPokemonList(activeList);
         updateLoadButtons();
     });

@@ -1,3 +1,9 @@
+import { activeList, currentMode, handleSearchInput, handleTypeInput, resetSearch } from './search.js';
+import { visibleStart, visibleCount, hasMoreData, loadNext, loadPrevious, pokemonCache } from './pagination.js';
+import { openDialog, closeDialog, currentIndex, renderInfoTab, renderStatsTab, renderEvoTab, renderArtworkTab } from './dialog.js';
+import { t } from './i18n.js';
+import { getPokemonCardTemplate } from './templates.js';
+
 // ===== CONFIG =====
 const TYPE_COLORS = {
     fire: "#e62829",
@@ -20,7 +26,11 @@ const TYPE_COLORS = {
     flying: "#81b9ef"
 };
 
-const TAB_RENDERER = {
+// dialog.js imports TAB_RENDERER back from here, while this object references
+// dialog.js's own render*Tab functions — a circular import, but a safe one:
+// function declarations are hoisted, so they're already bound when either
+// module's body runs, regardless of which side of the cycle evaluates first.
+export const TAB_RENDERER = {
     flavor: renderInfoTab,
     stats: renderStatsTab,
     evo: renderEvoTab,
@@ -45,16 +55,10 @@ const STAT_NAME_KEY = {
     speed: "stats.speed"
 };
 
-const LOAD_MODE = "append"; // "append" | "pagination"
-
-// ===== STATE =====
-let currentIndex = 0;
-let currentDialogPokemon = null;
-let currentDialogEntry = null;
-let searchOpen = false;
+export const LOAD_MODE = "append"; // "append" | "pagination"
 
 // ===== DATA HELPERS =====
-function getFlavorEntry(species) {
+export function getFlavorEntry(species) {
     const entry = species.flavor_text_entries
         .find(e => e.language.name === "en");
     if (!entry) return getDefaultFlavor();
@@ -78,7 +82,7 @@ function cleanFlavorText(text) {
         .replace(/\n/g, " ");
 }
 
-function prepareStats(pokemon) {
+export function prepareStats(pokemon) {
     return pokemon.stats.map(stat => {
         const value = stat.base_stat;
 
@@ -91,18 +95,18 @@ function prepareStats(pokemon) {
     });
 }
 
-function formatStatName(name) {
+export function formatStatName(name) {
     return t(STAT_NAME_KEY[name], null, STAT_NAME_FALLBACK[name]);
 }
 
 function getStatColor(value) {
-    if (value < 50) return "red";
-    if (value < 80) return "orange";
+    if (value < 50) return "var(--stat-low)";
+    if (value < 80) return "var(--stat-mid)";
 
-    return "green";
+    return "var(--stat-high)";
 }
 
-function mapEvolutionToPokemon(names) {
+export function mapEvolutionToPokemon(names) {
     return names.map(name => {
         const pkm = activeList.find(p => p.name === name)
             || pokemonCache.find(p => p.name === name);
@@ -117,7 +121,7 @@ function mapEvolutionToPokemon(names) {
     });
 }
 
-function parseEvolutionChain(chain) {
+export function parseEvolutionChain(chain) {
     const result = [];
     let current = chain;
 
@@ -129,7 +133,7 @@ function parseEvolutionChain(chain) {
     return result;
 }
 
-function getAbilities(pokemon) {
+export function getAbilities(pokemon) {
     return pokemon.abilities.map(a => {
         const name = a.ability.name;
 
@@ -140,11 +144,11 @@ function getAbilities(pokemon) {
 }
 
 // ===== UI HELPERS =====
-function getTypes(pokemon) {
+export function getTypes(pokemon) {
     return pokemon.types.map(t => t.type.name);
 }
 
-function getGradient(types) {
+export function getGradient(types) {
     const colors = types.map(t => TYPE_COLORS[t]);
 
     return colors.length === 1
@@ -152,26 +156,26 @@ function getGradient(types) {
         : `linear-gradient(135deg, ${colors[0]}, ${colors[1]})`;
 }
 
-function getTypeIcon(type) {
-    return `./assets/icons/types/${type}.png`;
+export function getTypeIcon(type) {
+    return `/assets/icons/types/${type}.png`;
 }
 
-function getTabContent() {
+export function getTabContent() {
     return document.getElementById("tab-content");
 }
 
-function showLoader() {
+export function showLoader() {
     const loader = document.getElementById("loader");
     loader.classList.remove("hidden");
 }
 
-function hideLoader() {
+export function hideLoader() {
     const loader = document.getElementById("loader");
     loader.classList.add("hidden");
 }
 
 // ===== RENDER =====
-function renderPokemonList(list = []) {
+export function renderPokemonList(list = []) {
     const container = document.getElementById("pokemon-container");
     container.classList.remove("centered");
 
@@ -211,16 +215,7 @@ function createPokemonData(pokemon) {
 }
 
 // ===== EVENTS =====
-function bindUI() {
-    bindOpenDialog();
-    bindCloseDialog();
-    bindLoadMore();
-    bindDialogNavigation();
-    bindLoadPrevious();
-    bindSearchUI();
-}
-
-function bindOpenDialog() {
+export function bindOpenDialog() {
     const pkmContainer = document.getElementById("pokemon-container");
     pkmContainer.addEventListener("click", handlePokemonClick);
 }
@@ -242,7 +237,7 @@ function getPokemonIndex(card) {
     return activeList.findIndex(p => p.id === id);
 }
 
-function bindCloseDialog() {
+export function bindCloseDialog() {
     const pkmDialog = document.getElementById("pokemon-dialog");
     pkmDialog.addEventListener("click", handleDialogClick);
     pkmDialog.addEventListener("close", handleDialogClose);
@@ -261,7 +256,7 @@ function isCloseButton(e) {
     return e.target.closest("#close-dialog-button");
 }
 
-function bindDialogNavigation() {
+export function bindDialogNavigation() {
     const pkmDialog = document.getElementById("pokemon-dialog");
     pkmDialog.addEventListener("click", handleDialogNavigation);
 }
@@ -290,19 +285,19 @@ function nextPokemon() {
 }
 
 // ===== LOAD BUTTON UI =====
-function bindLoadMore() {
+export function bindLoadMore() {
     const btn = document.getElementById("load-more-btn");
     if (!btn) return;
     btn.addEventListener("click", loadNext);
 }
 
-function bindLoadPrevious() {
+export function bindLoadPrevious() {
     const btn = document.getElementById("load-previous-btn");
     if (!btn) return;
     btn.addEventListener("click", loadPrevious);
 }
 
-function updateLoadButtons() {
+export function updateLoadButtons() {
     const prevBtn = document.getElementById("load-previous-btn");
     const nextBtn = document.getElementById("load-more-btn");
     if (!prevBtn || !nextBtn) return;
@@ -333,53 +328,16 @@ function hasMoreVisible() {
 }
 
 // ===== SEARCH UI =====
-function bindSearchUI() {
-    const searchToggle = document.getElementById("search-toggle");
+export function bindSearchInputs() {
     const searchInput = document.getElementById("search-name");
     const typeInput = document.getElementById("filter-type");
     const resetBtn = document.getElementById("search-reset");
     resetBtn.addEventListener("click", resetSearch);
-    searchToggle.addEventListener("click", toggleSearch);
     searchInput.addEventListener("input", handleSearchInput);
     typeInput.addEventListener("input", handleTypeInput);
-    document.addEventListener("click", handleClickOutsideSearch);
 }
 
-function toggleSearch() {
-    searchOpen = !searchOpen;
-    const panel = document.getElementById("search-panel");
-    const searchIcon = document.getElementById("search-icon");
-    const closeIcon = document.getElementById("close-icon");
-    panel.classList.toggle("open", searchOpen);
-    searchIcon.classList.toggle("hidden", searchOpen);
-    closeIcon.classList.toggle("hidden", !searchOpen);
-    if (searchOpen) {
-        document.getElementById("search-name").focus();
-    }
-}
-
-function showSearchWarning(show) {
+export function showSearchWarning(show) {
     const warning = document.getElementById("search-warning");
     warning.classList.toggle("hidden", !show);
-}
-
-function handleClickOutsideSearch(e) {
-    if (!searchOpen) return;
-
-    const panel = document.getElementById("search-panel");
-    const toggle = document.getElementById("search-toggle");
-
-    if (panel.contains(e.target) || toggle.contains(e.target)) return;
-
-    closeSearch();
-}
-
-function closeSearch() {
-    searchOpen = false;
-    const panel = document.getElementById("search-panel");
-    const searchIcon = document.getElementById("search-icon");
-    const closeIcon = document.getElementById("close-icon");
-    panel.classList.remove("open");
-    searchIcon.classList.remove("hidden");
-    closeIcon.classList.add("hidden");
 }

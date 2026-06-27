@@ -2,7 +2,7 @@
 const API_BASE = "https://pokeapi.co/api/v2";
 
 // ===== HELPERS =====
-async function fetchJSON(url, errorMessage) {
+export async function fetchJSON(url, errorMessage) {
     const res = await fetch(url);
     if (!res.ok) throw new Error(errorMessage);
     return res.json();
@@ -11,15 +11,35 @@ async function fetchJSON(url, errorMessage) {
 // ===== CACHE =====
 let speciesCache = {};
 
+const ALL_POKEMON_CACHE_KEY = "pokedex:allPokemonList:v1";
+
+function readCache(key) {
+    try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : null;
+    } catch {
+        return null;
+    }
+}
+
+function writeCache(key, data) {
+    try {
+        localStorage.setItem(key, JSON.stringify(data));
+    } catch {
+        // localStorage unavailable or quota exceeded — cache is an
+        // optimization, not a requirement, so just skip persisting it
+    }
+}
+
 // ===== POKEMON =====
-async function fetchPokemonList(limit, offset) {
+export async function fetchPokemonList(limit, offset) {
     return fetchJSON(
         `${API_BASE}/pokemon?limit=${limit}&offset=${offset}`,
         "Failed to fetch pokemon list"
     );
 }
 
-async function fetchPokemonDetails(list) {
+export async function fetchPokemonDetails(list) {
     return Promise.all(
         list.results.map(p =>
             fetchJSON(p.url, "Failed to fetch pokemon details")
@@ -28,7 +48,7 @@ async function fetchPokemonDetails(list) {
 }
 
 // ===== SPECIES =====
-async function getPokemonSpecies(url) {
+export async function getPokemonSpecies(url) {
     if (speciesCache[url]) return speciesCache[url];
 
     try {
@@ -45,23 +65,28 @@ async function getPokemonSpecies(url) {
 }
 
 // ===== EVOLUTION =====
-async function fetchEvolutionChain(url) {
+export async function fetchEvolutionChain(url) {
     return fetchJSON(url, "Failed to fetch evolution chain");
 }
 
 // ===== SEARCH / FILTER =====
-async function fetchAllPokemonList() {
-    return fetchJSON(
+export async function fetchAllPokemonList() {
+    const cached = readCache(ALL_POKEMON_CACHE_KEY);
+    if (cached) return cached;
+
+    const data = await fetchJSON(
         `${API_BASE}/pokemon?limit=100000&offset=0`,
         "Failed to fetch all pokemon"
     );
+    writeCache(ALL_POKEMON_CACHE_KEY, data);
+    return data;
 }
 
-async function fetchPokemonByUrl(url) {
+export async function fetchPokemonByUrl(url) {
     return fetchJSON(url, "Failed to fetch pokemon details");
 }
 
-async function fetchPokemonByType(type) {
+export async function fetchPokemonByType(type) {
     return fetchJSON(
         `${API_BASE}/type/${type}`,
         "Failed to fetch pokemon type"

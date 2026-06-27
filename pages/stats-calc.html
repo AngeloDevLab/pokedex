@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex | Stats Calculator</title>
+
+    <link rel="icon" href="../assets/images/pokeball.png">
+
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/standard.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/inputs.css">
+    <link rel="stylesheet" href="../css/components/stats.css">
+    <link rel="stylesheet" href="../css/components/nav.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <script type="module" src="../js/stats-calc-page.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content max-content">
+            <div class="header-brand">
+                <a href="../index.html"><img src="../assets/images/pokeball.png" alt="Pokeball Image"></a>
+                <p class="hide-mobile">Pokédex</p>
+            </div>
+
+            <button id="nav-toggle" class="svg-button">
+
+                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 5h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 19h16" />
+                </svg>
+
+                <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
+
+            </button>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar"></div>
+
+    <main>
+
+        <div id="loader" class="loader hidden">
+            <img src="../assets/images/pokeball.png" alt="Loading">
+        </div>
+
+        <div class="stats-calc-content max-content">
+
+            <h1 data-i18n="statsCalc.title">Stats Calculator</h1>
+
+            <div class="search-group">
+                <label for="pokemon-picker" data-i18n="statsCalc.pickerLabel">Choose a Pokémon</label>
+                <input type="text" id="pokemon-picker" list="pokemon-options"
+                    data-i18n-placeholder="statsCalc.pickerPlaceholder" placeholder="Enter name...">
+                <datalist id="pokemon-options"></datalist>
+            </div>
+
+            <div id="stats-calc-result" class="stats-calc-result hidden">
+
+                <div class="stats-calc-header">
+                    <h2 id="stats-calc-pokemon-name"></h2>
+
+                    <label for="nature-select" data-i18n="statsCalc.natureLabel">Nature</label>
+                    <select id="nature-select"></select>
+
+                    <button id="stats-calc-reset" class="load-btn" data-i18n="statsCalc.reset">Reset</button>
+                </div>
+
+                <ul id="stats-calc-list" class="stats-list"></ul>
+
+                <div class="ev-total" id="ev-total">
+                    <span data-i18n="statsCalc.evTotal">EV Total</span>
+                    <span id="ev-total-value">0 / 510</span>
+                </div>
+
+                <div class="bst-total-row">
+                    <span data-i18n="statsCalc.bstTotal">Total</span>
+                    <span id="bst-total-value">0</span>
+                </div>
+
+            </div>
+
+            <div class="stage-table-wrapper">
+                <h2 data-i18n="statsCalc.stageTable">Combat Stage Multipliers</h2>
+
+                <table class="stage-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="statsCalc.stage">Stage</th>
+                            <th data-i18n="statsCalc.multiplier">Multiplier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>-6</td><td>×0.25</td></tr>
+                        <tr><td>-5</td><td>×0.29</td></tr>
+                        <tr><td>-4</td><td>×0.33</td></tr>
+                        <tr><td>-3</td><td>×0.4</td></tr>
+                        <tr><td>-2</td><td>×0.5</td></tr>
+                        <tr><td>-1</td><td>×0.67</td></tr>
+                        <tr><td>0</td><td>×1</td></tr>
+                        <tr><td>+1</td><td>×1.5</td></tr>
+                        <tr><td>+2</td><td>×2</td></tr>
+                        <tr><td>+3</td><td>×2.5</td></tr>
+                        <tr><td>+4</td><td>×3</td></tr>
+                        <tr><td>+5</td><td>×3.5</td></tr>
+                        <tr><td>+6</td><td>×4</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-content max-content">
+            <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+            <a href="imprint.html" data-i18n="footer.imprint">Imprint</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

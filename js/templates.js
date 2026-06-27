@@ -1,4 +1,7 @@
-function getPokemonCardTemplate({ id, name, image, gradient, types }) {
+import { t } from './i18n.js';
+import { getTypeIcon, getTypes, getAbilities } from './ui.js';
+
+export function getPokemonCardTemplate({ id, name, image, gradient, types }) {
     return `
         <div class="pokemon-card" data-id="${id}" style="background: ${gradient}">
             <div class="card-inner">
@@ -12,7 +15,7 @@ function getPokemonCardTemplate({ id, name, image, gradient, types }) {
     `;
 }
 
-function getPokemonDialogTemplate(pokemon, entry) {
+export function getPokemonDialogTemplate(pokemon, entry) {
     return `
         <div class="dialog-inner">
 
@@ -126,7 +129,7 @@ function getPokemonDialogTemplate(pokemon, entry) {
     `;
 }
 
-function getFallbackDialogTemplate(pokemon) {
+export function getFallbackDialogTemplate(pokemon) {
     return `
         <div class="dialog-inner">
 
@@ -178,7 +181,7 @@ function getFallbackDialogTemplate(pokemon) {
     `;
 }
 
-function getInfoTabTemplate(pokemon, entry) {
+export function getInfoTabTemplate(pokemon, entry) {
     return `
         <table class="info-table">
             <tr><td>${t('dialog.table.types', null, 'Types')}</td><td>${getTypes(pokemon).join(", ")}</td></tr>
@@ -191,7 +194,7 @@ function getInfoTabTemplate(pokemon, entry) {
     `;
 }
 
-function getStatsTabTemplate(stats) {
+export function getStatsTabTemplate(stats, pokemonName) {
     return `
         <ul class="stats-list">
             ${stats.map(stat => `
@@ -202,17 +205,21 @@ function getStatsTabTemplate(stats) {
                     </div>
 
                     <div class="stat-bar">
-                        <div class="stat-fill" 
+                        <div class="stat-fill"
                              style="width: ${stat.percent}%; background: ${stat.color}">
                         </div>
                     </div>
                 </li>
             `).join("")}
         </ul>
+
+        <a href="/pages/stats-calc.html?pokemon=${pokemonName}" class="load-btn stats-calc-link">
+            ${t('dialog.statsCalcLink', null, 'Open Stats Calculator')}
+        </a>
     `;
 }
 
-function getEvoTemplate(evoData) {
+export function getEvoTemplate(evoData) {
     return `
         <div class="evo-chain">
             ${evoData.map((evo, index) => `
@@ -239,7 +246,7 @@ function getEvoTemplate(evoData) {
     `;
 }
 
-function getArtworkTabTemplate(pokemon) {
+export function getArtworkTabTemplate(pokemon) {
     return `
         <div class="artwork-images">
             <img src="${pokemon.sprites.other["official-artwork"].front_default || ''}"
@@ -257,7 +264,7 @@ function getArtworkTabTemplate(pokemon) {
     `;
 }
 
-function getNoResultTemplate() {
+export function getNoResultTemplate() {
     return `
         <div class="no-results">
             ${t('results.noResults', null, 'No results found')}

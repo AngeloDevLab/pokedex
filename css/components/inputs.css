@@ -1,0 +1,18 @@
+.search-group input {
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    border: none;
+    outline: none;
+    background: var(--secondary-color);
+    color: var(--color-white);
+    caret-color: var(--color-white);
+}
+
+.search-group input:focus {
+    outline: 2px solid var(--accent-color);
+}
+
+.search-group input::placeholder {
+    color: var(--color-white);
+    opacity: 1;
+}

@@ -1,0 +1,70 @@
+.svg-button {
+    margin: 0;
+    padding: var(--space-2);
+    width: var(--space-5);
+    height: var(--space-5);
+    border: none;
+    border-radius: var(--radius-full);
+    background: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.svg-button svg {
+    width: var(--space-3);
+    height: var(--space-3);
+    stroke: var(--color-white);
+}
+
+.svg-button:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.2);
+}
+
+.lang-toggle {
+    display: flex;
+    gap: var(--space-1);
+}
+
+.lang-btn {
+    margin: 0;
+    padding: var(--space-1) var(--space-2);
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--radius-sm);
+    background: var(--primary-color);
+    color: var(--color-white);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.lang-btn:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.lang-btn.active {
+    border-color: var(--accent-color);
+    font-weight: bold;
+}
+
+.load-btn {
+    margin: 0 auto;
+    padding: var(--space-1) var(--space-2);
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--radius-sm);
+    background: var(--secondary-color);
+    color: var(--color-white);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.load-btn:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
