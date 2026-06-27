@@ -24,16 +24,16 @@
 **Ziel:** Mehrsprachigkeit als Grundlage — EN / DE / JA — bevor weitere Features gebaut werden
 
 ### Architektur
-- [ ] `locales/en.json`, `locales/de.json`, `locales/ja.json` anlegen
-- [ ] `scripts/i18n.js` schreiben:
+- [x] `locales/en.json`, `locales/de.json`, `locales/ja.json` anlegen
+- [x] `scripts/i18n.js` schreiben:
   - `t('key')` Funktion für UI-Strings
   - Sprachpräferenz in LocalStorage speichern
   - Fallback auf `en` wenn Key fehlt
-- [ ] Language-Toggle im Header (EN / DE / JA)
-- [ ] Bei Sprachwechsel: UI neu rendern ohne Seitenreload
+- [x] Language-Toggle im Header (EN / DE / JA)
+- [x] Bei Sprachwechsel: UI neu rendern ohne Seitenreload
 
 ### Bestehende Strings ersetzen
-- [ ] Alle hardcodierten UI-Texte im bestehenden Code durch `t('key')` ersetzen
+- [x] Alle hardcodierten UI-Texte im bestehenden Code durch `t('key')` ersetzen
   - Buttons: „load more", „load previous", „Clear Search", …
   - Labels: „Search by Name", „Filter by Type", …
   - Dialog: Tab-Beschriftungen, „No results found", …
@@ -44,8 +44,10 @@
 - [ ] Move- und Ability-Namen sprachabhängig (für spätere Sessions vorbereiten)
 - [ ] Japanisch: PokéAPI liefert `ja` (Kanji) und `ja-Hrkt` (Hiragana/Katakana) — `ja-Hrkt` als Default für JA
 
+> Hinweis: erfordert Vorladen der Species-Daten je Pokémon-Karte (aktuell nur lazy beim Dialog-Öffnen) — eigener Performance-Umbau, daher in diesem Schritt bewusst zurückgestellt.
+
 ### Japanisch UI-Strings
-- [ ] `ja.json` initial mit DeepL übersetzen (einmalig, dann statisch)
+- [x] `ja.json` initial manuell übersetzt (kein DeepL-Zugriff verfügbar — bei Bedarf später von Muttersprachler/DeepL gegenprüfen)
 - [ ] CJK-Zeichensatz testen (System-Fonts reichen auf modernen OS)
 
 ---

@@ -1,0 +1,58 @@
+{
+    "common": {
+        "search": "Suche"
+    },
+    "searchPanel": {
+        "nameLabel": "Suche nach Name",
+        "namePlaceholder": "Namen eingeben...",
+        "warning": "mind. 3 Zeichen",
+        "typeLabel": "Nach Typ filtern",
+        "typePlaceholder": "Typ wählen...",
+        "clear": "Suche zurücksetzen"
+    },
+    "results": {
+        "noResults": "Keine Ergebnisse gefunden"
+    },
+    "load": {
+        "more": "mehr laden",
+        "previous": "vorherige laden"
+    },
+    "dialog": {
+        "tabs": {
+            "info": "Info",
+            "stats": "Stats",
+            "evolution": "Entwicklung",
+            "artworks": "Artworks"
+        },
+        "noDetails": "Keine weiteren Details verfügbar",
+        "loading": "Lädt...",
+        "imageAlt": "Kein Bild für {name} gefunden. Sorry",
+        "table": {
+            "types": "Typen",
+            "edition": "Edition",
+            "baseXp": "Basis-EP",
+            "height": "Größe",
+            "weight": "Gewicht",
+            "abilities": "Fähigkeiten"
+        },
+        "flavorFallback": "Keine Beschreibung gefunden.",
+        "editionUnknown": "Unbekannt",
+        "artwork": {
+            "official": "{name} offizielles Artwork",
+            "officialShiny": "{name} schillerndes offizielles Artwork",
+            "sprite": "{name} Sprite",
+            "spriteShiny": "{name} schillerndes Sprite"
+        }
+    },
+    "stats": {
+        "hp": "KP",
+        "attack": "ANGRIFF",
+        "defense": "VERTEIDIGUNG",
+        "specialAttack": "SP. ANGRIFF",
+        "specialDefense": "SP. VERTEIDIGUNG",
+        "speed": "INITIATIVE"
+    },
+    "footer": {
+        "imprint": "Impressum"
+    }
+}

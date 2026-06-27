@@ -1,0 +1,58 @@
+{
+    "common": {
+        "search": "Search"
+    },
+    "searchPanel": {
+        "nameLabel": "Search by Name",
+        "namePlaceholder": "Enter name...",
+        "warning": "min. 3 characters",
+        "typeLabel": "Filter by Type",
+        "typePlaceholder": "Select type...",
+        "clear": "Clear Search"
+    },
+    "results": {
+        "noResults": "No results found"
+    },
+    "load": {
+        "more": "load more",
+        "previous": "load previous"
+    },
+    "dialog": {
+        "tabs": {
+            "info": "Info",
+            "stats": "Stats",
+            "evolution": "Evolution",
+            "artworks": "Artworks"
+        },
+        "noDetails": "No more details available",
+        "loading": "Loading...",
+        "imageAlt": "No {name}-Image found. Sorry",
+        "table": {
+            "types": "Types",
+            "edition": "Edition",
+            "baseXp": "Base XP",
+            "height": "Height",
+            "weight": "Weight",
+            "abilities": "Abilities"
+        },
+        "flavorFallback": "No description found.",
+        "editionUnknown": "Unknown",
+        "artwork": {
+            "official": "{name} official artwork",
+            "officialShiny": "{name} shiny official artwork",
+            "sprite": "{name} sprite",
+            "spriteShiny": "{name} shiny sprite"
+        }
+    },
+    "stats": {
+        "hp": "HP",
+        "attack": "ATTACK",
+        "defense": "DEFENSE",
+        "specialAttack": "SP. ATTACK",
+        "specialDefense": "SP. DEFENSE",
+        "speed": "SPEED"
+    },
+    "footer": {
+        "imprint": "Imprint"
+    }
+}

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./styles/fonts.css">
     <link rel="stylesheet" href="./styles/responsive.css">
 
+    <script src="./scripts/i18n.js"></script>
     <script src="./scripts/main.js"></script>
     <script src="./scripts/api.js"></script>
     <script src="./scripts/search.js"></script>
@@ -31,9 +32,15 @@
                 <p class="hide-mobile">Pokédex</p>
             </div>
 
+            <div class="lang-toggle" id="lang-toggle">
+                <button type="button" class="lang-btn" data-lang="en">EN</button>
+                <button type="button" class="lang-btn" data-lang="de">DE</button>
+                <button type="button" class="lang-btn" data-lang="ja">JA</button>
+            </div>
+
             <div class="searching-content">
 
-                <p>Search</p>
+                <p data-i18n="common.search">Search</p>
 
                 <button id="search-toggle" class="search-button">
 
@@ -60,16 +67,16 @@
 
         <div class="search-content max-content">
             <div class="search-group">
-                <label for="search-name">Search by Name</label>
-                <input type="search" id="search-name" placeholder="Enter name...">
-                <small id="search-warning" class="hidden">
+                <label for="search-name" data-i18n="searchPanel.nameLabel">Search by Name</label>
+                <input type="search" id="search-name" data-i18n-placeholder="searchPanel.namePlaceholder" placeholder="Enter name...">
+                <small id="search-warning" class="hidden" data-i18n="searchPanel.warning">
                     min. 3 characters
                 </small>
             </div>
 
             <div class="search-group">
-                <label for="filter-type">Filter by Type</label>
-                <input list="type-list" id="filter-type" placeholder="Select type...">
+                <label for="filter-type" data-i18n="searchPanel.typeLabel">Filter by Type</label>
+                <input list="type-list" id="filter-type" data-i18n-placeholder="searchPanel.typePlaceholder" placeholder="Select type...">
 
                 <datalist id="type-list">
                     <option value="fire">
@@ -92,7 +99,7 @@
                 </datalist>
             </div>
 
-            <button id="search-reset">Clear Search</button>
+            <button id="search-reset" data-i18n="searchPanel.clear">Clear Search</button>
         </div>
 
 
@@ -104,11 +111,11 @@
             <img src="./assets/images/pokeball.png" alt="Loading">
         </div>
 
-        <button id="load-previous-btn" class="load-btn">load previous</button>
+        <button id="load-previous-btn" class="load-btn" data-i18n="load.previous">load previous</button>
 
         <div id="pokemon-container" class="max-content"></div>
 
-        <button id="load-more-btn" class="load-btn">load more</button>
+        <button id="load-more-btn" class="load-btn" data-i18n="load.more">load more</button>
 
     </main>
 
@@ -117,7 +124,7 @@
     <footer>
         <div class="footer-content max-content">
             <img src="./assets/images/pokeball.png" alt="Pokeball Image">
-            <a href="imprint.html" target="_blank">Imprint</a>
+            <a href="imprint.html" target="_blank" data-i18n="footer.imprint">Imprint</a>
         </div>
     </footer>
 

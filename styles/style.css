@@ -66,6 +66,32 @@
     gap: 0.5rem;
 }
 
+.lang-toggle {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.lang-btn {
+    margin: 0;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 0.25rem;
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+    background: var(--secondary-color);
+}
+
+.lang-btn.active {
+    background: var(--secondary-color);
+    font-weight: bold;
+}
+
 .search-button svg {
     height: 1rem;
     width: 1rem;

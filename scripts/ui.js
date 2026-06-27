@@ -27,6 +27,24 @@ const TAB_RENDERER = {
     artworks: renderArtworkTab
 };
 
+const STAT_NAME_FALLBACK = {
+    hp: "HP",
+    attack: "ATTACK",
+    defense: "DEFENSE",
+    "special-attack": "SP. ATTACK",
+    "special-defense": "SP. DEFENSE",
+    speed: "SPEED"
+};
+
+const STAT_NAME_KEY = {
+    hp: "stats.hp",
+    attack: "stats.attack",
+    defense: "stats.defense",
+    "special-attack": "stats.specialAttack",
+    "special-defense": "stats.specialDefense",
+    speed: "stats.speed"
+};
+
 const LOAD_MODE = "append"; // "append" | "pagination"
 
 // ===== STATE =====
@@ -49,8 +67,8 @@ function getFlavorEntry(species) {
 
 function getDefaultFlavor() {
     return {
-        text: "No description found.",
-        edition: "Unknown"
+        text: t('dialog.flavorFallback', null, 'No description found.'),
+        edition: t('dialog.editionUnknown', null, 'Unknown')
     };
 }
 
@@ -74,10 +92,7 @@ function prepareStats(pokemon) {
 }
 
 function formatStatName(name) {
-    return name
-        .replace("-", " ")
-        .replace("special", "sp.")
-        .toUpperCase();
+    return t(STAT_NAME_KEY[name], null, STAT_NAME_FALLBACK[name]);
 }
 
 function getStatColor(value) {

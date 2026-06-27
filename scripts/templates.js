@@ -3,7 +3,7 @@ function getPokemonCardTemplate({ id, name, image, gradient, types }) {
         <div class="pokemon-card" data-id="${id}" style="background: ${gradient}">
             <div class="card-inner">
                 <h3>#${id}<br>${name}</h3>
-                <img src="${image}" alt="No ${name}-Image found. Sorry">
+                <img src="${image}" alt="${t('dialog.imageAlt', { name }, `No ${name}-Image found. Sorry`)}">
                 <div class="type-icons">
                     ${types.map(t => `<img src="${getTypeIcon(t)}" alt="${t}">`).join("")}
                 </div>
@@ -46,7 +46,7 @@ function getPokemonDialogTemplate(pokemon, entry) {
                         <path d="M12 16v-4" />
                         <path d="M12 8h.01" />
                     </svg>
-                    <p class="hide-tab-text">Info</p>
+                    <p class="hide-tab-text">${t('dialog.tabs.info', null, 'Info')}</p>
                 </button>
 
                 <button class="tab-btn" data-tab="stats">
@@ -57,7 +57,7 @@ function getPokemonDialogTemplate(pokemon, entry) {
                         <path d="M7 11h12" />
                         <path d="M7 6h3" />
                     </svg>
-                    <p class="hide-tab-text">Stats</p>
+                    <p class="hide-tab-text">${t('dialog.tabs.stats', null, 'Stats')}</p>
                 </button>
 
                 <button class="tab-btn" data-tab="evo">
@@ -84,7 +84,7 @@ function getPokemonDialogTemplate(pokemon, entry) {
                         </svg>
                     </div>
 
-                    <p class="hide-tab-text">Evolution</p>
+                    <p class="hide-tab-text">${t('dialog.tabs.evolution', null, 'Evolution')}</p>
                 </button>
 
                 <button class="tab-btn" data-tab="artworks">
@@ -95,7 +95,7 @@ function getPokemonDialogTemplate(pokemon, entry) {
                         <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
                     </svg>
 
-                    <p class="hide-tab-text">Artworks</p>
+                    <p class="hide-tab-text">${t('dialog.tabs.artworks', null, 'Artworks')}</p>
                 </button>
 
             </div>
@@ -152,7 +152,7 @@ function getFallbackDialogTemplate(pokemon) {
 
             <hr>
 
-            <p>No more details available</p>
+            <p>${t('dialog.noDetails', null, 'No more details available')}</p>
 
             <footer class="dialog-footer">
                 <hr>
@@ -181,12 +181,12 @@ function getFallbackDialogTemplate(pokemon) {
 function getInfoTabTemplate(pokemon, entry) {
     return `
         <table class="info-table">
-            <tr><td>Types</td><td>${getTypes(pokemon).join(", ")}</td></tr>
-            <tr><td>Edition</td><td>${entry.edition}</td></tr>
-            <tr><td>Base XP</td><td>${pokemon.base_experience}</td></tr>
-            <tr><td>Height</td><td>${(pokemon.height / 10).toFixed(1)} m</td></tr>
-            <tr><td>Weight</td><td>${(pokemon.weight / 10).toFixed(1)} kg</td></tr>
-            <tr class="abilities-row"><td>Abilities</td><td>${getAbilities(pokemon).join(",<br>")}</td></tr>
+            <tr><td>${t('dialog.table.types', null, 'Types')}</td><td>${getTypes(pokemon).join(", ")}</td></tr>
+            <tr><td>${t('dialog.table.edition', null, 'Edition')}</td><td>${entry.edition}</td></tr>
+            <tr><td>${t('dialog.table.baseXp', null, 'Base XP')}</td><td>${pokemon.base_experience}</td></tr>
+            <tr><td>${t('dialog.table.height', null, 'Height')}</td><td>${(pokemon.height / 10).toFixed(1)} m</td></tr>
+            <tr><td>${t('dialog.table.weight', null, 'Weight')}</td><td>${(pokemon.weight / 10).toFixed(1)} kg</td></tr>
+            <tr class="abilities-row"><td>${t('dialog.table.abilities', null, 'Abilities')}</td><td>${getAbilities(pokemon).join(",<br>")}</td></tr>
         </table>
     `;
 }
@@ -242,17 +242,17 @@ function getEvoTemplate(evoData) {
 function getArtworkTabTemplate(pokemon) {
     return `
         <div class="artwork-images">
-            <img src="${pokemon.sprites.other["official-artwork"].front_default || ''}" 
-                 alt="${pokemon.name} official artwork">
+            <img src="${pokemon.sprites.other["official-artwork"].front_default || ''}"
+                 alt="${t('dialog.artwork.official', { name: pokemon.name }, `${pokemon.name} official artwork`)}">
 
-            <img src="${pokemon.sprites.other["official-artwork"].front_shiny || ''}" 
-                 alt="${pokemon.name} shiny official artwork">
+            <img src="${pokemon.sprites.other["official-artwork"].front_shiny || ''}"
+                 alt="${t('dialog.artwork.officialShiny', { name: pokemon.name }, `${pokemon.name} shiny official artwork`)}">
 
-            <img src="${pokemon.sprites.front_default || ''}" 
-                 alt="${pokemon.name} sprite">
+            <img src="${pokemon.sprites.front_default || ''}"
+                 alt="${t('dialog.artwork.sprite', { name: pokemon.name }, `${pokemon.name} sprite`)}">
 
-            <img src="${pokemon.sprites.front_shiny || ''}" 
-                 alt="${pokemon.name} shiny sprite">
+            <img src="${pokemon.sprites.front_shiny || ''}"
+                 alt="${t('dialog.artwork.spriteShiny', { name: pokemon.name }, `${pokemon.name} shiny sprite`)}">
         </div>
     `;
 }
@@ -260,7 +260,7 @@ function getArtworkTabTemplate(pokemon) {
 function getNoResultTemplate() {
     return `
         <div class="no-results">
-            No results found
+            ${t('results.noResults', null, 'No results found')}
         </div>
     `;
 }

@@ -1,0 +1,58 @@
+{
+    "common": {
+        "search": "検索"
+    },
+    "searchPanel": {
+        "nameLabel": "名前で検索",
+        "namePlaceholder": "名前を入力...",
+        "warning": "3文字以上入力してください",
+        "typeLabel": "タイプで絞り込む",
+        "typePlaceholder": "タイプを選択...",
+        "clear": "検索をクリア"
+    },
+    "results": {
+        "noResults": "検索結果がありません"
+    },
+    "load": {
+        "more": "もっと見る",
+        "previous": "前を見る"
+    },
+    "dialog": {
+        "tabs": {
+            "info": "情報",
+            "stats": "能力値",
+            "evolution": "進化",
+            "artworks": "イラスト"
+        },
+        "noDetails": "詳細情報はありません",
+        "loading": "読み込み中...",
+        "imageAlt": "{name}の画像が見つかりません。すみません",
+        "table": {
+            "types": "タイプ",
+            "edition": "バージョン",
+            "baseXp": "基礎経験値",
+            "height": "高さ",
+            "weight": "重さ",
+            "abilities": "特性"
+        },
+        "flavorFallback": "説明文が見つかりません。",
+        "editionUnknown": "不明",
+        "artwork": {
+            "official": "{name}の公式アートワーク",
+            "officialShiny": "{name}の色違い公式アートワーク",
+            "sprite": "{name}のスプライト",
+            "spriteShiny": "{name}の色違いスプライト"
+        }
+    },
+    "stats": {
+        "hp": "HP",
+        "attack": "こうげき",
+        "defense": "ぼうぎょ",
+        "specialAttack": "とくこう",
+        "specialDefense": "とくぼう",
+        "speed": "すばやさ"
+    },
+    "footer": {
+        "imprint": "法的表示"
+    }
+}

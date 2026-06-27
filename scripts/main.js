@@ -11,7 +11,8 @@ let visibleCount = 20;
 // ===== INIT =====
 document.addEventListener("DOMContentLoaded", init);
 
-function init() {
+async function init() {
+    await initI18n();
     bindUI();
     loadPokemon();
 }

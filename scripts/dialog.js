@@ -88,6 +88,7 @@ function lockScroll() {
 
 function showDialog() {
     const dialog = document.getElementById("pokemon-dialog");
+    if (dialog.open) return;
     dialog.showModal();
 }
 
@@ -138,7 +139,7 @@ function renderStatsTab() {
 
 async function renderEvoTab() {
     const tabContent = getTabContent();
-    tabContent.innerHTML = "Loading...";
+    tabContent.innerHTML = t('dialog.loading', null, 'Loading...');
     const evoData = await getEvolutionData(currentDialogPokemon);
     tabContent.innerHTML = getEvoTemplate(evoData);
 }
