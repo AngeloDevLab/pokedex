@@ -100,8 +100,8 @@
 - Sonderfälle (Session 12 Regionalformen, Session 14 Fundorte) sind aktuell auch als eigene Seite vorgesehen, aber das ist nicht in Stein gemeißelt — wenn sich bei der jeweiligen Session ein Dialog-Tab doch sinnvoller anfühlt, können wir das dann nochmal anders entscheiden.
 
 **Vorarbeit — Cache für die Pokémon-Liste:** Jede dieser Seiten braucht ihre eigene Pokémon-Suche, die intern `fetchAllPokemonList()` nutzt (die große ~1300-Einträge-Liste). Aktuell wird die bei jedem Seitenwechsel neu geladen, weil der In-Memory-Cache (`allPokemonList` in `search.js`) nicht über Seitenwechsel hinweg besteht. Bevor mehrere neue Seiten das brauchen:
-- [ ] `localStorage`-Cache für die Liste aus `fetchAllPokemonList()` (nur `{name, url}`-Paare, ~130 KB — passt locker ins Limit)
-- [ ] Bewusst **nicht** die vollen Pokémon-Detail-Objekte cachen (würden bei ~1300 Stück mehrere MB werden, sprengt das übliche 5–10 MB-Limit) — die sind ohnehin schon über den normalen Browser-HTTP-Cache bei wiederholten Requests an dieselbe URL abgedeckt
+- [x] `localStorage`-Cache für die Liste aus `fetchAllPokemonList()` (nur `{name, url}`-Paare, ~130 KB — passt locker ins Limit) — direkt in `js/api.js` verdrahtet (versionierter Key `pokedex:allPokemonList:v1`), damit jeder Aufrufer automatisch profitiert, nicht nur `search.js`
+- [x] Bewusst **nicht** die vollen Pokémon-Detail-Objekte gecacht (würden bei ~1300 Stück mehrere MB werden, sprengt das übliche 5–10 MB-Limit) — die sind ohnehin schon über den normalen Browser-HTTP-Cache bei wiederholten Requests an dieselbe URL abgedeckt
 - [ ] Bei Bedarf später: falls doch mehr Detail-Daten dauerhaft gecacht werden sollen, dafür IndexedDB statt `localStorage` nutzen (höheres Quota, dafür gemacht) — nicht jetzt nötig
 
 ---
@@ -110,18 +110,18 @@
 
 **Ziel:** Eigene Seite `pages/stats-calc.html` für den vollständigen IV/EV/Nature-Rechner (siehe Zwischenschritt oben — kein Dialog-Tab mehr)
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
-- [ ] IV-Eingabefelder (0–31, Standard: 31) für alle 6 Stats
-- [ ] EV-Eingabefelder (0–252, Standard: 0) mit Live-Summen-Counter (≤ 510)
-- [ ] Nature-Dropdown (alle 25 Wesen, positiver Stat grün / negativer rot markiert)
-- [ ] Endwert live berechnen nach offizieller Formel (Level 100):
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] IV-Eingabefelder (0–31, Standard: 31) für alle 6 Stats
+- [x] EV-Eingabefelder (0–252, Standard: 0) mit Live-Summen-Counter (≤ 510)
+- [x] Nature-Dropdown (alle 25 Wesen, positiver Stat grün / negativer rot markiert)
+- [x] Endwert live berechnen nach offizieller Formel (Level 100):
   - KP: `⌊(2·AS + IS + ⌊EV/4⌋) · 1⌋ + 110`
   - Rest: `⌊(⌊(2·AS + IS + ⌊EV/4⌋) + 5⌋ · Nature⌋`
-- [ ] Endwert groß neben Balken anzeigen, Balken reagiert live
-- [ ] Farbcodierung Endwert: grün ≥ 100 / orange 60–99 / rot < 60
-- [ ] Schnell-Button „Reset" (EVs 0, IVs 31, Nature neutral)
-- [ ] Gesamt-BST der Endwerte unten anzeigen
-- [ ] Info-Tabelle Kampfstufen (−6 bis +6) mit Multiplikator
+- [x] Endwert groß neben Balken anzeigen, Balken reagiert live
+- [x] Farbcodierung Endwert: grün ≥ 100 / orange 60–99 / rot < 60
+- [x] Schnell-Button „Reset" (EVs 0, IVs 31, Nature neutral)
+- [x] Gesamt-BST der Endwerte unten anzeigen
+- [x] Info-Tabelle Kampfstufen (−6 bis +6) mit Multiplikator
 
 ---
 

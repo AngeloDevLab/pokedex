@@ -6,6 +6,7 @@ function getSidebarTemplate() {
     return `
         <nav class="sidebar-nav">
             <a href="/pages/search.html" data-i18n="common.search">Search</a>
+            <a href="/pages/stats-calc.html" data-i18n="statsCalc.navLink">Stats Calculator</a>
         </nav>
 
         <div class="lang-toggle" id="lang-toggle">

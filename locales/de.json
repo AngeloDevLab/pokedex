@@ -37,6 +37,7 @@
         },
         "flavorFallback": "Keine Beschreibung gefunden.",
         "editionUnknown": "Unbekannt",
+        "statsCalcLink": "Statuswert-Rechner öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -54,5 +55,20 @@
     },
     "footer": {
         "imprint": "Impressum"
+    },
+    "statsCalc": {
+        "title": "Statuswert-Rechner",
+        "navLink": "Statuswert-Rechner",
+        "pickerLabel": "Pokémon wählen",
+        "pickerPlaceholder": "Namen eingeben...",
+        "natureLabel": "Wesen",
+        "reset": "Zurücksetzen",
+        "evTotal": "FP-Summe",
+        "bstTotal": "Gesamt",
+        "stageTable": "Kampfstufen-Multiplikatoren",
+        "stage": "Stufe",
+        "multiplier": "Multiplikator",
+        "iv": "IW",
+        "ev": "FP"
     }
 }

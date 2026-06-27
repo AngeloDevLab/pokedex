@@ -194,7 +194,7 @@ export function getInfoTabTemplate(pokemon, entry) {
     `;
 }
 
-export function getStatsTabTemplate(stats) {
+export function getStatsTabTemplate(stats, pokemonName) {
     return `
         <ul class="stats-list">
             ${stats.map(stat => `
@@ -205,13 +205,17 @@ export function getStatsTabTemplate(stats) {
                     </div>
 
                     <div class="stat-bar">
-                        <div class="stat-fill" 
+                        <div class="stat-fill"
                              style="width: ${stat.percent}%; background: ${stat.color}">
                         </div>
                     </div>
                 </li>
             `).join("")}
         </ul>
+
+        <a href="/pages/stats-calc.html?pokemon=${pokemonName}" class="load-btn stats-calc-link">
+            ${t('dialog.statsCalcLink', null, 'Open Stats Calculator')}
+        </a>
     `;
 }
 

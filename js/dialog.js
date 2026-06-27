@@ -152,7 +152,7 @@ export function renderInfoTab() {
 export function renderStatsTab() {
     const tabContent = getTabContent();
     const stats = prepareStats(currentDialogPokemon);
-    tabContent.innerHTML = getStatsTabTemplate(stats);
+    tabContent.innerHTML = getStatsTabTemplate(stats, currentDialogPokemon.name);
 }
 
 export async function renderEvoTab() {

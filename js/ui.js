@@ -95,7 +95,7 @@ export function prepareStats(pokemon) {
     });
 }
 
-function formatStatName(name) {
+export function formatStatName(name) {
     return t(STAT_NAME_KEY[name], null, STAT_NAME_FALLBACK[name]);
 }
 

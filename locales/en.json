@@ -37,6 +37,7 @@
         },
         "flavorFallback": "No description found.",
         "editionUnknown": "Unknown",
+        "statsCalcLink": "Open Stats Calculator",
         "artwork": {
             "official": "{name} official artwork",
             "officialShiny": "{name} shiny official artwork",
@@ -54,5 +55,20 @@
     },
     "footer": {
         "imprint": "Imprint"
+    },
+    "statsCalc": {
+        "title": "Stats Calculator",
+        "navLink": "Stats Calculator",
+        "pickerLabel": "Choose a Pokémon",
+        "pickerPlaceholder": "Enter name...",
+        "natureLabel": "Nature",
+        "reset": "Reset",
+        "evTotal": "EV Total",
+        "bstTotal": "Total",
+        "stageTable": "Combat Stage Multipliers",
+        "stage": "Stage",
+        "multiplier": "Multiplier",
+        "iv": "IV",
+        "ev": "EV"
     }
 }
