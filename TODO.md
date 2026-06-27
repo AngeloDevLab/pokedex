@@ -25,7 +25,7 @@
 
 ### Architektur
 - [x] `locales/en.json`, `locales/de.json`, `locales/ja.json` anlegen
-- [x] `scripts/i18n.js` schreiben:
+- [x] `js/i18n.js` schreiben:
   - `t('key')` Funktion für UI-Strings
   - Sprachpräferenz in LocalStorage speichern
   - Fallback auf `en` wenn Key fehlt
@@ -69,6 +69,8 @@
 
 ### Architektur-Entscheidungen
 - [x] MPA bestätigt (passt zur bestehenden Roadmap — `calc.html`, `items.html`, etc. sind bereits als eigene Seiten geplant — sowie zu „kein Build-Tool" + GitHub-Pages-Hosting)
+- [x] Ordnerstruktur: `scripts/` → `js/`, `styles/` → `css/`; neue Seiten außer `index.html` (das aus GitHub-Pages-Gründen im Root bleiben muss) wandern in `pages/` (z. B. `pages/imprint.html`)
+- [x] Konvention für künftige Seiten (Sessions 5+): pro Seite eine `js/<seite>.js` + `css/<seite>.css`, flach in `js/`/`css/` (kein Unterordner pro Seite, solange es nur wenige sind). Gemeinsam genutzter Code (`api.js`, `i18n.js`, ggf. `ui.js`-Helfer) bleibt zentral und wird von mehreren Seiten eingebunden. Aufteilung in Unterordner (z. B. `js/core/`, `js/pages/`) erst, wenn die flache Liste unübersichtlich wird (~8–10 Dateien) — nicht vorab anlegen.
 - [ ] Umstieg auf ES Modules (`<script type="module">`, `import`/`export` statt globaler Funktionen/Variablen)
   - Vermeidet Namespace-Kollisionen bei wachsender Dateizahl
   - Erfordert lokalen Server zum Testen (kein `file://`, wie schon bei `locales/*.json`)
@@ -76,7 +78,7 @@
 ### Navigation-Shell
 - [ ] Burger-Menü (Mobile) / Sidebar (Desktop) für Navigation zwischen Features
 - [ ] Default-Ansicht bleibt der bestehende Pokémon-Grid-Scroll
-- [ ] Menü verlinkt zu künftigen Seiten (`calc.html`, `items.html`, `moves.html`, …) sobald sie existieren
+- [ ] Menü verlinkt zu künftigen Seiten (`pages/calc.html`, `pages/items.html`, `pages/moves.html`, …) sobald sie existieren
 - [ ] Language-Toggle ins Menü verschieben (Header bleibt schlank: Logo + Menü-Toggle + Search)
 - [ ] Header-Layout entsprechend aufräumen
 
