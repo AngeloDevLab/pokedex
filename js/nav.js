@@ -1,15 +1,23 @@
 // ===== STATE =====
 let sidebarOpen = false;
 
-// ===== TEMPLATE =====
-function getSidebarTemplate() {
-    return `
-        <nav class="sidebar-nav">
-            <a href="/pages/search.html" data-i18n="common.search">Search</a>
-            <a href="/pages/stats-calc.html" data-i18n="statsCalc.navLink">Stats Calculator</a>
-        </nav>
+// Single source of truth for nav links — rendered into both the mobile
+// sidebar (vertical) and the desktop header (horizontal, see initNavShell()).
+const NAV_LINKS = [
+    { href: "/pages/search.html", i18nKey: "common.search", fallback: "Search" },
+    { href: "/pages/stats-calc.html", i18nKey: "statsCalc.navLink", fallback: "Stats Calculator" }
+];
 
-        <div class="lang-toggle" id="lang-toggle">
+// ===== TEMPLATES =====
+function getNavLinksMarkup() {
+    return NAV_LINKS
+        .map(link => `<a href="${link.href}" data-i18n="${link.i18nKey}">${link.fallback}</a>`)
+        .join("");
+}
+
+function getLangToggleTemplate() {
+    return `
+        <div class="lang-toggle">
             <button type="button" class="lang-btn" data-lang="en">EN</button>
             <button type="button" class="lang-btn" data-lang="de">DE</button>
             <button type="button" class="lang-btn" data-lang="ja">JA</button>
@@ -17,12 +25,28 @@ function getSidebarTemplate() {
     `;
 }
 
+function getSidebarTemplate() {
+    return `
+        <nav class="sidebar-nav">${getNavLinksMarkup()}</nav>
+        ${getLangToggleTemplate()}
+    `;
+}
+
+function getHeaderNavTemplate() {
+    return `<nav class="header-nav-links">${getNavLinksMarkup()}</nav>`;
+}
+
 // ===== INIT =====
 export function initNavShell() {
     const sidebar = document.getElementById("sidebar");
-    if (!sidebar) return;
+    if (sidebar) sidebar.innerHTML = getSidebarTemplate();
 
-    sidebar.innerHTML = getSidebarTemplate();
+    const headerNavSlot = document.getElementById("header-nav-slot");
+    if (headerNavSlot) headerNavSlot.innerHTML = getHeaderNavTemplate();
+
+    const headerLangSlot = document.getElementById("header-lang-slot");
+    if (headerLangSlot) headerLangSlot.innerHTML = getLangToggleTemplate();
+
     bindNavToggle();
 }
 

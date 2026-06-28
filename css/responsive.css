@@ -30,3 +30,13 @@
         display: block;
     }
 }
+
+@media (min-width: 768px) {
+    .nav-mobile-trigger {
+        display: none;
+    }
+
+    .nav-desktop-only {
+        display: block;
+    }
+}

@@ -26,28 +26,37 @@
 
     <header>
         <div class="header-content max-content">
-            <div class="header-brand">
-                <a href="index.html"><img src="./assets/images/pokeball.png" alt="Pokeball Image"></a>
-                <p class="hide-mobile">Pokédex</p>
+            <div class="header-left">
+                <div class="header-brand">
+                    <a href="index.html">
+                        <img src="./assets/images/pokeball.png" alt="Pokeball Image">
+                        <p>Pokédex</p>
+                    </a>
+                </div>
             </div>
 
-            <button id="nav-toggle" class="svg-button">
+            <div class="header-right">
+                <div id="header-lang-slot" class="nav-desktop-only"></div>
 
-                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 5h16" />
-                    <path d="M4 12h16" />
-                    <path d="M4 19h16" />
-                </svg>
+                <div id="header-nav-slot" class="nav-desktop-only"></div>
 
-                <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                </svg>
+                <button id="nav-toggle" class="svg-button nav-mobile-trigger">
 
-            </button>
+                    <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 5h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 19h16" />
+                    </svg>
+
+                    <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+
+                </button>
+            </div>
         </div>
     </header>
 
