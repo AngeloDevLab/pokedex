@@ -129,12 +129,12 @@
 
 **Ziel:** Eigene Seite `pages/matchup.html` — auf einen Blick sehen welche Typen wie viel Schaden gegen ein gewähltes Pokémon machen
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
-- [ ] Tabelle: alle 18 Typen mit Schadens-Multiplikator gegen dieses Pokémon
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] Tabelle: alle 18 Typen mit Schadens-Multiplikator gegen dieses Pokémon
   - 4× / 2× / 1× / 0,5× / 0,25× / 0× (Immunität)
-- [ ] Dual-Typ-Berechnung automatisch (z.B. Wasser/Boden = Gras trifft 4×)
-- [ ] Typ-Icons statt Text für kompakte Darstellung
-- [ ] Statische Matchup-Matrix als JS-Objekt (ändert sich nie)
+- [x] Dual-Typ-Berechnung automatisch (z.B. Wasser/Boden = Gras trifft 4×)
+- [x] Typ-Icons statt Text für kompakte Darstellung
+- [x] Statische Matchup-Matrix als JS-Objekt (ändert sich nie)
 
 ---
 
@@ -142,14 +142,14 @@
 
 **Ziel:** Eigene Seite `pages/learnset.html` — alle Attacken, die ein gewähltes Pokémon lernen kann
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
-- [ ] Anzeige nach Lernmethode gruppiert: Level-up / TM / Egg Move / Tutor
-- [ ] Level-up: Level + Move-Name + Typ-Icon + Kategorie-Icon
-- [ ] Egg Moves farblich hervorheben (competitive relevant)
-- [ ] Move-Details on click: Power, Accuracy, PP, Kategorie, Effekt-Text
-- [ ] Move-Namen sprachabhängig (i18n aus Session 2 nutzen)
-- [ ] Datenquelle: PokéAPI `/pokemon/{id}` liefert komplettes Learnset
-- [ ] Abgrenzung zu Session 16 (`moves.html`): diese Seite zeigt das Lernset **eines gewählten Pokémon**, Session 16 ist die allgemeine Move-Datenbank ohne Pokémon-Bezug
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] Anzeige nach Lernmethode gruppiert: Level-up / TM / Egg Move / Tutor
+- [x] Level-up: Level + Move-Name + Typ-Icon + Kategorie-Icon — Kategorie als farbiger Punkt statt eigenem Icon-Asset (kein Physisch/Spezial/Status-Icon im Bestand, Farbe reicht für die Unterscheidung)
+- [x] Egg Moves farblich hervorheben (competitive relevant)
+- [x] Move-Details on click: Power, Accuracy, PP, Kategorie, Effekt-Text
+- [x] Move-Namen sprachabhängig (i18n aus Session 2 nutzen) — nutzt PokéAPIs eigenes `names`-Array je Move, gefiltert auf die aktuell über `i18n.js` gewählte Sprache (Fallback: EN, dann formatierter Slug)
+- [x] Datenquelle: PokéAPI `/pokemon/{id}` liefert komplettes Learnset
+- [x] Abgrenzung zu Session 16 (`moves.html`): diese Seite zeigt das Lernset **eines gewählten Pokémon**, Session 16 ist die allgemeine Move-Datenbank ohne Pokémon-Bezug
 
 ---
 
@@ -157,14 +157,14 @@
 
 **Ziel:** Eigene Seite `calc.html` + Integration im Dialog als Schnell-Check
 
-- [ ] Seite `calc.html` mit zwei Seiten: Angreifer / Verteidiger
-- [ ] Angreifer: Pokémon wählen (Suche), Angriff-Stat + EVs/Nature, Move auswählen
-- [ ] Verteidiger: Pokémon wählen, HP + Def/SpDef + EVs/Nature
-- [ ] Im Dialog: Verteidiger vorausgefüllt mit aktuellem Pokémon
-- [ ] Ergebnis: Schadensspanne Min–Max in HP und in % der Gesamt-HP
+- [x] Seite `pages/damage-calc.html` mit zwei Spalten: Angreifer / Verteidiger (statt eines eigenen `calc.html` im Root — folgt der etablierten `pages/`-Konvention)
+- [x] Angreifer: Pokémon wählen (Suche), Angriff-Stat + EVs/Nature, Move auswählen — Move-Auswahl kommt aus dem echten Lernset des Angreifers (`core/moveset.js`, aus `learnset-page.js` extrahiert, da jetzt 2 Verbraucher), gefiltert auf schadende Attacken; welcher Stat (Angriff/Sp. Angriff) gezeigt wird, richtet sich nach der Kategorie der gewählten Attacke
+- [x] Verteidiger: Pokémon wählen, HP + Def/SpDef + EVs/Nature — gleiche Kategorie-Logik wie beim Angreifer
+- [x] Im Dialog: Verteidiger vorausgefüllt mit aktuellem Pokémon — `?defender=`-Query-Param (separat von `?pokemon=`, da der Angreifer-Picker auf derselben Seite den Standard-Parameter nutzt; `pokemon-picker.js` bekam dafür einen optionalen `queryParam`)
+- [x] Ergebnis: Schadensspanne Min–Max in HP und in % der Gesamt-HP
   - z.B. „84–99 HP (52–61%)"
-- [ ] OHKO / 2HKO / 3HKO Indikator mit Farbmarkierung
-- [ ] Schadensformel: `⌊⌊⌊2·Level/5+2⌋ · Angriff/Verteidigung · BasePower / 50 + 2⌋ · Modifier⌋`
+- [x] OHKO / 2HKO / 3HKO Indikator mit Farbmarkierung — Spanne aus bestem/schlechtestem Treffer (z.B. „2-3HKO"), Farbe nach dem gefährlicheren Ende (OHKO rot, 2HKO orange, sonst grün)
+- [x] Schadensformel: `⌊⌊⌊2·Level/5+2⌋ · Angriff/Verteidigung · BasePower / 50 + 2⌋ · Modifier⌋` — Level fix 100 (gleiche Konvention wie der Statuswert-Rechner), Modifier bewusst auf STAB × Typeneffektivität × offizielle 85–100%-Zufallsspanne begrenzt (keine Items/Abilities/Wetter, gibt's im Projekt noch nicht)
 
 ---
 

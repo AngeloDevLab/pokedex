@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex | Search</title>
+    <title>Pokédex | Learnset</title>
 
     <link rel="icon" href="../assets/images/pokeball.png">
 
@@ -12,15 +12,12 @@
     <link rel="stylesheet" href="../css/standard.css">
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/inputs.css">
-    <link rel="stylesheet" href="../css/components/search.css">
-    <link rel="stylesheet" href="../css/components/cards.css">
-    <link rel="stylesheet" href="../css/components/dialog.css">
-    <link rel="stylesheet" href="../css/components/stats.css">
+    <link rel="stylesheet" href="../css/components/learnset.css">
     <link rel="stylesheet" href="../css/components/nav.css">
     <link rel="stylesheet" href="../css/fonts.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <script type="module" src="../js/pages/search-page.js"></script>
+    <script type="module" src="../js/pages/learnset-page.js"></script>
 
 </head>
 
@@ -70,54 +67,59 @@
             <img src="../assets/images/pokeball.png" alt="Loading">
         </div>
 
-        <div class="search-content max-content">
-            <div class="search-group">
-                <label for="search-name" data-i18n="searchPanel.nameLabel">Search by Name</label>
-                <input type="search" id="search-name" data-i18n-placeholder="searchPanel.namePlaceholder"
-                    placeholder="Enter name...">
-                <small id="search-warning" class="hidden" data-i18n="searchPanel.warning">
-                    min. 3 characters
-                </small>
-            </div>
+        <div class="learnset-content max-content">
+
+            <h1 data-i18n="learnset.title">Learnset</h1>
 
             <div class="search-group">
-                <label for="filter-type" data-i18n="searchPanel.typeLabel">Filter by Type</label>
-                <input list="type-list" id="filter-type" data-i18n-placeholder="searchPanel.typePlaceholder"
-                    placeholder="Select type...">
-
-                <datalist id="type-list">
-                    <option value="fire">
-                    <option value="water">
-                    <option value="grass">
-                    <option value="electric">
-                    <option value="ice">
-                    <option value="fighting">
-                    <option value="poison">
-                    <option value="ground">
-                    <option value="flying">
-                    <option value="psychic">
-                    <option value="bug">
-                    <option value="rock">
-                    <option value="ghost">
-                    <option value="dragon">
-                    <option value="dark">
-                    <option value="steel">
-                    <option value="fairy">
-                </datalist>
+                <label for="pokemon-picker" data-i18n="common.pickerLabel">Choose a Pokémon</label>
+                <input type="text" id="pokemon-picker" list="pokemon-options"
+                    data-i18n-placeholder="common.pickerPlaceholder" placeholder="Enter name...">
+                <datalist id="pokemon-options"></datalist>
             </div>
 
-            <button id="search-reset" data-i18n="searchPanel.clear">Clear Search</button>
+            <div id="learnset-result" class="learnset-result hidden">
+                <h2 id="learnset-pokemon-name"></h2>
+
+                <div class="legend">
+                    <span class="legend-item">
+                        <span class="move-category-badge move-category-physical"></span>
+                        <span data-i18n="learnset.physical">Physical</span>
+                    </span>
+                    <span class="legend-item">
+                        <span class="move-category-badge move-category-special"></span>
+                        <span data-i18n="learnset.special">Special</span>
+                    </span>
+                    <span class="legend-item">
+                        <span class="move-category-badge move-category-status"></span>
+                        <span data-i18n="learnset.status">Status</span>
+                    </span>
+                </div>
+
+                <section class="learnset-group" id="learnset-group-level-up">
+                    <h3 data-i18n="learnset.levelUp">Level-up</h3>
+                    <ul class="learnset-list" id="learnset-list-level-up"></ul>
+                </section>
+
+                <section class="learnset-group" id="learnset-group-machine">
+                    <h3 data-i18n="learnset.tm">TM</h3>
+                    <ul class="learnset-list" id="learnset-list-machine"></ul>
+                </section>
+
+                <section class="learnset-group" id="learnset-group-egg">
+                    <h3 data-i18n="learnset.egg">Egg Moves</h3>
+                    <ul class="learnset-list" id="learnset-list-egg"></ul>
+                </section>
+
+                <section class="learnset-group" id="learnset-group-tutor">
+                    <h3 data-i18n="learnset.tutor">Tutor</h3>
+                    <ul class="learnset-list" id="learnset-list-tutor"></ul>
+                </section>
+            </div>
+
         </div>
 
-        <button id="load-previous-btn" class="load-btn hidden" data-i18n="load.previous">load previous</button>
-
-        <div id="pokemon-container" class="max-content"></div>
-
-        <button id="load-more-btn" class="load-btn hidden" data-i18n="load.more">load more</button>
-
     </main>
-
-    <dialog id="pokemon-dialog" closedby="any"></dialog>
 
     <footer>
         <div class="footer-content max-content">

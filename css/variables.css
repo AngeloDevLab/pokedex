@@ -20,6 +20,7 @@
     --overlay-backdrop: rgba(0, 0, 0, 0.7);
     --shadow-card: rgba(0, 0, 0, 0.4);
     --glow-color: rgba(255, 255, 255, 0.3);
+    --glow-accent: rgba(85, 0, 255, 0.3);
     --stat-track-color: rgba(255, 255, 255, 0.1);
 
     /* layout */

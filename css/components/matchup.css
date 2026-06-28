@@ -1,0 +1,73 @@
+.matchup-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.matchup-result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.matchup-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.matchup-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--secondary-color);
+}
+
+.matchup-row img {
+    width: var(--space-5);
+    height: var(--space-5);
+}
+
+.matchup-type-name {
+    flex: 1;
+    text-transform: uppercase;
+}
+
+.matchup-multiplier {
+    font-weight: bold;
+}
+
+.matchup-weak .matchup-multiplier {
+    color: var(--stat-low);
+}
+
+.matchup-resist .matchup-multiplier {
+    color: var(--stat-high);
+}
+
+.matchup-neutral .matchup-multiplier {
+    color: var(--muted-color);
+}
+
+.matchup-immune .matchup-multiplier {
+    color: var(--muted-color);
+    font-style: italic;
+}
+
+.matchup-weak .legend-dot {
+    background: var(--stat-low);
+}
+
+.matchup-resist .legend-dot {
+    background: var(--stat-high);
+}
+
+.matchup-neutral .legend-dot,
+.matchup-immune .legend-dot {
+    background: var(--muted-color);
+}

@@ -1,5 +1,5 @@
-import { initI18n } from './i18n.js';
-import { initNavShell } from './nav.js';
+import { initI18n } from '../core/i18n.js';
+import { initNavShell } from '../core/nav.js';
 import {
     bindOpenDialog,
     bindCloseDialog,
@@ -7,7 +7,7 @@ import {
     bindLoadMore,
     bindLoadPrevious,
     bindSearchInputs
-} from './ui.js';
+} from '../core/ui.js';
 
 // ===== INIT =====
 init();

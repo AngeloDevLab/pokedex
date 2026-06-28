@@ -1,17 +1,15 @@
-import { initI18n, t } from './i18n.js';
-import { initNavShell } from './nav.js';
-import { fetchAllPokemonList, fetchPokemonByUrl } from './api.js';
-import { withLoader } from './pagination.js';
-import { calculateStat } from './stat-formula.js';
-import { NATURES, getNatureMultiplier } from './natures.js';
-import { formatStatName } from './ui.js';
+import { initI18n, t } from '../core/i18n.js';
+import { initNavShell } from '../core/nav.js';
+import { initPokemonPicker } from '../core/pokemon-picker.js';
+import { calculateStat } from '../data/stat-formula.js';
+import { NATURES, getNatureMultiplier } from '../data/natures.js';
+import { formatStatName } from '../core/ui.js';
 
 // ===== CONFIG =====
 const EV_LIMIT = 510;
 const BAR_SCALE = 500;
 
 // ===== STATE =====
-let allPokemon = [];
 let currentPokemon = null;
 let ivs = createIvState();
 let evs = createEvState();
@@ -24,12 +22,14 @@ async function init() {
     initNavShell();
     await initI18n();
     populateNatureSelect();
-    bindPicker();
     bindNatureSelect();
     bindResetButton();
     bindStatInputs();
-    await withLoader(loadPokemonOptions);
-    await resolvePokemonFromQuery();
+    await initPokemonPicker({
+        inputId: "pokemon-picker",
+        datalistId: "pokemon-options",
+        onSelect: selectPokemon
+    });
 }
 
 function createIvState() {
@@ -40,51 +40,13 @@ function createEvState() {
     return { hp: 0, attack: 0, defense: 0, "special-attack": 0, "special-defense": 0, speed: 0 };
 }
 
-// ===== POKEMON PICKER =====
-async function loadPokemonOptions() {
-    const data = await fetchAllPokemonList();
-    allPokemon = data.results;
-
-    const datalist = document.getElementById("pokemon-options");
-    datalist.innerHTML = allPokemon.map(p => `<option value="${p.name}">`).join("");
-}
-
-function bindPicker() {
-    const input = document.getElementById("pokemon-picker");
-    input.addEventListener("change", handlePickerChange);
-}
-
-function handlePickerChange(e) {
-    const match = findPokemonByName(e.target.value);
-    if (!match) return;
-    selectPokemon(match.url);
-}
-
-function findPokemonByName(name) {
-    const normalized = name.trim().toLowerCase();
-    return allPokemon.find(p => p.name === normalized);
-}
-
-async function resolvePokemonFromQuery() {
-    const name = new URLSearchParams(location.search).get("pokemon");
-    if (!name) return;
-
-    const match = findPokemonByName(name);
-    if (!match) return;
-
-    document.getElementById("pokemon-picker").value = match.name;
-    await selectPokemon(match.url);
-}
-
-async function selectPokemon(url) {
-    await withLoader(async () => {
-        currentPokemon = await fetchPokemonByUrl(url);
-        ivs = createIvState();
-        evs = createEvState();
-        currentNature = NATURES[0];
-        document.getElementById("nature-select").value = 0;
-        renderStatsCalc();
-    });
+function selectPokemon(pokemon) {
+    currentPokemon = pokemon;
+    ivs = createIvState();
+    evs = createEvState();
+    currentNature = NATURES[0];
+    document.getElementById("nature-select").value = 0;
+    renderStatsCalc();
 }
 
 // ===== NATURE =====

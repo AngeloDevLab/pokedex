@@ -191,6 +191,18 @@ export function getInfoTabTemplate(pokemon, entry) {
             <tr><td>${t('dialog.table.weight', null, 'Weight')}</td><td>${(pokemon.weight / 10).toFixed(1)} kg</td></tr>
             <tr class="abilities-row"><td>${t('dialog.table.abilities', null, 'Abilities')}</td><td>${getAbilities(pokemon).join(",<br>")}</td></tr>
         </table>
+
+        <a href="/pages/matchup.html?pokemon=${pokemon.name}" class="load-btn matchup-link">
+            ${t('dialog.matchupLink', null, 'Open Type Matchup')}
+        </a>
+
+        <a href="/pages/learnset.html?pokemon=${pokemon.name}" class="load-btn learnset-link">
+            ${t('dialog.learnsetLink', null, 'Open Learnset')}
+        </a>
+
+        <a href="/pages/damage-calc.html?defender=${pokemon.name}" class="load-btn damage-calc-link">
+            ${t('dialog.damageCalcLink', null, 'Open Damage Calculator')}
+        </a>
     `;
 }
 

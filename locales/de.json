@@ -1,6 +1,8 @@
 {
     "common": {
-        "search": "Suche"
+        "search": "Suche",
+        "pickerLabel": "Pokémon wählen",
+        "pickerPlaceholder": "Namen eingeben..."
     },
     "searchPanel": {
         "nameLabel": "Suche nach Name",
@@ -38,6 +40,9 @@
         "flavorFallback": "Keine Beschreibung gefunden.",
         "editionUnknown": "Unbekannt",
         "statsCalcLink": "Statuswert-Rechner öffnen",
+        "matchupLink": "Typ-Matchup öffnen",
+        "learnsetLink": "Lernset öffnen",
+        "damageCalcLink": "Schadensrechner öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -59,8 +64,6 @@
     "statsCalc": {
         "title": "Statuswert-Rechner",
         "navLink": "Statuswert-Rechner",
-        "pickerLabel": "Pokémon wählen",
-        "pickerPlaceholder": "Namen eingeben...",
         "natureLabel": "Wesen",
         "reset": "Zurücksetzen",
         "evTotal": "FP-Summe",
@@ -70,5 +73,41 @@
         "multiplier": "Multiplikator",
         "iv": "IW",
         "ev": "FP"
+    },
+    "matchup": {
+        "title": "Typ-Matchup",
+        "navLink": "Typ-Matchup",
+        "immune": "Immun",
+        "legendWeak": "Schwäche — kassiert mehr Schaden",
+        "legendResist": "Resistenz — kassiert weniger Schaden",
+        "legendNeutral": "Neutral"
+    },
+    "learnset": {
+        "title": "Lernset",
+        "navLink": "Lernset",
+        "levelUp": "Level-Aufstieg",
+        "tm": "TM",
+        "egg": "Ei-Attacken",
+        "tutor": "Lehrmeister",
+        "power": "Stärke",
+        "accuracy": "Genauigkeit",
+        "pp": "AP",
+        "category": "Kategorie",
+        "physical": "Physisch",
+        "special": "Speziell",
+        "status": "Status"
+    },
+    "damageCalc": {
+        "title": "Schadensrechner",
+        "navLink": "Schadensrechner",
+        "attacker": "Angreifer",
+        "defender": "Verteidiger",
+        "moveLabel": "Attacke",
+        "selectMove": "Attacke wählen",
+        "resultTitle": "Ergebnis",
+        "stab": "STAB",
+        "typeEffectiveness": "Typ",
+        "noEffect": "Kein Effekt",
+        "ohko": "OHKO"
     }
 }

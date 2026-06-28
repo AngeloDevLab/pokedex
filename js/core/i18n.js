@@ -34,6 +34,10 @@ async function loadTranslations() {
     }
 }
 
+export function getCurrentLang() {
+    return currentLang;
+}
+
 // ===== TRANSLATE =====
 export function t(key, vars, fallback) {
     const value = getNested(translations[currentLang], key)
@@ -92,9 +96,9 @@ function rerenderDynamicContent() {
 }
 
 function bindLanguageToggle() {
-    const toggle = document.getElementById("lang-toggle");
-    if (!toggle) return;
-    toggle.addEventListener("click", handleLanguageToggleClick);
+    document.querySelectorAll(".lang-toggle").forEach(toggle => {
+        toggle.addEventListener("click", handleLanguageToggleClick);
+    });
 }
 
 function handleLanguageToggleClick(e) {
@@ -104,7 +108,7 @@ function handleLanguageToggleClick(e) {
 }
 
 function renderLanguageToggleState() {
-    document.querySelectorAll("#lang-toggle [data-lang]").forEach(btn => {
+    document.querySelectorAll(".lang-toggle [data-lang]").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.lang === currentLang);
     });
 }

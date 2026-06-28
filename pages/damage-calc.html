@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex | Damage Calculator</title>
+
+    <link rel="icon" href="../assets/images/pokeball.png">
+
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/standard.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/inputs.css">
+    <link rel="stylesheet" href="../css/components/stats.css">
+    <link rel="stylesheet" href="../css/components/damage-calc.css">
+    <link rel="stylesheet" href="../css/components/nav.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <script type="module" src="../js/pages/damage-calc-page.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content max-content">
+            <div class="header-left">
+                <div class="header-brand">
+                    <a href="../index.html">
+                        <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+                        <p>Pokédex</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div id="header-lang-slot" class="nav-desktop-only"></div>
+
+                <div id="header-nav-slot" class="nav-desktop-only"></div>
+
+                <button id="nav-toggle" class="svg-button nav-mobile-trigger">
+
+                    <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 5h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 19h16" />
+                    </svg>
+
+                    <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar"></div>
+
+    <main>
+
+        <div id="loader" class="loader hidden">
+            <img src="../assets/images/pokeball.png" alt="Loading">
+        </div>
+
+        <div class="damage-calc-content max-content">
+
+            <h1 data-i18n="damageCalc.title">Damage Calculator</h1>
+
+            <div class="damage-calc-columns">
+
+                <section class="damage-calc-side">
+                    <h2 data-i18n="damageCalc.attacker">Attacker</h2>
+
+                    <div class="search-group">
+                        <label for="attacker-picker" data-i18n="common.pickerLabel">Choose a Pokémon</label>
+                        <input type="text" id="attacker-picker" list="attacker-options"
+                            data-i18n-placeholder="common.pickerPlaceholder" placeholder="Enter name...">
+                        <datalist id="attacker-options"></datalist>
+                    </div>
+
+                    <div class="search-group hidden" id="move-picker-group">
+                        <label for="move-select" data-i18n="damageCalc.moveLabel">Move</label>
+                        <select id="move-select"></select>
+                    </div>
+
+                    <div class="search-group hidden" id="attacker-nature-group">
+                        <label for="attacker-nature-select" data-i18n="statsCalc.natureLabel">Nature</label>
+                        <select id="attacker-nature-select" class="nature-select"></select>
+                    </div>
+
+                    <ul class="stats-list hidden" id="attacker-stat-list"></ul>
+                </section>
+
+                <section class="damage-calc-side">
+                    <h2 data-i18n="damageCalc.defender">Defender</h2>
+
+                    <div class="search-group">
+                        <label for="defender-picker" data-i18n="common.pickerLabel">Choose a Pokémon</label>
+                        <input type="text" id="defender-picker" list="defender-options"
+                            data-i18n-placeholder="common.pickerPlaceholder" placeholder="Enter name...">
+                        <datalist id="defender-options"></datalist>
+                    </div>
+
+                    <div class="search-group hidden" id="defender-nature-group">
+                        <label for="defender-nature-select" data-i18n="statsCalc.natureLabel">Nature</label>
+                        <select id="defender-nature-select" class="nature-select"></select>
+                    </div>
+
+                    <ul class="stats-list hidden" id="defender-stat-list"></ul>
+                </section>
+
+            </div>
+
+            <div id="damage-result" class="damage-result hidden">
+                <h2 data-i18n="damageCalc.resultTitle">Result</h2>
+                <p id="damage-breakdown"></p>
+                <p id="damage-range"></p>
+                <span id="hko-badge" class="hko-badge"></span>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-content max-content">
+            <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+            <a href="imprint.html" data-i18n="footer.imprint">Imprint</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

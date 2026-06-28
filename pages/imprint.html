@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../css/fonts.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <script type="module" src="../js/imprint-page.js"></script>
+    <script type="module" src="../js/pages/imprint-page.js"></script>
 
 </head>
 
@@ -23,28 +23,37 @@
 
     <header>
         <div class="header-content max-content">
-            <div class="header-brand">
-                <a href="../index.html"><img src="../assets/images/pokeball.png" alt="Pokeball Image"></a>
-                <p class="hide-mobile">Pokédex</p>
+            <div class="header-left">
+                <div class="header-brand">
+                    <a href="../index.html">
+                        <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+                        <p>Pokédex</p>
+                    </a>
+                </div>
             </div>
 
-            <button id="nav-toggle" class="svg-button">
+            <div class="header-right">
+                <div id="header-lang-slot" class="nav-desktop-only"></div>
 
-                <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 5h16" />
-                    <path d="M4 12h16" />
-                    <path d="M4 19h16" />
-                </svg>
+                <div id="header-nav-slot" class="nav-desktop-only"></div>
 
-                <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
-                </svg>
+                <button id="nav-toggle" class="svg-button nav-mobile-trigger">
 
-            </button>
+                    <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 5h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 19h16" />
+                    </svg>
+
+                    <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+
+                </button>
+            </div>
         </div>
     </header>
 
@@ -52,44 +61,44 @@
 
     <main class="imprint-content">
 
-    <h1>Imprint & Privacy</h1>
+        <h1>Imprint & Privacy</h1>
 
-    <h2>Imprint</h2>
+        <h2>Imprint</h2>
 
-    <p>Information according to § 5 TMG:</p>
-    <p>
-        Angelo Pietsch<br>
-        Haydnstraße 45<br>
-        02708 Löbau<br>
-        Germany
-    </p>
+        <p>Information according to § 5 TMG:</p>
+        <p>
+            Angelo Pietsch<br>
+            Haydnstraße 45<br>
+            02708 Löbau<br>
+            Germany
+        </p>
 
-    <p>
-        <strong>Email:</strong>
-        <a href="mailto:apietsch94@gmail.com">apietsch94@gmail.com</a>
-    </p>
+        <p>
+            <strong>Email:</strong>
+            <a href="mailto:apietsch94@gmail.com">apietsch94@gmail.com</a>
+        </p>
 
-    <hr>
+        <hr>
 
-    <h2>Privacy Policy</h2>
+        <h2>Privacy Policy</h2>
 
-    <p>This website is a private project and does not collect, store, or process any personal data.</p>
-    <p>No cookies or tracking technologies are used.</p>
-    <p>
-        Data displayed on this website is fetched from a public API:<br>
-        <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">https://pokeapi.co/</a>
-    </p>
+        <p>This website is a private project and does not collect, store, or process any personal data.</p>
+        <p>No cookies or tracking technologies are used.</p>
+        <p>
+            Data displayed on this website is fetched from a public API:<br>
+            <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">https://pokeapi.co/</a>
+        </p>
 
-    <p>
-        When using this website, your browser may send requests to external servers (PokéAPI),
-        which may log technical
-        data such as your IP address.
-    </p>
+        <p>
+            When using this website, your browser may send requests to external servers (PokéAPI),
+            which may log technical
+            data such as your IP address.
+        </p>
 
-    <hr>
+        <hr>
 
-    <h2>Credits</h2>
-    <p>Special thanks to Jens for valuable input.</p>
+        <h2>Credits</h2>
+        <p>Special thanks to Jens for valuable input.</p>
 
     </main>
 
