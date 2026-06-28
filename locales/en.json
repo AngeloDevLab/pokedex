@@ -41,6 +41,7 @@
         "editionUnknown": "Unknown",
         "statsCalcLink": "Open Stats Calculator",
         "matchupLink": "Open Type Matchup",
+        "learnsetLink": "Open Learnset",
         "artwork": {
             "official": "{name} official artwork",
             "officialShiny": "{name} shiny official artwork",
@@ -79,5 +80,20 @@
         "legendWeak": "Weakness — takes more damage",
         "legendResist": "Resistance — takes less damage",
         "legendNeutral": "Neutral"
+    },
+    "learnset": {
+        "title": "Learnset",
+        "navLink": "Learnset",
+        "levelUp": "Level-up",
+        "tm": "TM",
+        "egg": "Egg Moves",
+        "tutor": "Tutor",
+        "power": "Power",
+        "accuracy": "Accuracy",
+        "pp": "PP",
+        "category": "Category",
+        "physical": "Physical",
+        "special": "Special",
+        "status": "Status"
     }
 }

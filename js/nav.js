@@ -6,7 +6,8 @@ let sidebarOpen = false;
 const NAV_LINKS = [
     { href: "/pages/search.html", i18nKey: "common.search", fallback: "Search" },
     { href: "/pages/stats-calc.html", i18nKey: "statsCalc.navLink", fallback: "Stats Calculator" },
-    { href: "/pages/matchup.html", i18nKey: "matchup.navLink", fallback: "Type Matchup" }
+    { href: "/pages/matchup.html", i18nKey: "matchup.navLink", fallback: "Type Matchup" },
+    { href: "/pages/learnset.html", i18nKey: "learnset.navLink", fallback: "Learnset" }
 ];
 
 // ===== TEMPLATES =====

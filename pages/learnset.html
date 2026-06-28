@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex | Type Matchup</title>
+    <title>Pokédex | Learnset</title>
 
     <link rel="icon" href="../assets/images/pokeball.png">
 
@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="../css/standard.css">
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/inputs.css">
-    <link rel="stylesheet" href="../css/components/matchup.css">
+    <link rel="stylesheet" href="../css/components/learnset.css">
     <link rel="stylesheet" href="../css/components/nav.css">
     <link rel="stylesheet" href="../css/fonts.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <script type="module" src="../js/matchup-page.js"></script>
+    <script type="module" src="../js/learnset-page.js"></script>
 
 </head>
 
@@ -67,9 +67,9 @@
             <img src="../assets/images/pokeball.png" alt="Loading">
         </div>
 
-        <div class="matchup-content max-content">
+        <div class="learnset-content max-content">
 
-            <h1 data-i18n="matchup.title">Type Matchup</h1>
+            <h1 data-i18n="learnset.title">Learnset</h1>
 
             <div class="search-group">
                 <label for="pokemon-picker" data-i18n="common.pickerLabel">Choose a Pokémon</label>
@@ -78,29 +78,43 @@
                 <datalist id="pokemon-options"></datalist>
             </div>
 
-            <div id="matchup-result" class="matchup-result hidden">
-                <h2 id="matchup-pokemon-name"></h2>
+            <div id="learnset-result" class="learnset-result hidden">
+                <h2 id="learnset-pokemon-name"></h2>
 
                 <div class="legend">
-                    <span class="legend-item matchup-weak">
-                        <span class="legend-dot"></span>
-                        <span data-i18n="matchup.legendWeak">Weakness — takes more damage</span>
+                    <span class="legend-item">
+                        <span class="move-category-badge move-category-physical"></span>
+                        <span data-i18n="learnset.physical">Physical</span>
                     </span>
-                    <span class="legend-item matchup-resist">
-                        <span class="legend-dot"></span>
-                        <span data-i18n="matchup.legendResist">Resistance — takes less damage</span>
+                    <span class="legend-item">
+                        <span class="move-category-badge move-category-special"></span>
+                        <span data-i18n="learnset.special">Special</span>
                     </span>
-                    <span class="legend-item matchup-neutral">
-                        <span class="legend-dot"></span>
-                        <span data-i18n="matchup.legendNeutral">Neutral</span>
-                    </span>
-                    <span class="legend-item matchup-immune">
-                        <span class="legend-dot"></span>
-                        <span data-i18n="matchup.immune">Immune</span>
+                    <span class="legend-item">
+                        <span class="move-category-badge move-category-status"></span>
+                        <span data-i18n="learnset.status">Status</span>
                     </span>
                 </div>
 
-                <ul id="matchup-list" class="matchup-list"></ul>
+                <section class="learnset-group" id="learnset-group-level-up">
+                    <h3 data-i18n="learnset.levelUp">Level-up</h3>
+                    <ul class="learnset-list" id="learnset-list-level-up"></ul>
+                </section>
+
+                <section class="learnset-group" id="learnset-group-machine">
+                    <h3 data-i18n="learnset.tm">TM</h3>
+                    <ul class="learnset-list" id="learnset-list-machine"></ul>
+                </section>
+
+                <section class="learnset-group" id="learnset-group-egg">
+                    <h3 data-i18n="learnset.egg">Egg Moves</h3>
+                    <ul class="learnset-list" id="learnset-list-egg"></ul>
+                </section>
+
+                <section class="learnset-group" id="learnset-group-tutor">
+                    <h3 data-i18n="learnset.tutor">Tutor</h3>
+                    <ul class="learnset-list" id="learnset-list-tutor"></ul>
+                </section>
             </div>
 
         </div>

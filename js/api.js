@@ -10,6 +10,7 @@ export async function fetchJSON(url, errorMessage) {
 
 // ===== CACHE =====
 let speciesCache = {};
+let moveCache = {};
 
 const ALL_POKEMON_CACHE_KEY = "pokedex:allPokemonList:v1";
 
@@ -91,4 +92,13 @@ export async function fetchPokemonByType(type) {
         `${API_BASE}/type/${type}`,
         "Failed to fetch pokemon type"
     );
+}
+
+// ===== MOVES =====
+export async function fetchMoveByUrl(url) {
+    if (moveCache[url]) return moveCache[url];
+
+    const data = await fetchJSON(url, "Failed to fetch move");
+    moveCache[url] = data;
+    return data;
 }

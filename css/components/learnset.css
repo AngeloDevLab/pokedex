@@ -1,0 +1,129 @@
+.learnset-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.learnset-result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.learnset-group h3 {
+    text-align: start;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+}
+
+.learnset-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.move-row {
+    background: var(--secondary-color);
+    border-radius: var(--radius-sm);
+}
+
+.move-row-toggle {
+    width: 100%;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all var(--transition-base);
+}
+
+.move-row-toggle:hover {
+    border-color: var(--accent-color);
+}
+
+.move-row.egg-move .move-row-toggle {
+    border-color: var(--accent-color);
+}
+
+.move-level {
+    width: 2rem;
+    text-align: right;
+    font-weight: bold;
+    color: var(--muted-color);
+}
+
+.move-type-icon {
+    width: var(--space-4);
+    height: var(--space-4);
+}
+
+.move-category-badge {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+}
+
+.move-category-physical {
+    background: var(--stat-low);
+}
+
+.move-category-special {
+    background: var(--accent-color);
+}
+
+.move-category-status {
+    background: var(--muted-color);
+}
+
+.move-name {
+    flex: 1;
+    text-align: left;
+    text-transform: capitalize;
+}
+
+.move-chevron {
+    width: var(--space-3);
+    height: var(--space-3);
+    flex-shrink: 0;
+}
+
+.move-details {
+    padding: 0 var(--space-3) var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.move-details table {
+    width: 100%;
+    max-width: 20rem;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.move-details td {
+    padding: 0.15rem 0;
+}
+
+.move-details td:first-child {
+    font-weight: bold;
+}
+
+.move-details td:last-child {
+    text-align: right;
+}
+
+.move-effect {
+    font-size: 0.9rem;
+    color: var(--muted-color);
+}

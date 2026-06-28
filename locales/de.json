@@ -41,6 +41,7 @@
         "editionUnknown": "Unbekannt",
         "statsCalcLink": "Statuswert-Rechner öffnen",
         "matchupLink": "Typ-Matchup öffnen",
+        "learnsetLink": "Lernset öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -79,5 +80,20 @@
         "legendWeak": "Schwäche — kassiert mehr Schaden",
         "legendResist": "Resistenz — kassiert weniger Schaden",
         "legendNeutral": "Neutral"
+    },
+    "learnset": {
+        "title": "Lernset",
+        "navLink": "Lernset",
+        "levelUp": "Level-Aufstieg",
+        "tm": "TM",
+        "egg": "Ei-Attacken",
+        "tutor": "Lehrmeister",
+        "power": "Stärke",
+        "accuracy": "Genauigkeit",
+        "pp": "AP",
+        "category": "Kategorie",
+        "physical": "Physisch",
+        "special": "Speziell",
+        "status": "Status"
     }
 }

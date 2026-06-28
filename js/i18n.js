@@ -34,6 +34,10 @@ async function loadTranslations() {
     }
 }
 
+export function getCurrentLang() {
+    return currentLang;
+}
+
 // ===== TRANSLATE =====
 export function t(key, vars, fallback) {
     const value = getNested(translations[currentLang], key)

@@ -59,26 +59,6 @@
     font-style: italic;
 }
 
-.matchup-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    font-size: 0.85rem;
-    color: var(--muted-color);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-}
-
-.legend-dot {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: var(--radius-full);
-}
-
 .matchup-weak .legend-dot {
     background: var(--stat-low);
 }

@@ -41,6 +41,7 @@
         "editionUnknown": "不明",
         "statsCalcLink": "ステータス計算機を開く",
         "matchupLink": "タイプ相性を開く",
+        "learnsetLink": "わざ一覧を開く",
         "artwork": {
             "official": "{name}の公式アートワーク",
             "officialShiny": "{name}の色違い公式アートワーク",
@@ -79,5 +80,20 @@
         "legendWeak": "弱点 — ダメージが増える",
         "legendResist": "耐性 — ダメージが減る",
         "legendNeutral": "通常"
+    },
+    "learnset": {
+        "title": "わざ一覧",
+        "navLink": "わざ一覧",
+        "levelUp": "レベルアップ",
+        "tm": "わざマシン",
+        "egg": "タマゴわざ",
+        "tutor": "わざ教え",
+        "power": "威力",
+        "accuracy": "命中率",
+        "pp": "PP",
+        "category": "分類",
+        "physical": "物理",
+        "special": "特殊",
+        "status": "変化"
     }
 }

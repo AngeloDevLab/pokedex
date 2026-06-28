@@ -195,6 +195,10 @@ export function getInfoTabTemplate(pokemon, entry) {
         <a href="/pages/matchup.html?pokemon=${pokemon.name}" class="load-btn matchup-link">
             ${t('dialog.matchupLink', null, 'Open Type Matchup')}
         </a>
+
+        <a href="/pages/learnset.html?pokemon=${pokemon.name}" class="load-btn learnset-link">
+            ${t('dialog.learnsetLink', null, 'Open Learnset')}
+        </a>
     `;
 }
 

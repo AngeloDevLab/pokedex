@@ -142,14 +142,14 @@
 
 **Ziel:** Eigene Seite `pages/learnset.html` — alle Attacken, die ein gewähltes Pokémon lernen kann
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
-- [ ] Anzeige nach Lernmethode gruppiert: Level-up / TM / Egg Move / Tutor
-- [ ] Level-up: Level + Move-Name + Typ-Icon + Kategorie-Icon
-- [ ] Egg Moves farblich hervorheben (competitive relevant)
-- [ ] Move-Details on click: Power, Accuracy, PP, Kategorie, Effekt-Text
-- [ ] Move-Namen sprachabhängig (i18n aus Session 2 nutzen)
-- [ ] Datenquelle: PokéAPI `/pokemon/{id}` liefert komplettes Learnset
-- [ ] Abgrenzung zu Session 16 (`moves.html`): diese Seite zeigt das Lernset **eines gewählten Pokémon**, Session 16 ist die allgemeine Move-Datenbank ohne Pokémon-Bezug
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] Anzeige nach Lernmethode gruppiert: Level-up / TM / Egg Move / Tutor
+- [x] Level-up: Level + Move-Name + Typ-Icon + Kategorie-Icon — Kategorie als farbiger Punkt statt eigenem Icon-Asset (kein Physisch/Spezial/Status-Icon im Bestand, Farbe reicht für die Unterscheidung)
+- [x] Egg Moves farblich hervorheben (competitive relevant)
+- [x] Move-Details on click: Power, Accuracy, PP, Kategorie, Effekt-Text
+- [x] Move-Namen sprachabhängig (i18n aus Session 2 nutzen) — nutzt PokéAPIs eigenes `names`-Array je Move, gefiltert auf die aktuell über `i18n.js` gewählte Sprache (Fallback: EN, dann formatierter Slug)
+- [x] Datenquelle: PokéAPI `/pokemon/{id}` liefert komplettes Learnset
+- [x] Abgrenzung zu Session 16 (`moves.html`): diese Seite zeigt das Lernset **eines gewählten Pokémon**, Session 16 ist die allgemeine Move-Datenbank ohne Pokémon-Bezug
 
 ---
 
