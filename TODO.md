@@ -157,14 +157,14 @@
 
 **Ziel:** Eigene Seite `calc.html` + Integration im Dialog als Schnell-Check
 
-- [ ] Seite `calc.html` mit zwei Seiten: Angreifer / Verteidiger
-- [ ] Angreifer: Pokémon wählen (Suche), Angriff-Stat + EVs/Nature, Move auswählen
-- [ ] Verteidiger: Pokémon wählen, HP + Def/SpDef + EVs/Nature
-- [ ] Im Dialog: Verteidiger vorausgefüllt mit aktuellem Pokémon
-- [ ] Ergebnis: Schadensspanne Min–Max in HP und in % der Gesamt-HP
+- [x] Seite `pages/damage-calc.html` mit zwei Spalten: Angreifer / Verteidiger (statt eines eigenen `calc.html` im Root — folgt der etablierten `pages/`-Konvention)
+- [x] Angreifer: Pokémon wählen (Suche), Angriff-Stat + EVs/Nature, Move auswählen — Move-Auswahl kommt aus dem echten Lernset des Angreifers (`core/moveset.js`, aus `learnset-page.js` extrahiert, da jetzt 2 Verbraucher), gefiltert auf schadende Attacken; welcher Stat (Angriff/Sp. Angriff) gezeigt wird, richtet sich nach der Kategorie der gewählten Attacke
+- [x] Verteidiger: Pokémon wählen, HP + Def/SpDef + EVs/Nature — gleiche Kategorie-Logik wie beim Angreifer
+- [x] Im Dialog: Verteidiger vorausgefüllt mit aktuellem Pokémon — `?defender=`-Query-Param (separat von `?pokemon=`, da der Angreifer-Picker auf derselben Seite den Standard-Parameter nutzt; `pokemon-picker.js` bekam dafür einen optionalen `queryParam`)
+- [x] Ergebnis: Schadensspanne Min–Max in HP und in % der Gesamt-HP
   - z.B. „84–99 HP (52–61%)"
-- [ ] OHKO / 2HKO / 3HKO Indikator mit Farbmarkierung
-- [ ] Schadensformel: `⌊⌊⌊2·Level/5+2⌋ · Angriff/Verteidigung · BasePower / 50 + 2⌋ · Modifier⌋`
+- [x] OHKO / 2HKO / 3HKO Indikator mit Farbmarkierung — Spanne aus bestem/schlechtestem Treffer (z.B. „2-3HKO"), Farbe nach dem gefährlicheren Ende (OHKO rot, 2HKO orange, sonst grün)
+- [x] Schadensformel: `⌊⌊⌊2·Level/5+2⌋ · Angriff/Verteidigung · BasePower / 50 + 2⌋ · Modifier⌋` — Level fix 100 (gleiche Konvention wie der Statuswert-Rechner), Modifier bewusst auf STAB × Typeneffektivität × offizielle 85–100%-Zufallsspanne begrenzt (keine Items/Abilities/Wetter, gibt's im Projekt noch nicht)
 
 ---
 

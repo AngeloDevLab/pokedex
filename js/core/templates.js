@@ -199,6 +199,10 @@ export function getInfoTabTemplate(pokemon, entry) {
         <a href="/pages/learnset.html?pokemon=${pokemon.name}" class="load-btn learnset-link">
             ${t('dialog.learnsetLink', null, 'Open Learnset')}
         </a>
+
+        <a href="/pages/damage-calc.html?defender=${pokemon.name}" class="load-btn damage-calc-link">
+            ${t('dialog.damageCalcLink', null, 'Open Damage Calculator')}
+        </a>
     `;
 }
 

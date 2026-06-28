@@ -2,7 +2,7 @@ import { initI18n, t, getCurrentLang } from '../core/i18n.js';
 import { initNavShell } from '../core/nav.js';
 import { initPokemonPicker } from '../core/pokemon-picker.js';
 import { withLoader } from '../core/pagination.js';
-import { fetchMoveByUrl } from '../core/api.js';
+import { fetchMoveset } from '../core/moveset.js';
 import { getTypeIcon } from '../core/ui.js';
 
 const METHODS = ["level-up", "machine", "egg", "tutor"];
@@ -29,28 +29,6 @@ async function selectPokemon(pokemon) {
 }
 
 // ===== DATA =====
-function getLatestLearnDetail(moveEntry) {
-    const details = moveEntry.version_group_details;
-    return details[details.length - 1];
-}
-
-async function buildMoveEntries() {
-    const entries = currentPokemon.moves.map(moveEntry => ({
-        moveEntry,
-        latest: getLatestLearnDetail(moveEntry)
-    }));
-
-    const moves = await Promise.all(
-        entries.map(({ moveEntry }) => fetchMoveByUrl(moveEntry.move.url))
-    );
-
-    return entries.map(({ moveEntry, latest }, i) => ({
-        move: moves[i],
-        method: latest.move_learn_method.name,
-        level: latest.level_learned_at
-    }));
-}
-
 function groupByMethod(learnsetEntries) {
     const groups = { "level-up": [], machine: [], egg: [], tutor: [] };
 
@@ -72,7 +50,7 @@ function groupByMethod(learnsetEntries) {
 async function renderLearnset() {
     document.getElementById("learnset-pokemon-name").textContent = currentPokemon.name;
 
-    const learnsetEntries = await buildMoveEntries();
+    const learnsetEntries = await fetchMoveset(currentPokemon);
     const groups = groupByMethod(learnsetEntries);
 
     METHODS.forEach(method => renderGroup(method, groups[method]));

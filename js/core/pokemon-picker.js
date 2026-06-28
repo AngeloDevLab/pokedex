@@ -1,11 +1,14 @@
 // Shared Pokémon picker for the tool pages (stats calculator, type matchup,
-// and the future learnset/breeding/competitive/shiny pages per TODO.md) —
-// datalist-backed name input, ?pokemon= deep-link resolution, no error UI
-// for an unmatched/stale name (just leaves the picker as-is).
+// learnset, damage calculator, and the future breeding/competitive/shiny
+// pages per TODO.md) — datalist-backed name input, ?<queryParam>= deep-link
+// resolution (defaults to "pokemon"; the damage calculator uses two
+// instances on one page, so its defender picker passes queryParam:
+// "defender" to avoid colliding with the attacker's), no error UI for an
+// unmatched/stale name (just leaves the picker as-is).
 import { fetchAllPokemonList, fetchPokemonByUrl } from './api.js';
 import { withLoader } from './pagination.js';
 
-export async function initPokemonPicker({ inputId, datalistId, onSelect }) {
+export async function initPokemonPicker({ inputId, datalistId, onSelect, queryParam = "pokemon" }) {
     const data = await withLoader(fetchAllPokemonList);
     const allPokemon = data.results;
 
@@ -25,7 +28,7 @@ export async function initPokemonPicker({ inputId, datalistId, onSelect }) {
         });
     }
 
-    const queryName = new URLSearchParams(location.search).get("pokemon");
+    const queryName = new URLSearchParams(location.search).get(queryParam);
     if (!queryName) return;
 
     const match = findPokemonByName(allPokemon, queryName);

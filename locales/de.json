@@ -42,6 +42,7 @@
         "statsCalcLink": "Statuswert-Rechner öffnen",
         "matchupLink": "Typ-Matchup öffnen",
         "learnsetLink": "Lernset öffnen",
+        "damageCalcLink": "Schadensrechner öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -95,5 +96,18 @@
         "physical": "Physisch",
         "special": "Speziell",
         "status": "Status"
+    },
+    "damageCalc": {
+        "title": "Schadensrechner",
+        "navLink": "Schadensrechner",
+        "attacker": "Angreifer",
+        "defender": "Verteidiger",
+        "moveLabel": "Attacke",
+        "selectMove": "Attacke wählen",
+        "resultTitle": "Ergebnis",
+        "stab": "STAB",
+        "typeEffectiveness": "Typ",
+        "noEffect": "Kein Effekt",
+        "ohko": "OHKO"
     }
 }

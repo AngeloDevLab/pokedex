@@ -42,6 +42,7 @@
         "statsCalcLink": "ステータス計算機を開く",
         "matchupLink": "タイプ相性を開く",
         "learnsetLink": "わざ一覧を開く",
+        "damageCalcLink": "ダメージ計算機を開く",
         "artwork": {
             "official": "{name}の公式アートワーク",
             "officialShiny": "{name}の色違い公式アートワーク",
@@ -95,5 +96,18 @@
         "physical": "物理",
         "special": "特殊",
         "status": "変化"
+    },
+    "damageCalc": {
+        "title": "ダメージ計算機",
+        "navLink": "ダメージ計算機",
+        "attacker": "攻撃側",
+        "defender": "防御側",
+        "moveLabel": "わざ",
+        "selectMove": "わざを選択",
+        "resultTitle": "結果",
+        "stab": "タイプ一致",
+        "typeEffectiveness": "タイプ相性",
+        "noEffect": "効果なし",
+        "ohko": "一撃"
     }
 }

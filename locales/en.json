@@ -42,6 +42,7 @@
         "statsCalcLink": "Open Stats Calculator",
         "matchupLink": "Open Type Matchup",
         "learnsetLink": "Open Learnset",
+        "damageCalcLink": "Open Damage Calculator",
         "artwork": {
             "official": "{name} official artwork",
             "officialShiny": "{name} shiny official artwork",
@@ -95,5 +96,18 @@
         "physical": "Physical",
         "special": "Special",
         "status": "Status"
+    },
+    "damageCalc": {
+        "title": "Damage Calculator",
+        "navLink": "Damage Calculator",
+        "attacker": "Attacker",
+        "defender": "Defender",
+        "moveLabel": "Move",
+        "selectMove": "Select a move",
+        "resultTitle": "Result",
+        "stab": "STAB",
+        "typeEffectiveness": "Type",
+        "noEffect": "No effect",
+        "ohko": "OHKO"
     }
 }

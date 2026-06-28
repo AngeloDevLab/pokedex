@@ -39,4 +39,12 @@
     .nav-desktop-only {
         display: block;
     }
+
+    .damage-calc-columns {
+        flex-direction: row;
+    }
+
+    .damage-calc-side {
+        flex: 1;
+    }
 }
