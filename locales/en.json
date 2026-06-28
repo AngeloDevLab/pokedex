@@ -1,6 +1,8 @@
 {
     "common": {
-        "search": "Search"
+        "search": "Search",
+        "pickerLabel": "Choose a Pokémon",
+        "pickerPlaceholder": "Enter name..."
     },
     "searchPanel": {
         "nameLabel": "Search by Name",
@@ -38,6 +40,7 @@
         "flavorFallback": "No description found.",
         "editionUnknown": "Unknown",
         "statsCalcLink": "Open Stats Calculator",
+        "matchupLink": "Open Type Matchup",
         "artwork": {
             "official": "{name} official artwork",
             "officialShiny": "{name} shiny official artwork",
@@ -59,8 +62,6 @@
     "statsCalc": {
         "title": "Stats Calculator",
         "navLink": "Stats Calculator",
-        "pickerLabel": "Choose a Pokémon",
-        "pickerPlaceholder": "Enter name...",
         "natureLabel": "Nature",
         "reset": "Reset",
         "evTotal": "EV Total",
@@ -70,5 +71,13 @@
         "multiplier": "Multiplier",
         "iv": "IV",
         "ev": "EV"
+    },
+    "matchup": {
+        "title": "Type Matchup",
+        "navLink": "Type Matchup",
+        "immune": "Immune",
+        "legendWeak": "Weakness — takes more damage",
+        "legendResist": "Resistance — takes less damage",
+        "legendNeutral": "Neutral"
     }
 }

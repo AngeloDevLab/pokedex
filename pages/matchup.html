@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex | Type Matchup</title>
+
+    <link rel="icon" href="../assets/images/pokeball.png">
+
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/standard.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/inputs.css">
+    <link rel="stylesheet" href="../css/components/matchup.css">
+    <link rel="stylesheet" href="../css/components/nav.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <script type="module" src="../js/matchup-page.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content max-content">
+            <div class="header-left">
+                <div class="header-brand">
+                    <a href="../index.html">
+                        <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+                        <p>Pokédex</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div id="header-lang-slot" class="nav-desktop-only"></div>
+
+                <div id="header-nav-slot" class="nav-desktop-only"></div>
+
+                <button id="nav-toggle" class="svg-button nav-mobile-trigger">
+
+                    <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 5h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 19h16" />
+                    </svg>
+
+                    <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar"></div>
+
+    <main>
+
+        <div id="loader" class="loader hidden">
+            <img src="../assets/images/pokeball.png" alt="Loading">
+        </div>
+
+        <div class="matchup-content max-content">
+
+            <h1 data-i18n="matchup.title">Type Matchup</h1>
+
+            <div class="search-group">
+                <label for="pokemon-picker" data-i18n="common.pickerLabel">Choose a Pokémon</label>
+                <input type="text" id="pokemon-picker" list="pokemon-options"
+                    data-i18n-placeholder="common.pickerPlaceholder" placeholder="Enter name...">
+                <datalist id="pokemon-options"></datalist>
+            </div>
+
+            <div id="matchup-result" class="matchup-result hidden">
+                <h2 id="matchup-pokemon-name"></h2>
+
+                <div class="matchup-legend">
+                    <span class="legend-item matchup-weak">
+                        <span class="legend-dot"></span>
+                        <span data-i18n="matchup.legendWeak">Weakness — takes more damage</span>
+                    </span>
+                    <span class="legend-item matchup-resist">
+                        <span class="legend-dot"></span>
+                        <span data-i18n="matchup.legendResist">Resistance — takes less damage</span>
+                    </span>
+                    <span class="legend-item matchup-neutral">
+                        <span class="legend-dot"></span>
+                        <span data-i18n="matchup.legendNeutral">Neutral</span>
+                    </span>
+                    <span class="legend-item matchup-immune">
+                        <span class="legend-dot"></span>
+                        <span data-i18n="matchup.immune">Immune</span>
+                    </span>
+                </div>
+
+                <ul id="matchup-list" class="matchup-list"></ul>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-content max-content">
+            <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+            <a href="imprint.html" data-i18n="footer.imprint">Imprint</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

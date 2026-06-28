@@ -177,6 +177,8 @@ export function hideLoader() {
 // ===== RENDER =====
 export function renderPokemonList(list = []) {
     const container = document.getElementById("pokemon-container");
+    if (!container) return;
+
     container.classList.remove("centered");
 
     const visiblePokemon = getVisiblePokemon(list);

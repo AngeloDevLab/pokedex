@@ -1,6 +1,8 @@
 {
     "common": {
-        "search": "Suche"
+        "search": "Suche",
+        "pickerLabel": "Pokémon wählen",
+        "pickerPlaceholder": "Namen eingeben..."
     },
     "searchPanel": {
         "nameLabel": "Suche nach Name",
@@ -38,6 +40,7 @@
         "flavorFallback": "Keine Beschreibung gefunden.",
         "editionUnknown": "Unbekannt",
         "statsCalcLink": "Statuswert-Rechner öffnen",
+        "matchupLink": "Typ-Matchup öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -59,8 +62,6 @@
     "statsCalc": {
         "title": "Statuswert-Rechner",
         "navLink": "Statuswert-Rechner",
-        "pickerLabel": "Pokémon wählen",
-        "pickerPlaceholder": "Namen eingeben...",
         "natureLabel": "Wesen",
         "reset": "Zurücksetzen",
         "evTotal": "FP-Summe",
@@ -70,5 +71,13 @@
         "multiplier": "Multiplikator",
         "iv": "IW",
         "ev": "FP"
+    },
+    "matchup": {
+        "title": "Typ-Matchup",
+        "navLink": "Typ-Matchup",
+        "immune": "Immun",
+        "legendWeak": "Schwäche — kassiert mehr Schaden",
+        "legendResist": "Resistenz — kassiert weniger Schaden",
+        "legendNeutral": "Neutral"
     }
 }

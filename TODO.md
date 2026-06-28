@@ -129,12 +129,12 @@
 
 **Ziel:** Eigene Seite `pages/matchup.html` — auf einen Blick sehen welche Typen wie viel Schaden gegen ein gewähltes Pokémon machen
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
-- [ ] Tabelle: alle 18 Typen mit Schadens-Multiplikator gegen dieses Pokémon
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] Tabelle: alle 18 Typen mit Schadens-Multiplikator gegen dieses Pokémon
   - 4× / 2× / 1× / 0,5× / 0,25× / 0× (Immunität)
-- [ ] Dual-Typ-Berechnung automatisch (z.B. Wasser/Boden = Gras trifft 4×)
-- [ ] Typ-Icons statt Text für kompakte Darstellung
-- [ ] Statische Matchup-Matrix als JS-Objekt (ändert sich nie)
+- [x] Dual-Typ-Berechnung automatisch (z.B. Wasser/Boden = Gras trifft 4×)
+- [x] Typ-Icons statt Text für kompakte Darstellung
+- [x] Statische Matchup-Matrix als JS-Objekt (ändert sich nie)
 
 ---
 
