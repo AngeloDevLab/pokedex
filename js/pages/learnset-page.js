@@ -1,9 +1,9 @@
-import { initI18n, t, getCurrentLang } from './i18n.js';
-import { initNavShell } from './nav.js';
-import { initPokemonPicker } from './pokemon-picker.js';
-import { withLoader } from './pagination.js';
-import { fetchMoveByUrl } from './api.js';
-import { getTypeIcon } from './ui.js';
+import { initI18n, t, getCurrentLang } from '../core/i18n.js';
+import { initNavShell } from '../core/nav.js';
+import { initPokemonPicker } from '../core/pokemon-picker.js';
+import { withLoader } from '../core/pagination.js';
+import { fetchMoveByUrl } from '../core/api.js';
+import { getTypeIcon } from '../core/ui.js';
 
 const METHODS = ["level-up", "machine", "egg", "tutor"];
 

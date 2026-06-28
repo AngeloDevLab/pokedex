@@ -1,8 +1,8 @@
-import { initI18n, t } from './i18n.js';
-import { initNavShell } from './nav.js';
-import { initPokemonPicker } from './pokemon-picker.js';
-import { getTypes, getTypeIcon } from './ui.js';
-import { ALL_TYPES, getDualTypeMultiplier } from './type-chart.js';
+import { initI18n, t } from '../core/i18n.js';
+import { initNavShell } from '../core/nav.js';
+import { initPokemonPicker } from '../core/pokemon-picker.js';
+import { getTypes, getTypeIcon } from '../core/ui.js';
+import { ALL_TYPES, getDualTypeMultiplier } from '../data/type-chart.js';
 
 let currentPokemon = null;
 

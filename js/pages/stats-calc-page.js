@@ -1,9 +1,9 @@
-import { initI18n, t } from './i18n.js';
-import { initNavShell } from './nav.js';
-import { initPokemonPicker } from './pokemon-picker.js';
-import { calculateStat } from './stat-formula.js';
-import { NATURES, getNatureMultiplier } from './natures.js';
-import { formatStatName } from './ui.js';
+import { initI18n, t } from '../core/i18n.js';
+import { initNavShell } from '../core/nav.js';
+import { initPokemonPicker } from '../core/pokemon-picker.js';
+import { calculateStat } from '../data/stat-formula.js';
+import { NATURES, getNatureMultiplier } from '../data/natures.js';
+import { formatStatName } from '../core/ui.js';
 
 // ===== CONFIG =====
 const EV_LIMIT = 510;

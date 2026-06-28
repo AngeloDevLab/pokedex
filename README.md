@@ -23,7 +23,7 @@ The focus was on understanding how to structure a frontend application without f
   * Evolution chain
 * Loading indicator with improved UX (minimum display time)
 * "No results found" state
-* Multi-language UI (EN / DE / JA) via `js/i18n.js`, language preference stored in LocalStorage
+* Multi-language UI (EN / DE / JA) via `js/core/i18n.js`, language preference stored in LocalStorage
 
 ---
 
@@ -39,25 +39,36 @@ The focus was on understanding how to structure a frontend application without f
 ## Project Structure
 
 ```
-index.html          → home page (stays at root — required by GitHub Pages)
-pages/               → secondary pages (search.html, imprint.html, ...)
+index.html             → home page (stays at root — required by GitHub Pages)
+pages/                  → secondary pages (search, stats-calc, matchup, learnset, imprint)
 js/
-  api.js             → API calls and data fetching
-  pagination.js      → shared pagination/loading state (used by index.html and search.html)
-  main.js            → index.html entry point (default browse view bootstrap)
-  search-page.js     → pages/search.html entry point
-  search.js          → search and type-filter logic
-  nav.js             → burger + sidebar nav shell (shared across pages)
-  templates.js        → HTML template strings for cards/dialog
-  dialog.js          → Pokémon detail dialog logic
-  ui.js              → rendering and DOM interactions
-  i18n.js            → translation loading, language switching
-css/                 → variables.css (design tokens), standard.css (base/reset), components/ (buttons, inputs, search, cards, dialog, nav), fonts.css, responsive.css
-locales/             → UI translation strings (en.json, de.json, ja.json)
-assets/              → images, icons, fonts
+  core/                 → shared DOM/state/API infrastructure
+    api.js              → API calls and data fetching (species/move caching, localStorage Pokémon-list cache)
+    dialog.js           → Pokémon detail dialog logic
+    i18n.js             → translation loading, language switching
+    nav.js              → burger + sidebar nav shell, desktop header nav (shared across pages)
+    pagination.js       → shared pagination/loading state (used by index.html and search.html)
+    pokemon-picker.js   → shared Pokémon picker (datalist + ?pokemon= deep-link) for the tool pages
+    search.js           → search and type-filter logic
+    templates.js        → HTML template strings for cards/dialog
+    ui.js               → rendering and DOM interactions
+  data/                 → pure static data + calculation, no DOM access
+    natures.js          → the 25 natures
+    stat-formula.js     → level-100 final-stat formula
+    type-chart.js       → 18x18 type effectiveness chart
+  pages/                → one entry script per page
+    main.js             → index.html entry point (default browse view bootstrap)
+    search-page.js      → pages/search.html entry point
+    stats-calc-page.js  → pages/stats-calc.html entry point (IV/EV/nature calculator)
+    matchup-page.js     → pages/matchup.html entry point (type matchup table)
+    learnset-page.js    → pages/learnset.html entry point (move list by learn method)
+    imprint-page.js     → pages/imprint.html entry point
+css/                    → variables.css (design tokens), standard.css (base/reset), components/ (buttons, inputs, search, cards, dialog, nav, stats, matchup, learnset), fonts.css, responsive.css
+locales/                → UI translation strings (en.json, de.json, ja.json)
+assets/                 → images, icons, fonts
 ```
 
-ES Modules (`<script type="module">`) — each page loads a single entry script (`main.js` or `search-page.js`), which pulls in everything else via `import`/`export`. Shared modules with cross-page side effects (page bootstrapping) are deliberately kept side-effect-free at the module level, since importing a module for its exports also runs its top-level code.
+ES Modules (`<script type="module">`) — each page loads a single entry script from `js/pages/`, which pulls in everything else via `import`/`export`. Shared modules with cross-page side effects (page bootstrapping) are deliberately kept side-effect-free at the module level, since importing a module for its exports also runs its top-level code.
 
 ---
 
