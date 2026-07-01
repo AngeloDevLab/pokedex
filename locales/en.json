@@ -44,6 +44,7 @@
         "learnsetLink": "Open Learnset",
         "damageCalcLink": "Open Damage Calculator",
         "breedingLink": "Open Breeding Guide",
+        "competitiveLink": "Open Competitive",
         "artwork": {
             "official": "{name} official artwork",
             "officialShiny": "{name} shiny official artwork",
@@ -143,5 +144,32 @@
         "benchmarkLabel": "Your Speed",
         "benchmarkPlaceholder": "Enter a speed value...",
         "choiceScarfToggle": "Choice Scarf (×1.5)"
+    },
+    "competitive": {
+        "title": "Competitive",
+        "navLink": "Competitive",
+        "tierLabel": "Smogon Tier",
+        "tierNotRanked": "Not ranked",
+        "nationalDexNote": "Not usable in the current generation — National Dex tier: {tier}",
+        "viewOnSmogon": "View full analysis on Smogon",
+        "legendTitle": "Tier Legend",
+        "legend": {
+            "ag": "No bans — anything goes",
+            "uber": "Too strong for OU",
+            "ou": "The standard, most common tier",
+            "uubl": "Banned from OU, too strong for UU",
+            "uu": "Below OU",
+            "rubl": "Banned from UU, too strong for RU",
+            "ru": "Below UU",
+            "nubl": "Banned from RU, too strong for NU",
+            "nu": "Below RU",
+            "publ": "Banned from NU, too strong for PU",
+            "pu": "Below NU",
+            "zubl": "Banned from PU, too strong for ZU",
+            "zu": "The least-used tier",
+            "nfe": "Not Fully Evolved — can still evolve further",
+            "lc": "Little Cup — level 5, first evolution stage only",
+            "cap": "Create-A-Pokémon — community fan-made Pokémon"
+        }
     }
 }

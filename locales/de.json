@@ -44,6 +44,7 @@
         "learnsetLink": "Lernset öffnen",
         "damageCalcLink": "Schadensrechner öffnen",
         "breedingLink": "Zucht-Guide öffnen",
+        "competitiveLink": "Competitive öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -143,5 +144,32 @@
         "benchmarkLabel": "Deine Initiative",
         "benchmarkPlaceholder": "Initiativ-Wert eingeben...",
         "choiceScarfToggle": "Choice Scarf (×1,5)"
+    },
+    "competitive": {
+        "title": "Competitive",
+        "navLink": "Competitive",
+        "tierLabel": "Smogon-Tier",
+        "tierNotRanked": "Nicht eingestuft",
+        "nationalDexNote": "In der aktuellen Generation nicht nutzbar — National-Dex-Tier: {tier}",
+        "viewOnSmogon": "Vollständige Analyse auf Smogon ansehen",
+        "legendTitle": "Tier-Erklärung",
+        "legend": {
+            "ag": "Keine Verbote — alles erlaubt",
+            "uber": "Zu stark für OU",
+            "ou": "Der Standard-Tier, am häufigsten",
+            "uubl": "Aus OU verbannt, zu stark für UU",
+            "uu": "Unter OU",
+            "rubl": "Aus UU verbannt, zu stark für RU",
+            "ru": "Unter UU",
+            "nubl": "Aus RU verbannt, zu stark für NU",
+            "nu": "Unter RU",
+            "publ": "Aus NU verbannt, zu stark für PU",
+            "pu": "Unter NU",
+            "zubl": "Aus PU verbannt, zu stark für ZU",
+            "zu": "Der am wenigsten genutzte Tier",
+            "nfe": "Nicht vollständig entwickelt — kann sich noch weiterentwickeln",
+            "lc": "Little Cup — Level 5, nur erste Entwicklungsstufe",
+            "cap": "Create-A-Pokémon — von der Community erstellte Fan-Pokémon"
+        }
     }
 }

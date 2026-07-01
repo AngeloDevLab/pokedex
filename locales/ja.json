@@ -44,6 +44,7 @@
         "learnsetLink": "わざ一覧を開く",
         "damageCalcLink": "ダメージ計算機を開く",
         "breedingLink": "タマゴ厳選ガイドを開く",
+        "competitiveLink": "対戦考察を開く",
         "artwork": {
             "official": "{name}の公式アートワーク",
             "officialShiny": "{name}の色違い公式アートワーク",
@@ -143,5 +144,32 @@
         "benchmarkLabel": "自分のすばやさ",
         "benchmarkPlaceholder": "すばやさの数値を入力...",
         "choiceScarfToggle": "こだわりスカーフ (×1.5)"
+    },
+    "competitive": {
+        "title": "対戦考察",
+        "navLink": "対戦考察",
+        "tierLabel": "Smogon階級",
+        "tierNotRanked": "未評価",
+        "nationalDexNote": "現行世代では使用不可 — ナショナルデックス階級: {tier}",
+        "viewOnSmogon": "Smogonで詳しい考察を見る",
+        "legendTitle": "階級の説明",
+        "legend": {
+            "ag": "禁止なし — 何でもあり",
+            "uber": "OUには強すぎる",
+            "ou": "標準的で最も一般的な階級",
+            "uubl": "OUで禁止、UUには強すぎる",
+            "uu": "OUの下",
+            "rubl": "UUで禁止、RUには強すぎる",
+            "ru": "UUの下",
+            "nubl": "RUで禁止、NUには強すぎる",
+            "nu": "RUの下",
+            "publ": "NUで禁止、PUには強すぎる",
+            "pu": "NUの下",
+            "zubl": "PUで禁止、ZUには強すぎる",
+            "zu": "最も使用率の低い階級",
+            "nfe": "進化前 — まだ進化できる",
+            "lc": "リトルカップ — レベル5、最初の進化段階のみ",
+            "cap": "Create-A-Pokémon — コミュニティ制作のファンポケモン"
+        }
     }
 }

@@ -1,6 +1,7 @@
 // ===== CONFIG =====
 const API_BASE = "https://pokeapi.co/api/v2";
 const GRAPHQL_BASE = "https://beta.pokeapi.co/graphql/v1beta";
+const SHOWDOWN_FORMATS_DATA_URL = "https://raw.githubusercontent.com/smogon/pokemon-showdown/master/data/formats-data.ts";
 
 // ===== HELPERS =====
 export async function fetchJSON(url, errorMessage) {
@@ -15,6 +16,8 @@ let moveCache = {};
 
 const ALL_POKEMON_CACHE_KEY = "pokedex:allPokemonList:v1";
 const SPEED_TIER_CACHE_KEY = "pokedex:speedTierList:v1";
+const SMOGON_TIERS_CACHE_KEY = "pokedex:smogonTiers:v1";
+const SMOGON_TIERS_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 function readCache(key) {
     try {
@@ -32,6 +35,21 @@ function writeCache(key, data) {
         // localStorage unavailable or quota exceeded — cache is an
         // optimization, not a requirement, so just skip persisting it
     }
+}
+
+// TTL-aware cache variant — everything else cached in this file is static
+// Pokédex data (a species' base stats never change), so it's cached forever
+// until a version bump. Smogon tier data actually shifts over time, so it
+// needs to expire and re-fetch on its own instead.
+function readCacheWithTTL(key, ttlMs) {
+    const cached = readCache(key);
+    if (!cached) return null;
+    if (Date.now() - cached.fetchedAt > ttlMs) return null;
+    return cached.data;
+}
+
+function writeCacheWithTTL(key, data) {
+    writeCache(key, { fetchedAt: Date.now(), data });
 }
 
 // ===== POKEMON =====
@@ -196,4 +214,44 @@ function statArray(pokemon) {
 
 function arraysEqual(a, b) {
     return a.length === b.length && a.every((value, i) => value === b[i]);
+}
+
+// ===== SMOGON TIERS =====
+// Not a PokéAPI endpoint at all — Smogon's competitive tier placement isn't
+// part of PokéAPI. Fetches Pokémon Showdown's own data/formats-data.ts
+// (the actual source Smogon's tier list is built from) straight from
+// GitHub. That file is a TypeScript object-literal export, not JSON, so it
+// can't go through fetchJSON() — a small regex extractor pulls out just the
+// `tier`/`natDexTier` fields per entry instead of evaluating the fetched
+// text as code. Also the only cache in this file with a TTL (see
+// readCacheWithTTL above): tier placements actually change over time,
+// unlike the rest of this app's Pokédex data.
+export async function fetchSmogonTiers() {
+    const cached = readCacheWithTTL(SMOGON_TIERS_CACHE_KEY, SMOGON_TIERS_TTL_MS);
+    if (cached) return cached;
+
+    const res = await fetch(SHOWDOWN_FORMATS_DATA_URL);
+    if (!res.ok) throw new Error("Failed to fetch Smogon tier data");
+
+    const text = await res.text();
+    const tiers = parseFormatsData(text);
+    writeCacheWithTTL(SMOGON_TIERS_CACHE_KEY, tiers);
+    return tiers;
+}
+
+function parseFormatsData(text) {
+    const entryRegex = /^\t([a-z0-9]+): \{([\s\S]*?)\n\t\},$/gm;
+    const tierRegex = /\btier: "([^"]+)"/;
+    const natDexTierRegex = /\bnatDexTier: "([^"]+)"/;
+
+    const tiers = {};
+    let match;
+    while ((match = entryRegex.exec(text)) !== null) {
+        const [, name, body] = match;
+        const tier = tierRegex.exec(body)?.[1] ?? null;
+        const natDexTier = natDexTierRegex.exec(body)?.[1] ?? null;
+        if (tier || natDexTier) tiers[name] = { tier, natDexTier };
+    }
+
+    return tiers;
 }

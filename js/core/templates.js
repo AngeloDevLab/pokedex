@@ -207,6 +207,10 @@ export function getInfoTabTemplate(pokemon, entry) {
         <a href="/pages/breeding.html?pokemon=${pokemon.name}" class="load-btn breeding-link">
             ${t('dialog.breedingLink', null, 'Open Breeding Guide')}
         </a>
+
+        <a href="/pages/competitive.html?pokemon=${pokemon.name}" class="load-btn competitive-link">
+            ${t('dialog.competitiveLink', null, 'Open Competitive')}
+        </a>
     `;
 }
 

@@ -201,14 +201,9 @@
 
 **Ziel:** Eigene Seite `pages/competitive.html` — Smogon-Tier und Beispiel-Sets zu einem gewählten Pokémon (kein Dialog-Tab mehr, siehe Zwischenschritt vor Session 5)
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
-- [ ] Smogon-Tier anzeigen (OU / UU / RU / NU / Ubers / NFE / LC)
-  - Datenquelle: eigene `smogon-tiers.json` (manuell gepflegt oder geskrapt)
-- [ ] 1–2 Beispiel-Sets im Showdown-Export-Format:
-  - Pokémon @ Item / Ability / EVs / Nature / Moves
-- [ ] „Was schlägt X?" Sektion:
-  - Häufige Counter mit kurzem Grund (Typ, Speed, Ability)
-  - Datenquelle: kuratierte `counters.json`
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] Smogon-Tier anzeigen (OU / UU / RU / NU / Ubers / NFE / LC) — Datenquelle ist keine eigene `smogon-tiers.json` mehr, sondern ein Live-Fetch von Pokémon Showdowns eigener `data/formats-data.ts` auf GitHub (`fetchSmogonTiers()` in `js/core/api.js`), der tatsächlichen Quelle hinter Smogons Tier-Liste — immer aktuell, alle ~1400 Einträge, kein manuelles Pflegen. Datei ist eine TS-Objektliteral-Export, kein JSON, daher ein kleiner Regex-Parser statt `fetchJSON()`/Eval. Cache hat als einziger im Projekt eine TTL (1 Woche) statt permanent, da sich Tier-Einstufungen mit der Zeit ändern. Fällt ein Pokémon in der aktuellen Generation unter „Illegal" (z. B. jede Mega-Entwicklung in SV), wird stattdessen `natDexTier` mit Hinweistext angezeigt (verifiziert: 382 von 509 „Illegal"-Einträgen haben einen nutzbaren `natDexTier`-Fallback)
+- [x] Beispiel-Sets & „Was schlägt X?"-Sektion — bewusst durch einen Link zur echten Smogon-Dex-Seite (`smogon.com/dex/sv/pokemon/<name>/`) ersetzt statt selbst kuratiert: dafür gibt's keine saubere API (nur von Analysten geschriebener Text auf Smogon selbst), eigene Sets/Counter zu erfinden hätte das Risiko veralteter/falscher Angaben gehabt. `counters.json`-Datenquelle damit komplett entfallen — bewusste Scope-Entscheidung, kein übersehener Punkt
 
 ---
 
