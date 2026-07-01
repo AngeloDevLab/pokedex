@@ -1,5 +1,6 @@
 // ===== CONFIG =====
 const API_BASE = "https://pokeapi.co/api/v2";
+const GRAPHQL_BASE = "https://beta.pokeapi.co/graphql/v1beta";
 
 // ===== HELPERS =====
 export async function fetchJSON(url, errorMessage) {
@@ -13,6 +14,7 @@ let speciesCache = {};
 let moveCache = {};
 
 const ALL_POKEMON_CACHE_KEY = "pokedex:allPokemonList:v1";
+const SPEED_TIER_CACHE_KEY = "pokedex:speedTierList:v1";
 
 function readCache(key) {
     try {
@@ -117,4 +119,81 @@ export async function fetchMoveByUrl(url) {
     const data = await fetchJSON(url, "Failed to fetch move");
     moveCache[url] = data;
     return data;
+}
+
+// ===== SPEED TIERS (GraphQL) =====
+// The only GraphQL call in the project — the speed-tier page needs base
+// stats for every Pokémon at once to build a sorted list, and doing that as
+// ~1300 individual REST /pokemon/{id} requests (like fetchPokemonByUrl)
+// would be far too slow/heavy. PokéAPI's GraphQL beta endpoint returns
+// exactly the fields we need for every Pokémon form in a single request.
+const SPEED_TIER_QUERY = `query {
+    pokemon: pokemon_v2_pokemon {
+        id
+        name
+        is_default
+        pokemon_species_id
+        pokemon_v2_pokemonstats(order_by: { stat_id: asc }) { base_stat }
+        pokemon_v2_pokemonspecy { generation_id }
+        pokemon_v2_pokemontypes(order_by: { slot: asc }) { pokemon_v2_type { name } }
+    }
+}`;
+
+export async function fetchSpeedTierList() {
+    const cached = readCache(SPEED_TIER_CACHE_KEY);
+    if (cached) return cached;
+
+    const res = await fetch(GRAPHQL_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: SPEED_TIER_QUERY })
+    });
+    if (!res.ok) throw new Error("Failed to fetch speed tier data");
+
+    const { data } = await res.json();
+    const list = buildSpeedTierList(data.pokemon);
+    writeCache(SPEED_TIER_CACHE_KEY, list);
+    return list;
+}
+
+// Keeps every default-form Pokémon, plus non-default forms (Megas, regional
+// forms, Therian/Origin/Crowned, ...) only if their base stats actually
+// differ from their species' default form — this drops purely cosmetic
+// duplicates (Pikachu costumes, Totem forms, Gmax forms all share identical
+// base stats with their default form in PokéAPI's data) without a
+// hand-maintained name blocklist.
+function buildSpeedTierList(allPokemon) {
+    const bySpecies = new Map();
+    allPokemon.forEach(p => {
+        const forms = bySpecies.get(p.pokemon_species_id) ?? [];
+        forms.push(p);
+        bySpecies.set(p.pokemon_species_id, forms);
+    });
+
+    const result = [];
+    bySpecies.forEach(forms => {
+        const defaultForm = forms.find(p => p.is_default) ?? forms[0];
+        const defaultStats = statArray(defaultForm);
+
+        forms.forEach(p => {
+            if (p !== defaultForm && arraysEqual(statArray(p), defaultStats)) return;
+            result.push({
+                id: p.id,
+                name: p.name,
+                speed: statArray(p)[5],
+                gen: p.pokemon_v2_pokemonspecy?.generation_id ?? null,
+                types: p.pokemon_v2_pokemontypes.map(t => t.pokemon_v2_type.name)
+            });
+        });
+    });
+
+    return result;
+}
+
+function statArray(pokemon) {
+    return pokemon.pokemon_v2_pokemonstats.map(s => s.base_stat);
+}
+
+function arraysEqual(a, b) {
+    return a.length === b.length && a.every((value, i) => value === b[i]);
 }

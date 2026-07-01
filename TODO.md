@@ -189,11 +189,11 @@
 
 **Ziel:** Seite `speed-tiers.html` — wer überholt wen beim Teambuilding
 
-- [ ] Alle Pokémon sortiert nach Initiativ-Endwert (Lvl 100, 31 IVs, 252 EVs, neutral)
-- [ ] Filter nach Generation / Smogon-Tier
-- [ ] Eingabefeld: Speed-Wert eingeben → markiert was drüber / drunter liegt
-- [ ] Choice Scarf Toggle (×1,5) per Button
-- [ ] Wichtige Benchmarks highlighten (z.B. 130 = Dragapult-Speed-Tier)
+- [x] Alle Pokémon sortiert nach Initiativ-Endwert (Lvl 100, 31 IVs, 252 EVs, neutral) — Datenquelle ist Pokémon-API's GraphQL-Beta-Endpoint (`fetchSpeedTierList()` in `js/core/api.js`, erster GraphQL-Call im Projekt), da ~1300 einzelne REST-Requests zu langsam/schwer gewesen wären; Formen-Auswahl datengetrieben (nicht namensbasiert): pro Spezies wird die Default-Form immer behalten, eine Nicht-Default-Form nur wenn ihr voller Stat-Block vom Default abweicht (verifiziert gegen Live-Daten: behält Mega/Regionalformen/Therian/Origin/Crowned/etc., verwirft Pikachu-Kostüme/Totem-Formen/Gmax-Formen, da PokéAPI diese mit identischen Stats zur Default-Form führt) — Ergebnis ~1177 Einträge
+- [x] Filter nach Generation (Smogon-Tier-Filter zurückgestellt bis Session 11 die `smogon-tiers.json`-Datenquelle einführt)
+- [x] Eingabefeld: Speed-Wert eingeben → markiert was drüber / drunter liegt
+- [x] Choice Scarf Toggle (×1,5) per Button
+- [x] Quick-Pick-Buttons für runde Speed-Werte (100/110/120/130/140/150/200) statt konkret benannter Pokémon-Benchmarks — bewusste Scope-Vereinfachung, um keine ungeprüften Fakten über exakte Meta-Breakpoints zu behaupten; TODOs eigenes Beispiel ("130 = Dragapult") war ohnehin nur illustrativ
 
 ---
 

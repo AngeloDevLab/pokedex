@@ -134,5 +134,14 @@
         "hiddenAbilityText": "Versteckte Fähigkeiten werden meist von der Mutter vererbt (oder von einem der Elternteile beim Züchten mit Ditto). Häufige Quellen: Max-Rambas, Pokéradar-Ketten oder ein Fähigkeitskapsel/-Patch auf einem Pokémon mit normaler Fähigkeit.",
         "masudaTitle": "Masuda-Methode",
         "masudaText": "Werden zwei Pokémon aus Spielen mit unterschiedlicher Spracheinstellung verpaart, verdoppelt bis versechsfacht sich in etwa die Shiny-Chance (zusätzlich verstärkt durch einen Schillerstein bei einem der Eltern)."
+    },
+    "speedTiers": {
+        "title": "Speed-Tiers",
+        "navLink": "Speed-Tiers",
+        "generationLabel": "Generation",
+        "allGenerations": "Alle Generationen",
+        "benchmarkLabel": "Deine Initiative",
+        "benchmarkPlaceholder": "Initiativ-Wert eingeben...",
+        "choiceScarfToggle": "Choice Scarf (×1,5)"
     }
 }

@@ -134,5 +134,14 @@
         "hiddenAbilityText": "Hidden Abilities are usually passed down from the mother (or from either parent when breeding with Ditto). Common sources: Max Raid Battles, Poké Radar chains, or an Ability Patch/Capsule used on a Pokémon that already has its regular ability.",
         "masudaTitle": "Masuda Method",
         "masudaText": "Breeding two Pokémon from games with different language settings roughly sextuples the shiny odds (further boosted if either parent also holds a Shiny Charm)."
+    },
+    "speedTiers": {
+        "title": "Speed Tiers",
+        "navLink": "Speed Tiers",
+        "generationLabel": "Generation",
+        "allGenerations": "All Generations",
+        "benchmarkLabel": "Your Speed",
+        "benchmarkPlaceholder": "Enter a speed value...",
+        "choiceScarfToggle": "Choice Scarf (×1.5)"
     }
 }

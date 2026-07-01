@@ -1,0 +1,92 @@
+.speed-tiers-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.speed-tiers-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--space-3);
+}
+
+.benchmark-quick-picks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.quick-pick-btn {
+    padding: var(--space-1) var(--space-2);
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--radius-sm);
+    background: var(--secondary-color);
+    color: var(--color-white);
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.quick-pick-btn:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.scarf-toggle {
+    margin: 0;
+}
+
+.scarf-toggle.active {
+    border-color: var(--accent-color);
+}
+
+/* ===== RESULT LIST ===== */
+.speed-tier-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.speed-tier-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--secondary-color);
+    border-left: 3px solid transparent;
+}
+
+.speed-tier-rank {
+    width: 3rem;
+    color: var(--muted-color);
+}
+
+.speed-tier-types {
+    display: flex;
+    gap: var(--space-1);
+}
+
+.speed-tier-types img {
+    width: var(--space-4);
+    height: var(--space-4);
+}
+
+.speed-tier-name {
+    flex: 1;
+}
+
+.speed-tier-value {
+    font-weight: bold;
+}
+
+.speed-tier-row.above-benchmark {
+    border-left-color: var(--stat-high);
+}
+
+.speed-tier-row.below-benchmark {
+    opacity: 0.5;
+}

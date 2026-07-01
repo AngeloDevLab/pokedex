@@ -9,7 +9,8 @@ const NAV_LINKS = [
     { href: "/pages/matchup.html", i18nKey: "matchup.navLink", fallback: "Type Matchup" },
     { href: "/pages/learnset.html", i18nKey: "learnset.navLink", fallback: "Learnset" },
     { href: "/pages/damage-calc.html", i18nKey: "damageCalc.navLink", fallback: "Damage Calculator" },
-    { href: "/pages/breeding.html", i18nKey: "breeding.navLink", fallback: "Breeding Guide" }
+    { href: "/pages/breeding.html", i18nKey: "breeding.navLink", fallback: "Breeding Guide" },
+    { href: "/pages/speed-tiers.html", i18nKey: "speedTiers.navLink", fallback: "Speed Tiers" }
 ];
 
 // ===== TEMPLATES =====
