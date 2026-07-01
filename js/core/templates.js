@@ -203,6 +203,10 @@ export function getInfoTabTemplate(pokemon, entry) {
         <a href="/pages/damage-calc.html?defender=${pokemon.name}" class="load-btn damage-calc-link">
             ${t('dialog.damageCalcLink', null, 'Open Damage Calculator')}
         </a>
+
+        <a href="/pages/breeding.html?pokemon=${pokemon.name}" class="load-btn breeding-link">
+            ${t('dialog.breedingLink', null, 'Open Breeding Guide')}
+        </a>
     `;
 }
 

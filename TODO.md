@@ -63,6 +63,7 @@
 - [x] Spacing/Abstände im Header gegengecheckt — Bug gefunden + gefixt: `.search-panel` war bei `top: 80px` während Header `6rem` (96px) hoch ist, dadurch 16px Überlappung beim Öffnen; jetzt beide an `var(--header-height)` gekoppelt
 - [x] Bug gefunden + gefixt: Such-Toggle-Button hatte Klasse `search-button` statt `svg-button` und sah dadurch eckig statt rund/konsistent zu den anderen Icon-Buttons aus
 - [ ] Weitere kleinere visuelle Unstimmigkeiten sammeln und fixen
+- [ ] Sprachumstellung aktualisiert dynamisch gerenderten Content auf den Tool-Seiten nicht live (z.B. Nature-Tabelle auf `breeding.html`) — `i18n.js`s `rerenderDynamicContent()` re-rendert bisher nur `activeList`/den Dialog (index/search), Tool-Seiten (stats-calc, matchup, learnset, damage-calc, breeding) hängen sich da nicht ein und müssten ihre dynamischen Teile bei Sprachwechsel selbst neu rendern (oder der/die zuletzt ausgewählte Zustand wird beim Reselect einfach neu gezogen) — aktuell bewusst zurückgestellt, siehe Zwischenschritt-Entscheidung "erst durchziehen, dann Polish"
 
 ---
 
@@ -172,13 +173,13 @@
 
 **Ziel:** Alles was man für kompetitive Zucht wissen muss — eigene Seite `pages/breeding.html`, kein Dialog-Tab mehr (siehe Zwischenschritt vor Session 5)
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
-- [ ] Ei-Gruppe(n) anzeigen (mit welchen Pokémon kann es züchten)
-- [ ] Egg Moves Liste (aus Learnset, Lernmethode `egg`)
-- [ ] Für jeden Egg Move: welche anderen Pokémon vererben ihn (Zucht-Kette)
-- [ ] Allgemeiner Teil (Pokémon-unabhängig, gleiche Seite):
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] Ei-Gruppe(n) anzeigen (mit welchen Pokémon kann es züchten) — über `getEggGroup()` (neu in `js/core/api.js`), Undiscovered-Gruppe (`no-eggs`) zeigt stattdessen einen "kann nicht normal gezüchtet werden"-Hinweis statt der Zuchtkette
+- [x] Egg Moves Liste (aus Learnset, Lernmethode `egg`) — über bereits bestehendes `fetchMoveset()`
+- [x] Für jeden Egg Move: welche anderen Pokémon vererben ihn (Zucht-Kette) — Algorithmus vermeidet das naive Durchfetchen ganzer Ei-Gruppen (teils ~100 Mitglieder): pro Egg Move wird PokéAPIs `move.learned_by_pokemon` mit den Namen der eigenen Ei-Gruppe(n) geschnitten, die verbleibenden Kandidaten werden einmalig vollständig geladen (page-lokaler Cache in `breeding-page.js`) und nur behalten, wenn ihre eigene `version_group_details`-Lernmethode für diesen Move *nicht* `egg` ist (echter Lehrer, keine reine Weitervererbung)
+- [x] Allgemeiner Teil (Pokémon-unabhängig, gleiche Seite):
   - Schritt-für-Schritt IV-Zucht-Anleitung (Destino-Knoten, Items)
-  - Nature-Tabelle: alle 25 Wesen mit +/− Stats
+  - Nature-Tabelle: alle 25 Wesen mit +/− Stats — wiederverwendet `js/data/natures.js` (war bereits für diese Session vorbereitet)
   - Hidden Ability: wie bekommt man sie (Max-Raid, Ability Patch)
   - Masuda-Methode erklärt
 
@@ -303,6 +304,17 @@
 - [ ] Mobile: Swipe-Geste im Dialog (links/rechts)
 - [ ] Pokémon-Cry abspielen (PokéAPI liefert `.ogg`)
 - [ ] Favoriten-Liste (LocalStorage)
+
+---
+
+## Session 19 — Design-Review (eigene Session)
+
+**Ziel:** Nach Session 3 (kleinere Hover/Spacing-Fixes) noch mal grundsätzlich übers gesamte visuelle Design gehen, statt nur Einzelfixes zu sammeln — aktuelle Farbpalette/Abstände/Struktur/Typo fühlen sich noch nicht final an
+
+- [ ] Farbpalette gegenchecken (aktuell 4 Farben aus Session 3, seitdem nicht mehr grundsätzlich hinterfragt)
+- [ ] Abstände/Spacing-Skala (`--space-1`…`--space-7`) auf Konsistenz über alle Seiten prüfen (mittlerweile 7 Seiten mit teils eigenen Card-/Section-Paddings)
+- [ ] Seitenstruktur/Layout der Tool-Seiten (stats-calc, matchup, learnset, damage-calc, breeding) im Vergleich — sind sie konsistent genug zueinander oder ist jede Seite leicht anders gewachsen?
+- [ ] Typographie (Schriftgrößen-Skala, Line-Height, Headings) — bisher nicht zentral definiert, nur implizit durch Browser-Defaults + Einzelregeln
 
 ---
 

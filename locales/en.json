@@ -43,6 +43,7 @@
         "matchupLink": "Open Type Matchup",
         "learnsetLink": "Open Learnset",
         "damageCalcLink": "Open Damage Calculator",
+        "breedingLink": "Open Breeding Guide",
         "artwork": {
             "official": "{name} official artwork",
             "officialShiny": "{name} shiny official artwork",
@@ -109,5 +110,29 @@
         "typeEffectiveness": "Type",
         "noEffect": "No effect",
         "ohko": "OHKO"
+    },
+    "breeding": {
+        "title": "Breeding Guide",
+        "navLink": "Breeding Guide",
+        "eggGroupsTitle": "Egg Groups",
+        "cannotBreed": "This Pokémon cannot breed normally (Undiscovered egg group).",
+        "eggMovesTitle": "Egg Moves",
+        "noEggMoves": "This Pokémon has no egg moves.",
+        "fathersLabel": "Can be taught by:",
+        "noFathersFound": "No direct teacher found — this move may only be passed down through chain breeding.",
+        "guideTitle": "General Breeding Guide",
+        "ivGuideTitle": "Breeding for IVs",
+        "ivStep1": "Catch or breed a Ditto and Pokémon with good IVs in the stats you care about.",
+        "ivStep2": "Give one parent a Destiny Knot to inherit 5 random IVs from the two parents instead of the usual 3.",
+        "ivStep3": "Power items (Power Weight, Power Bracer, Power Belt, Power Lens, Power Band, Power Anklet) force one specific IV to always pass down when held by a parent.",
+        "ivStep4": "Repeat with the best offspring as new parents to gradually stack perfect IVs across multiple stats.",
+        "natureTableTitle": "Nature Table",
+        "natureTableIncreased": "Increases",
+        "natureTableDecreased": "Decreases",
+        "natureTableNeutral": "No effect",
+        "hiddenAbilityTitle": "Hidden Ability",
+        "hiddenAbilityText": "Hidden Abilities are usually passed down from the mother (or from either parent when breeding with Ditto). Common sources: Max Raid Battles, Poké Radar chains, or an Ability Patch/Capsule used on a Pokémon that already has its regular ability.",
+        "masudaTitle": "Masuda Method",
+        "masudaText": "Breeding two Pokémon from games with different language settings roughly sextuples the shiny odds (further boosted if either parent also holds a Shiny Charm)."
     }
 }

@@ -3,7 +3,7 @@ import { initNavShell } from '../core/nav.js';
 import { initPokemonPicker } from '../core/pokemon-picker.js';
 import { withLoader } from '../core/pagination.js';
 import { fetchMoveset } from '../core/moveset.js';
-import { getTypeIcon } from '../core/ui.js';
+import { getTypeIcon, formatSlug } from '../core/ui.js';
 
 const METHODS = ["level-up", "machine", "egg", "tutor"];
 
@@ -101,13 +101,6 @@ function getMoveName(move) {
         ?? move.names.find(n => n.language.name === "en");
 
     return localized ? localized.name : formatSlug(move.name);
-}
-
-function formatSlug(slug) {
-    return slug
-        .split("-")
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
 }
 
 function getCategoryLabel(damageClass) {

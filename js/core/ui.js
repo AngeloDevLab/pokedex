@@ -160,6 +160,13 @@ export function getTypeIcon(type) {
     return `/assets/icons/types/${type}.png`;
 }
 
+export function formatSlug(slug) {
+    return slug
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+}
+
 export function getTabContent() {
     return document.getElementById("tab-content");
 }

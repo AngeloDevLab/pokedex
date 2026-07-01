@@ -43,6 +43,7 @@
         "matchupLink": "タイプ相性を開く",
         "learnsetLink": "わざ一覧を開く",
         "damageCalcLink": "ダメージ計算機を開く",
+        "breedingLink": "タマゴ厳選ガイドを開く",
         "artwork": {
             "official": "{name}の公式アートワーク",
             "officialShiny": "{name}の色違い公式アートワーク",
@@ -109,5 +110,29 @@
         "typeEffectiveness": "タイプ相性",
         "noEffect": "効果なし",
         "ohko": "一撃"
+    },
+    "breeding": {
+        "title": "タマゴ厳選ガイド",
+        "navLink": "タマゴ厳選ガイド",
+        "eggGroupsTitle": "タマゴグループ",
+        "cannotBreed": "このポケモンは通常繁殖できません(タマゴグループ「未発見」)。",
+        "eggMovesTitle": "タマゴわざ",
+        "noEggMoves": "このポケモンにタマゴわざはありません。",
+        "fathersLabel": "遺伝元:",
+        "noFathersFound": "直接教えられるポケモンが見つかりません — このわざは複数回の遺伝が必要な場合があります。",
+        "guideTitle": "厳選ガイド",
+        "ivGuideTitle": "個体値厳選",
+        "ivStep1": "個体値の高い親ポケモンとメタモンを用意しましょう。",
+        "ivStep2": "親にあかいいとを持たせると、通常3つではなく5つの個体値がランダムに遺伝します。",
+        "ivStep3": "パワー系アイテム(パワーリスト、パワーベルト、パワーレンズ、パワーバンド、パワーアンクル、おもいおもり)を持たせると、特定の個体値を必ず遺伝させられます。",
+        "ivStep4": "優秀な個体値を持つ子供を新たな親として繰り返すことで、複数のステータスで理論値に近づけていきます。",
+        "natureTableTitle": "性格一覧",
+        "natureTableIncreased": "上昇",
+        "natureTableDecreased": "下降",
+        "natureTableNeutral": "効果なし",
+        "hiddenAbilityTitle": "夢特性",
+        "hiddenAbilityText": "夢特性は主に母親から遺伝します(メタモンと預ける場合はどちらの親からでも可)。入手方法としては、マックスレイドバトル、ポケルスサーチのチェイン、または通常特性のポケモンにとくせいパッチ/カプセルを使う方法があります。",
+        "masudaTitle": "国際孵化(マサダメソッド)",
+        "masudaText": "言語設定の異なるソフト同士の親からタマゴを孵すと色違いの確率が約6倍になります(親のどちらかが光るお守りを持っているとさらに上がります)。"
     }
 }

@@ -43,6 +43,7 @@
         "matchupLink": "Typ-Matchup öffnen",
         "learnsetLink": "Lernset öffnen",
         "damageCalcLink": "Schadensrechner öffnen",
+        "breedingLink": "Zucht-Guide öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -109,5 +110,29 @@
         "typeEffectiveness": "Typ",
         "noEffect": "Kein Effekt",
         "ohko": "OHKO"
+    },
+    "breeding": {
+        "title": "Zucht-Guide",
+        "navLink": "Zucht-Guide",
+        "eggGroupsTitle": "Ei-Gruppen",
+        "cannotBreed": "Dieses Pokémon kann nicht normal gezüchtet werden (Ei-Gruppe „Unentdeckt\").",
+        "eggMovesTitle": "Ei-Attacken",
+        "noEggMoves": "Dieses Pokémon hat keine Ei-Attacken.",
+        "fathersLabel": "Kann gelehrt werden von:",
+        "noFathersFound": "Kein direkter Lehrer gefunden — diese Attacke lässt sich eventuell nur über eine Zuchtkette weitergeben.",
+        "guideTitle": "Allgemeiner Zucht-Guide",
+        "ivGuideTitle": "IV-Zucht (Individualwerte)",
+        "ivStep1": "Fange oder züchte ein Ditto sowie Elternteile mit guten Individualwerten (IVs) in den relevanten Statuswerten.",
+        "ivStep2": "Gib einem Elternteil ein Zieband (Destiny Knot), damit 5 statt der üblichen 3 IVs zufällig vererbt werden.",
+        "ivStep3": "Kraft-Items (Krafttrikot, Kraftband, Kraftgurt, Kraftlinse, Kraftfußband) erzwingen die Vererbung eines bestimmten IVs, wenn ein Elternteil sie trägt.",
+        "ivStep4": "Wiederhole den Vorgang mit den besten Nachkommen als neue Eltern, um nach und nach perfekte IVs in mehreren Statuswerten zu stapeln.",
+        "natureTableTitle": "Wesen-Tabelle",
+        "natureTableIncreased": "Erhöht",
+        "natureTableDecreased": "Senkt",
+        "natureTableNeutral": "Kein Effekt",
+        "hiddenAbilityTitle": "Versteckte Fähigkeit",
+        "hiddenAbilityText": "Versteckte Fähigkeiten werden meist von der Mutter vererbt (oder von einem der Elternteile beim Züchten mit Ditto). Häufige Quellen: Max-Rambas, Pokéradar-Ketten oder ein Fähigkeitskapsel/-Patch auf einem Pokémon mit normaler Fähigkeit.",
+        "masudaTitle": "Masuda-Methode",
+        "masudaText": "Werden zwei Pokémon aus Spielen mit unterschiedlicher Spracheinstellung verpaart, verdoppelt bis versechsfacht sich in etwa die Shiny-Chance (zusätzlich verstärkt durch einen Schillerstein bei einem der Eltern)."
     }
 }

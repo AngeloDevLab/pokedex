@@ -70,6 +70,22 @@ export async function fetchEvolutionChain(url) {
     return fetchJSON(url, "Failed to fetch evolution chain");
 }
 
+// ===== EGG GROUPS =====
+let eggGroupCache = {};
+
+export async function getEggGroup(url) {
+    if (eggGroupCache[url]) return eggGroupCache[url];
+
+    try {
+        const data = await fetchJSON(url, "Failed to fetch egg group");
+        eggGroupCache[url] = data;
+        return data;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+}
+
 // ===== SEARCH / FILTER =====
 export async function fetchAllPokemonList() {
     const cached = readCache(ALL_POKEMON_CACHE_KEY);
