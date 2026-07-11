@@ -4,6 +4,10 @@
         "pickerLabel": "Pokémon wählen",
         "pickerPlaceholder": "Namen eingeben..."
     },
+    "nav": {
+        "calculators": "Rechner",
+        "guide": "Pokémon-Guide"
+    },
     "searchPanel": {
         "nameLabel": "Suche nach Name",
         "namePlaceholder": "Namen eingeben...",

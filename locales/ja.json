@@ -4,6 +4,10 @@
         "pickerLabel": "ポケモンを選択",
         "pickerPlaceholder": "名前を入力..."
     },
+    "nav": {
+        "calculators": "計算ツール",
+        "guide": "ポケモンガイド"
+    },
     "searchPanel": {
         "nameLabel": "名前で検索",
         "namePlaceholder": "名前を入力...",

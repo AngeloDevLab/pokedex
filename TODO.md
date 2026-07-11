@@ -207,6 +207,22 @@
 
 ---
 
+## Zwischenschritt — Navigation-Kategorien
+
+**Ziel:** Bevor Session 12+ weitere Seiten in die Navbar packen, die Navigation auf Kategorien mit Dropdown/Flyout umstellen. Aktuell schon 8 flache Links (Search, Stats-Rechner, Matchup, Lernset, Schadensrechner, Zucht-Guide, Speed-Tiers, Competitive), bis Session 17 kämen realistisch 5–6 weitere dazu (~13–14 total) — jetzt gemacht, damit jede künftige Session nur noch ihren Link in die passende Kategorie einträgt statt am Ende eine eigene große Nav-Umbau-Session zu brauchen (gleiches Muster wie der localStorage-Cache-Zwischenschritt vor Session 5).
+
+- [x] Kategorie-Struktur: 1 flacher Top-Level-Link (Search) + vorerst 2 Dropdown-Kategorien (Referenz erst ab Session 13, siehe unten)
+  - Rechner: Statuswert-Rechner, Schadensrechner, Speed-Tiers, Typ-Matchup
+  - Pokémon-Guide: Lernset, Zucht-Guide, Competitive (Regionalformen & Megas / Shiny Hunting kommen erst mit Session 12/14 dazu)
+  - Referenz (Items/Moves & Abilities/VGC-Guide) bewusst noch nicht angelegt — keine leere Dropdown-Kategorie auf Vorrat, gleiches Prinzip wie „keine toten Links" aus Session 4; wird mit Session 13 (erste Referenz-Seite) ergänzt
+  - Zucht-Guide/Shiny-Hunting sind Mischformen (Pokémon-Tool + allgemeiner Guide-Text) und könnten auch unter Referenz stehen — bei Bedarf beim tatsächlichen Umbau nochmal gegenchecken
+- [x] `NAV_LINKS` in `js/core/nav.js` von flacher Liste auf Kategorie-Struktur umbauen (`{ top: [...], categories: [...] }`)
+- [x] Desktop: Dropdown/Flyout per Klick auf Kategorie-Label (`.nav-category-toggle`) — bewusst kein Hover, um mit der Klick-Logik auf Touch/Tablet konsistent zu bleiben; schließt sich bei Klick auf eine andere Kategorie oder außerhalb (gleiches `document`-Click-Outside-Muster wie das Burger-Menü)
+- [x] Mobile (Sidebar): Kategorien als native `<details>`/`<summary>`-Accordions statt Dropdown — kein eigenes JS nötig, barrierefrei by default
+- [x] Ab hier tragen neue Sessions ihren Link nur noch in die passende Kategorie ein, keine Nav-Struktur-Änderung mehr nötig
+
+---
+
 ## Session 12 — Regionale Formen & Megas (eigene Seite, vorläufig)
 
 **Ziel:** Alola/Galar/Hisui/Paldea-Formen und Mega-Entwicklungen zu einem gewählten Pokémon
