@@ -49,6 +49,7 @@
         "damageCalcLink": "Open Damage Calculator",
         "breedingLink": "Open Breeding Guide",
         "competitiveLink": "Open Competitive",
+        "formsLink": "Open Forms & Megas",
         "artwork": {
             "official": "{name} official artwork",
             "officialShiny": "{name} shiny official artwork",
@@ -175,5 +176,16 @@
             "lc": "Little Cup — level 5, first evolution stage only",
             "cap": "Create-A-Pokémon — community fan-made Pokémon"
         }
+    },
+    "forms": {
+        "title": "Forms & Megas",
+        "navLink": "Forms & Megas",
+        "standardForm": "Standard",
+        "noAlternateForms": "This Pokémon has no alternate forms.",
+        "megaBadge": "Mega Evolution",
+        "gmaxBadge": "Gigantamax",
+        "battleOnlyBadge": "Battle only",
+        "gmaxMoveNote": "Gigantamax Pokémon also gain an exclusive G-Max Move in battle — that data isn't available through the API this site uses, so it can't be shown here.",
+        "pickerHint": "Suggestions only include Pokémon with alternate forms — type any name to search directly."
     }
 }

@@ -213,7 +213,7 @@
 
 - [x] Kategorie-Struktur: 1 flacher Top-Level-Link (Search) + vorerst 2 Dropdown-Kategorien (Referenz erst ab Session 13, siehe unten)
   - Rechner: Statuswert-Rechner, Schadensrechner, Speed-Tiers, Typ-Matchup
-  - Pokémon-Guide: Lernset, Zucht-Guide, Competitive (Regionalformen & Megas / Shiny Hunting kommen erst mit Session 12/14 dazu)
+  - Pokémon-Guide: Lernset, Zucht-Guide, Competitive, Regionalformen & Megas (Shiny Hunting kommt erst mit Session 14 dazu)
   - Referenz (Items/Moves & Abilities/VGC-Guide) bewusst noch nicht angelegt — keine leere Dropdown-Kategorie auf Vorrat, gleiches Prinzip wie „keine toten Links" aus Session 4; wird mit Session 13 (erste Referenz-Seite) ergänzt
   - Zucht-Guide/Shiny-Hunting sind Mischformen (Pokémon-Tool + allgemeiner Guide-Text) und könnten auch unter Referenz stehen — bei Bedarf beim tatsächlichen Umbau nochmal gegenchecken
 - [x] `NAV_LINKS` in `js/core/nav.js` von flacher Liste auf Kategorie-Struktur umbauen (`{ top: [...], categories: [...] }`)
@@ -223,19 +223,20 @@
 
 ---
 
-## Session 12 — Regionale Formen & Megas (eigene Seite, vorläufig)
+## Session 12 — Regionale Formen & Megas (eigene Seite)
 
 **Ziel:** Alola/Galar/Hisui/Paldea-Formen und Mega-Entwicklungen zu einem gewählten Pokémon
 
-> Vorläufig als eigene Seite `pages/forms.html` eingeplant, analog zu den anderen Sessions oben. Da das hier am stärksten an "genau dieses eine Pokémon gerade offen" hängt, nochmal neu bewerten, wenn diese Session tatsächlich anfängt — ein Dialog-Tab könnte hier am Ende doch die bessere Wahl sein.
+> Entscheidung gefallen: eigene Seite `pages/forms.html`, gleiches Muster wie alle anderen Tool-Seiten seit dem Zwischenschritt vor Session 5 (Dialog bekommt keine weiteren Tabs mehr) — kein Sonderfall trotz enger Kopplung ans gerade offene Pokémon.
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus (oder doch Dialog-Tab — siehe Hinweis oben)
-- [ ] Varianten-Auswahl wenn Formen vorhanden (z.B. „Alola" / „Galar")
-  - PokéAPI: eigene Einträge wie `rattata-alola`, `mewtwo-mega-x`
-- [ ] Stats, Typ, Ability der Form korrekt laden und anzeigen
-- [ ] Mega-Entwicklungen: Stats-Unterschied zur Basis-Form visualisieren
-- [ ] Gigantamax-Formen: G-Max Move + Unterschied zu Standard-Dynamax
-- [ ] Auf der Pokémon-Karte kleines Icon wenn Formen vorhanden
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] Varianten-Auswahl wenn Formen vorhanden (z.B. „Alola" / „Galar") — Button-Leiste (`variant-selector`), nur sichtbar wenn die Spezies mehr als eine `variety` hat; sonst Hinweistext „keine alternativen Formen"
+  - PokéAPI: eigene Einträge wie `rattata-alola`, `mewtwo-mega-x` — jede Variante ist ein eigener `/pokemon/{name}`-Eintrag, verlinkt von `/pokemon-species/{id}`s `varieties`-Array; Klassifikation (`is_mega`/`is_battle_only`/`form_name`) kommt vom verknüpften `/pokemon-form/{id}`-Eintrag (neu: `fetchPokemonForm()` in `js/core/api.js`)
+- [x] Stats, Typ, Ability der Form korrekt laden und anzeigen — wiederverwendet `prepareStats()`/`getTypes()`/`getAbilities()` aus `ui.js`, gleiche Stat-Bar-Optik wie Dialog/Stats-Rechner (`css/components/stats.css`)
+- [x] Mega-Entwicklungen: Stats-Unterschied zur Basis-Form visualisieren — pro Stat ein `(+n)`/`(−n)`-Delta neben dem Wert (grün/rot, gleiche `--stat-high`/`--stat-low`-Konvention wie die Wesen-Tabelle im Zucht-Guide), relativ zur `is_default`-Variante der Spezies
+- [x] Gigantamax-Formen: Unterschied zu Standard-Dynamax — G-Max Move bewusst nicht dargestellt: gegen die echte API verifiziert, dass er nirgends als Daten modelliert ist (weder im `moves`-Array der Gigadynamax-Variante noch der Standardform, kein `/move/g-max-*`-Eintrag) — Hinweistext (`forms.gmaxMoveNote`) erklärt das statt eine falsche Quelle zu erfinden, gleiches Prinzip wie die „keine ungeprüften Fakten"-Entscheidung aus Session 10
+- [ ] Auf der Pokémon-Karte kleines Icon wenn Formen vorhanden — zurückgestellt: bräuchte einen Bulk-Lookup (Spezies → Varianten-Anzahl, gleiche GraphQL-Bulk-Bauart wie `fetchSpeedTierList()`), der vor dem allerersten Render des Haupt-Grids abgewartet werden müsste und damit den First Paint der meistbesuchten Seite spürbar verzögern würde; erst angehen, wenn ein Weg ohne First-Paint-Blocker gefunden ist
+- [x] Nachtrag: Picker-Autocomplete auf `forms.html` schlägt jetzt nur Pokémon mit tatsächlichen Alternativformen vor, statt dass man erst nach der Auswahl „keine alternativen Formen" sieht — neue `fetchPokemonNamesWithForms()` (Bulk-GraphQL wie oben, permanent gecacht) + optionaler `filterNames`-Parameter in `pokemon-picker.js`, der nur die Vorschlagsliste einschränkt; exakte Eingabe/Deep-Link aus dem Dialog funktioniert weiterhin für jedes Pokémon. Anderer, deutlich kleinerer Blast-Radius als der zurückgestellte Karten-Icon-Punkt oben (betrifft nur diese eine Seite, nicht das Haupt-Grid)
 
 ---
 

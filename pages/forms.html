@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex | Forms & Megas</title>
+
+    <link rel="icon" href="../assets/images/pokeball.png">
+
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/standard.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/inputs.css">
+    <link rel="stylesheet" href="../css/components/stats.css">
+    <link rel="stylesheet" href="../css/components/forms.css">
+    <link rel="stylesheet" href="../css/components/nav.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <script type="module" src="../js/pages/forms-page.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content max-content">
+            <div class="header-left">
+                <div class="header-brand">
+                    <a href="../index.html">
+                        <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+                        <p>Pokédex</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div id="header-lang-slot" class="nav-desktop-only"></div>
+
+                <div id="header-nav-slot" class="nav-desktop-only"></div>
+
+                <button id="nav-toggle" class="svg-button nav-mobile-trigger">
+
+                    <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 5h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 19h16" />
+                    </svg>
+
+                    <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar"></div>
+
+    <main>
+
+        <div id="loader" class="loader hidden">
+            <img src="../assets/images/pokeball.png" alt="Loading">
+        </div>
+
+        <div class="forms-content max-content">
+
+            <h1 data-i18n="forms.title">Forms & Megas</h1>
+
+            <div class="search-group">
+                <label for="pokemon-picker" data-i18n="common.pickerLabel">Choose a Pokémon</label>
+                <input type="text" id="pokemon-picker" list="pokemon-options"
+                    data-i18n-placeholder="common.pickerPlaceholder" placeholder="Enter name...">
+                <datalist id="pokemon-options"></datalist>
+                <small class="picker-hint" data-i18n="forms.pickerHint">
+                    Suggestions only include Pokémon with alternate forms — type any name to search directly.
+                </small>
+            </div>
+
+            <div id="forms-result" class="hidden">
+
+                <p id="no-forms-message" class="no-forms-message hidden" data-i18n="forms.noAlternateForms">
+                    This Pokémon has no alternate forms.
+                </p>
+
+                <div id="forms-detail" class="hidden">
+
+                    <nav id="variant-selector" class="variant-selector hidden"></nav>
+
+                    <div class="forms-panel">
+                        <div class="form-header">
+                            <h2 id="form-name"></h2>
+                            <div id="form-badges" class="form-badges"></div>
+                        </div>
+
+                        <p id="gmax-note" class="gmax-note hidden" data-i18n="forms.gmaxMoveNote">
+                            Gigantamax Pokémon also gain an exclusive G-Max Move in battle — that data isn't
+                            available through the API this site uses, so it can't be shown here.
+                        </p>
+
+                        <div class="form-info-row">
+                            <span class="form-info-label" data-i18n="dialog.table.types">Types</span>
+                            <div id="form-types" class="form-types"></div>
+                        </div>
+
+                        <div class="form-info-row">
+                            <span class="form-info-label" data-i18n="dialog.table.abilities">Abilities</span>
+                            <span id="form-abilities"></span>
+                        </div>
+
+                        <ul id="form-stats" class="stats-list"></ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-content max-content">
+            <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+            <a href="imprint.html" data-i18n="footer.imprint">Imprint</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

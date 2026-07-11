@@ -90,6 +90,17 @@ export async function fetchEvolutionChain(url) {
     return fetchJSON(url, "Failed to fetch evolution chain");
 }
 
+// ===== FORMS =====
+let formCache = {};
+
+export async function fetchPokemonForm(url) {
+    if (formCache[url]) return formCache[url];
+
+    const data = await fetchJSON(url, "Failed to fetch pokemon form");
+    formCache[url] = data;
+    return data;
+}
+
 // ===== EGG GROUPS =====
 let eggGroupCache = {};
 
@@ -214,6 +225,52 @@ function statArray(pokemon) {
 
 function arraysEqual(a, b) {
     return a.length === b.length && a.every((value, i) => value === b[i]);
+}
+
+// ===== FORMS (bulk, GraphQL) =====
+// Names of every default-form Pokémon whose species has more than one
+// variety — used by forms-page.js to restrict its picker's autocomplete
+// suggestions to Pokémon that actually have alternate forms, instead of
+// letting users pick one from the full ~1300-entry list only to land on a
+// "no alternate forms" message. Same GraphQL-bulk shape as
+// fetchSpeedTierList() (one request instead of ~1300 individual ones),
+// cached permanently like the rest of this app's static Pokédex data.
+const NAMES_WITH_FORMS_CACHE_KEY = "pokedex:pokemonNamesWithForms:v1";
+
+const VARIETY_COUNT_QUERY = `query {
+    pokemon: pokemon_v2_pokemon {
+        name
+        is_default
+        pokemon_species_id
+    }
+}`;
+
+export async function fetchPokemonNamesWithForms() {
+    const cached = readCache(NAMES_WITH_FORMS_CACHE_KEY);
+    if (cached) return cached;
+
+    const res = await fetch(GRAPHQL_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: VARIETY_COUNT_QUERY })
+    });
+    if (!res.ok) throw new Error("Failed to fetch pokemon forms data");
+
+    const { data } = await res.json();
+    const names = buildNamesWithForms(data.pokemon);
+    writeCache(NAMES_WITH_FORMS_CACHE_KEY, names);
+    return names;
+}
+
+function buildNamesWithForms(allPokemon) {
+    const varietyCounts = {};
+    allPokemon.forEach(p => {
+        varietyCounts[p.pokemon_species_id] = (varietyCounts[p.pokemon_species_id] ?? 0) + 1;
+    });
+
+    return allPokemon
+        .filter(p => p.is_default && varietyCounts[p.pokemon_species_id] > 1)
+        .map(p => p.name);
 }
 
 // ===== SMOGON TIERS =====

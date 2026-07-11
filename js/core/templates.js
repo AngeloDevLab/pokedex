@@ -211,6 +211,10 @@ export function getInfoTabTemplate(pokemon, entry) {
         <a href="/pages/competitive.html?pokemon=${pokemon.name}" class="load-btn competitive-link">
             ${t('dialog.competitiveLink', null, 'Open Competitive')}
         </a>
+
+        <a href="/pages/forms.html?pokemon=${pokemon.name}" class="load-btn forms-link">
+            ${t('dialog.formsLink', null, 'Open Forms & Megas')}
+        </a>
     `;
 }
 

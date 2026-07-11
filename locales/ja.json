@@ -49,6 +49,7 @@
         "damageCalcLink": "ダメージ計算機を開く",
         "breedingLink": "タマゴ厳選ガイドを開く",
         "competitiveLink": "対戦考察を開く",
+        "formsLink": "フォーム＆メガシンカを開く",
         "artwork": {
             "official": "{name}の公式アートワーク",
             "officialShiny": "{name}の色違い公式アートワーク",
@@ -175,5 +176,16 @@
             "lc": "リトルカップ — レベル5、最初の進化段階のみ",
             "cap": "Create-A-Pokémon — コミュニティ制作のファンポケモン"
         }
+    },
+    "forms": {
+        "title": "フォーム＆メガシンカ",
+        "navLink": "フォーム＆メガシンカ",
+        "standardForm": "通常",
+        "noAlternateForms": "このポケモンには他のフォームがありません。",
+        "megaBadge": "メガシンカ",
+        "gmaxBadge": "キョダイマックス",
+        "battleOnlyBadge": "バトル限定",
+        "gmaxMoveNote": "キョダイマックスポケモンは専用のキョダイマックスわざも使用できますが、このサイトが利用するAPIにはそのデータがないため表示できません。",
+        "pickerHint": "候補には別のフォームを持つポケモンのみ表示されます。それ以外の名前も直接入力できます。"
     }
 }

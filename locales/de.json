@@ -49,6 +49,7 @@
         "damageCalcLink": "Schadensrechner öffnen",
         "breedingLink": "Zucht-Guide öffnen",
         "competitiveLink": "Competitive öffnen",
+        "formsLink": "Formen & Megas öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -175,5 +176,16 @@
             "lc": "Little Cup — Level 5, nur erste Entwicklungsstufe",
             "cap": "Create-A-Pokémon — von der Community erstellte Fan-Pokémon"
         }
+    },
+    "forms": {
+        "title": "Formen & Megas",
+        "navLink": "Formen & Megas",
+        "standardForm": "Standard",
+        "noAlternateForms": "Dieses Pokémon hat keine alternativen Formen.",
+        "megaBadge": "Mega-Entwicklung",
+        "gmaxBadge": "Gigadynamaximierung",
+        "battleOnlyBadge": "Nur im Kampf",
+        "gmaxMoveNote": "Gigadynamax-Pokémon erhalten im Kampf außerdem eine exklusive G-Max-Attacke — diese Daten sind über die hier genutzte API nicht verfügbar und können deshalb nicht angezeigt werden.",
+        "pickerHint": "Vorschläge zeigen nur Pokémon mit alternativen Formen — jeder andere Name kann trotzdem direkt eingegeben werden."
     }
 }
