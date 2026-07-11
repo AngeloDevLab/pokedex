@@ -4,18 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex | Imprint</title>
+    <title>Pokédex | Competitive</title>
 
     <link rel="icon" href="../assets/images/pokeball.png">
 
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/standard.css">
     <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/inputs.css">
+    <link rel="stylesheet" href="../css/components/competitive.css">
     <link rel="stylesheet" href="../css/components/nav.css">
     <link rel="stylesheet" href="../css/fonts.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <script type="module" src="../js/pages/imprint-page.js"></script>
+    <script type="module" src="../js/pages/competitive-page.js"></script>
 
 </head>
 
@@ -59,58 +61,52 @@
 
     <div class="sidebar" id="sidebar"></div>
 
-    <main class="imprint-content">
+    <main>
 
-        <h1>Imprint & Privacy</h1>
+        <div id="loader" class="loader hidden">
+            <img src="../assets/images/pokeball.png" alt="Loading">
+        </div>
 
-        <h2>Imprint</h2>
+        <div class="competitive-content max-content">
 
-        <p>Information according to § 5 TMG:</p>
-        <p>
-            Angelo Pietsch<br>
-            Haydnstraße 45<br>
-            02708 Löbau<br>
-            Germany
-        </p>
+            <h1 data-i18n="competitive.title">Competitive</h1>
 
-        <p>
-            <strong>Email:</strong>
-            <a href="mailto:apietsch94@gmail.com">apietsch94@gmail.com</a>
-        </p>
+            <div class="search-group">
+                <label for="pokemon-picker" data-i18n="common.pickerLabel">Choose a Pokémon</label>
+                <input type="text" id="pokemon-picker" list="pokemon-options"
+                    data-i18n-placeholder="common.pickerPlaceholder" placeholder="Enter name...">
+                <datalist id="pokemon-options"></datalist>
+            </div>
 
-        <hr>
+            <div id="competitive-result" class="competitive-result hidden">
 
-        <h2>Privacy Policy</h2>
+                <div class="tier-row">
+                    <span class="tier-label" data-i18n="competitive.tierLabel">Smogon Tier</span>
+                    <span id="tier-badge" class="tier-badge"></span>
+                </div>
 
-        <p>This website is a private project and does not collect, store, or process any personal data.</p>
-        <p>No cookies or tracking technologies are used.</p>
-        <p>
-            Data displayed on this website is fetched from public sources:<br>
-            <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">https://pokeapi.co/</a><br>
-            <a href="https://github.com/smogon/pokemon-showdown" target="_blank" rel="noopener noreferrer">Pokémon Showdown / Smogon (competitive tier data)</a>
-        </p>
+                <p id="tier-note" class="tier-note hidden"></p>
 
-        <p>
-            When using this website, your browser may send requests to external servers (PokéAPI, GitHub),
-            which may log technical
-            data such as your IP address.
-        </p>
+                <a id="smogon-link" class="load-btn smogon-link" href="#" target="_blank" rel="noopener noreferrer"
+                    data-i18n="competitive.viewOnSmogon">View full analysis on Smogon</a>
 
-        <hr>
+            </div>
 
-        <h2>Disclaimer</h2>
-        <p>
-            Pokémon, Pokémon character names, and all related media are trademarks of Nintendo, Game Freak,
-            and Creatures Inc. This is an unofficial, non-commercial fan project and is not affiliated with,
-            endorsed, sponsored, or approved by Nintendo, Game Freak, Creatures Inc., or The Pokémon Company.
-        </p>
+            <section class="tier-legend">
+                <h2 data-i18n="competitive.legendTitle">Tier Legend</h2>
+                <ul id="tier-legend-list" class="tier-legend-list"></ul>
+            </section>
 
-        <hr>
-
-        <h2>Credits</h2>
-        <p>Special thanks to Jens for valuable input.</p>
+        </div>
 
     </main>
+
+    <footer>
+        <div class="footer-content max-content">
+            <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+            <a href="imprint.html" data-i18n="footer.imprint">Imprint</a>
+        </div>
+    </footer>
 
 </body>
 

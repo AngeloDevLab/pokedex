@@ -1,45 +1,60 @@
-import { fetchAllPokemonList, fetchPokemonByType, fetchPokemonByUrl } from './api.js';
+import { fetchPokemonByUrl, fetchSearchIndex } from './api.js';
 import { LIMIT, pokemonCache, visibleCount, withLoader, setVisibleStart } from './pagination.js';
 import { renderPokemonList, updateLoadButtons, showSearchWarning } from './ui.js';
 import { getNoResultTemplate } from './templates.js';
 
 // ===== STATE =====
 export let activeList = [];
-export let currentMode = "default";  // default | search | type
-let allPokemonList = [];
+export let currentMode = "default";  // default | filtered
 export let searchOffset = 0;
 export let searchResults = [];
+
+// Bulk dataset (id/name/url/generation/eggGroups/abilities/types/bst) all
+// combinable filters below run against client-side — see api.js's
+// fetchSearchIndex() for why this replaces separate per-filter REST calls.
+let searchIndex = [];
+
+// All filters combine with AND; empty string/falsy = not applied.
+const filters = { name: "", type: "", generation: "", ability: "", eggGroup: "" };
+let sortBy = "id"; // id | name | bst
 
 export function setActiveList(list) {
     activeList = list;
 }
 
-// ===== DATA (LOAD) =====
-async function loadAllPokemonForSearch() {
-    if (allPokemonList.length > 0) return;
-    const data = await fetchAllPokemonList();
-    allPokemonList = data.results;
+// ===== INDEX (LOAD ONCE) =====
+export async function loadSearchIndex() {
+    if (!searchIndex.length) {
+        searchIndex = await fetchSearchIndex();
+    }
+    return searchIndex;
 }
 
-// ===== SEARCH (LOGIC) =====
-async function searchPokemonByName(query) {
-    await loadAllPokemonForSearch();
-    const matches = allPokemonList.filter(pokemon =>
-        pokemon.name.includes(query)
-    );
-    searchResults = matches;
-    searchOffset = 0;
+// ===== FILTER + SORT (client-side) =====
+function computeFilteredResults() {
+    let results = searchIndex;
 
-    return loadSearchBatch();
+    if (filters.name) results = results.filter(p => p.name.includes(filters.name));
+    if (filters.type) results = results.filter(p => p.types.includes(filters.type));
+    if (filters.generation) results = results.filter(p => String(p.generation) === filters.generation);
+    if (filters.ability) results = results.filter(p => p.abilities.includes(filters.ability));
+    if (filters.eggGroup) results = results.filter(p => p.eggGroups.includes(filters.eggGroup));
+
+    return sortResults(results);
 }
 
-async function searchPokemonByType(type) {
-    const data = await fetchPokemonByType(type);
-    const results = data.pokemon.map(p => p.pokemon);
-    searchResults = results;
-    searchOffset = 0;
+function sortResults(results) {
+    const sorted = [...results];
 
-    return loadSearchBatch();
+    if (sortBy === "name") sorted.sort((a, b) => a.name.localeCompare(b.name));
+    else if (sortBy === "bst") sorted.sort((a, b) => b.bst - a.bst);
+    else sorted.sort((a, b) => a.id - b.id);
+
+    return sorted;
+}
+
+function hasActiveFilter() {
+    return Object.values(filters).some(Boolean) || sortBy !== "id";
 }
 
 // ===== PAGINATION =====
@@ -59,48 +74,50 @@ export async function loadSearchBatch() {
 // ===== INPUT HANDLING =====
 export function handleSearchInput(e) {
     const query = getInputValue(e);
-    if (!validateSearchQuery(query)) return;
-    resetOtherInput("filter-type");
-    currentMode = "search";
-    showSearchWarning(false);
-    runNameSearch(query);
+    const isShort = query.length > 0 && query.length < 3;
+
+    showSearchWarning(isShort);
+    filters.name = isShort ? "" : query;
+    applyFilters();
 }
 
 export function handleTypeInput(e) {
-    const type = getInputValue(e);
-
-    if (!type) {
-        resetSearch();
-        return;
-    }
-
-    resetOtherInput("search-name");
-    currentMode = "type";
-    runTypeSearch(type);
+    filters.type = getInputValue(e);
+    applyFilters();
 }
 
-function validateSearchQuery(query) {
-    if (!query) {
-        showSearchWarning(false);
-        resetSearch();
-        return false;
-    }
+export function handleGenerationInput(e) {
+    filters.generation = e.target.value;
+    applyFilters();
+}
 
-    if (isShortQuery(query)) {
-        showSearchWarning(true);
-        return false;
-    }
+export function handleAbilityInput(e) {
+    filters.ability = getInputValue(e);
+    applyFilters();
+}
 
-    return true;
+export function handleEggGroupInput(e) {
+    filters.eggGroup = e.target.value;
+    applyFilters();
+}
+
+export function handleSortInput(e) {
+    sortBy = e.target.value;
+    applyFilters();
 }
 
 // ===== SEARCH FLOW =====
 export function resetSearch() {
-    const searchInput = document.getElementById("search-name");
-    const typeInput = document.getElementById("filter-type");
-    searchInput.value = "";
-    typeInput.value = "";
+    resetFilterInputs();
+
+    filters.name = "";
+    filters.type = "";
+    filters.generation = "";
+    filters.ability = "";
+    filters.eggGroup = "";
+    sortBy = "id";
     showSearchWarning(false);
+
     currentMode = "default";
     activeList = pokemonCache;
     setVisibleStart(Math.max(
@@ -110,51 +127,98 @@ export function resetSearch() {
 
     renderPokemonList(activeList);
     updateLoadButtons();
+    syncUrlParams();
 }
 
-async function runSearch(task) {
-    await withLoader(async () => {
-        const details = await task();
+function resetFilterInputs() {
+    ["search-name", "filter-type", "ability-filter"].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.value = "";
+    });
+    ["generation-select", "egg-group-select"].forEach(id => {
+        const select = document.getElementById(id);
+        if (select) select.value = "";
+    });
+    const sortSelect = document.getElementById("sort-select");
+    if (sortSelect) sortSelect.value = "id";
+}
 
-        if (!details.length) {
+async function applyFilters() {
+    if (!hasActiveFilter()) {
+        resetSearch();
+        return;
+    }
+
+    await withLoader(async () => {
+        await loadSearchIndex();
+        currentMode = "filtered";
+        searchResults = computeFilteredResults();
+        searchOffset = 0;
+
+        if (!searchResults.length) {
             activeList = [];
             renderNoResults();
             updateLoadButtons();
             return;
         }
 
+        const details = await loadSearchBatch();
         activeList = details;
         setVisibleStart(0);
         renderPokemonList(activeList);
         updateLoadButtons();
     });
+
+    syncUrlParams();
 }
 
-function runNameSearch(query) {
-    currentMode = "search";
-    showSearchWarning(false);
+// ===== URL PARAMS (deep-links / sharing) =====
+export async function applyUrlParams() {
+    const params = new URLSearchParams(location.search);
+    if (![...params.keys()].length) return;
 
-    return runSearch(() => searchPokemonByName(query));
+    filters.name = params.get("name") ?? "";
+    filters.type = params.get("type") ?? "";
+    filters.generation = params.get("gen") ?? "";
+    filters.ability = params.get("ability") ?? "";
+    filters.eggGroup = params.get("eggGroup") ?? "";
+    sortBy = params.get("sort") ?? "id";
+
+    syncFilterInputs();
+    await applyFilters();
 }
 
-function runTypeSearch(type) {
-    currentMode = "type";
+function syncFilterInputs() {
+    setInputValue("search-name", filters.name);
+    setInputValue("filter-type", filters.type);
+    setInputValue("generation-select", filters.generation);
+    setInputValue("ability-filter", filters.ability);
+    setInputValue("egg-group-select", filters.eggGroup);
+    setInputValue("sort-select", sortBy);
+}
 
-    return runSearch(() => searchPokemonByType(type));
+function setInputValue(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.value = value;
+}
+
+function syncUrlParams() {
+    const params = new URLSearchParams();
+    if (filters.name) params.set("name", filters.name);
+    if (filters.type) params.set("type", filters.type);
+    if (filters.generation) params.set("gen", filters.generation);
+    if (filters.ability) params.set("ability", filters.ability);
+    if (filters.eggGroup) params.set("eggGroup", filters.eggGroup);
+    if (sortBy !== "id") params.set("sort", sortBy);
+
+    const query = params.toString();
+    const url = query ? `${location.pathname}?${query}` : location.pathname;
+    history.replaceState(null, "", url);
 }
 
 // ===== HELPERS =====
-function isShortQuery(query) {
-    return query.length > 0 && query.length < 3;
-}
-
 function getInputValue(e) {
     return e.target.value.trim().toLowerCase();
-}
-
-function resetOtherInput(id) {
-    const input = document.getElementById(id);
-    if (input) input.value = "";
 }
 
 function renderNoResults() {

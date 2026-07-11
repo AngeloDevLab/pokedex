@@ -1,0 +1,115 @@
+.forms-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.no-forms-message {
+    color: var(--muted-color);
+}
+
+.picker-hint {
+    display: block;
+    color: var(--muted-color);
+    font-size: 0.85rem;
+    margin-top: var(--space-1);
+}
+
+.variant-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+}
+
+.variant-btn {
+    padding: var(--space-1) var(--space-3);
+    border: 2px solid var(--secondary-color);
+    border-radius: var(--radius-full);
+    background: var(--secondary-color);
+    color: var(--color-white);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.variant-btn:hover {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.variant-btn.active {
+    border-color: var(--accent-color);
+}
+
+.forms-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+}
+
+.form-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+}
+
+.form-header h2 {
+    text-transform: uppercase;
+}
+
+.form-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.form-badge {
+    padding: var(--space-1) var(--space-3);
+    border: 2px solid var(--accent-color);
+    border-radius: var(--radius-full);
+    background: var(--secondary-color);
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.gmax-note {
+    color: var(--muted-color);
+    font-size: 0.9rem;
+}
+
+.form-info-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.form-info-label {
+    text-transform: uppercase;
+    color: var(--muted-color);
+    font-size: 0.85rem;
+}
+
+.form-types {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.form-types img {
+    height: var(--space-5);
+    width: var(--space-5);
+}
+
+.forms-stat-up {
+    color: var(--stat-high);
+}
+
+.forms-stat-down {
+    color: var(--stat-low);
+}

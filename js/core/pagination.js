@@ -81,7 +81,7 @@ async function loadMoreData(nextStart) {
         return loadMoreDefault();
     }
 
-    if (currentMode === "search" || currentMode === "type") {
+    if (currentMode === "filtered") {
         return loadMoreSearch(nextStart);
     }
 }
@@ -129,7 +129,7 @@ export function hasMoreData() {
         return pokemonCache.length % LIMIT === 0;
     }
 
-    if (currentMode === "search" || currentMode === "type") {
+    if (currentMode === "filtered") {
         return searchOffset < searchResults.length;
     }
 

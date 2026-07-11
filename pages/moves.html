@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex | Search</title>
+    <title>Pokédex | Moves</title>
 
     <link rel="icon" href="../assets/images/pokeball.png">
 
@@ -12,15 +12,13 @@
     <link rel="stylesheet" href="../css/standard.css">
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/inputs.css">
-    <link rel="stylesheet" href="../css/components/search.css">
-    <link rel="stylesheet" href="../css/components/cards.css">
-    <link rel="stylesheet" href="../css/components/dialog.css">
-    <link rel="stylesheet" href="../css/components/stats.css">
+    <link rel="stylesheet" href="../css/components/learnset.css">
+    <link rel="stylesheet" href="../css/components/moves.css">
     <link rel="stylesheet" href="../css/components/nav.css">
     <link rel="stylesheet" href="../css/fonts.css">
     <link rel="stylesheet" href="../css/responsive.css">
 
-    <script type="module" src="../js/pages/search-page.js"></script>
+    <script type="module" src="../js/pages/moves-page.js"></script>
 
 </head>
 
@@ -70,22 +68,21 @@
             <img src="../assets/images/pokeball.png" alt="Loading">
         </div>
 
-        <div class="search-content max-content">
+        <div class="moves-content max-content">
+
+            <h1 data-i18n="moves.title">Moves</h1>
+
             <div class="search-group">
-                <label for="search-name" data-i18n="searchPanel.nameLabel">Search by Name</label>
-                <input type="search" id="search-name" data-i18n-placeholder="searchPanel.namePlaceholder"
-                    placeholder="Enter name...">
-                <small id="search-warning" class="hidden" data-i18n="searchPanel.warning">
-                    min. 3 characters
-                </small>
+                <label for="move-search" data-i18n="moves.searchLabel">Search by Name</label>
+                <input type="search" id="move-search" data-i18n-placeholder="moves.searchPlaceholder"
+                    placeholder="Enter move name...">
             </div>
 
             <div class="search-group">
-                <label for="filter-type" data-i18n="searchPanel.typeLabel">Filter by Type</label>
-                <input list="type-list" id="filter-type" data-i18n-placeholder="searchPanel.typePlaceholder"
+                <label for="move-type-filter" data-i18n="searchPanel.typeLabel">Filter by Type</label>
+                <input list="move-type-list" id="move-type-filter" data-i18n-placeholder="searchPanel.typePlaceholder"
                     placeholder="Select type...">
-
-                <datalist id="type-list">
+                <datalist id="move-type-list">
                     <option value="fire">
                     <option value="water">
                     <option value="grass">
@@ -103,47 +100,25 @@
                     <option value="dark">
                     <option value="steel">
                     <option value="fairy">
+                    <option value="normal">
                 </datalist>
             </div>
 
             <div class="search-group">
-                <label for="generation-select" data-i18n="searchPanel.generationLabel">Generation</label>
-                <select id="generation-select" class="filter-select"></select>
-            </div>
-
-            <div class="search-group">
-                <label for="ability-filter" data-i18n="searchPanel.abilityLabel">Search by Ability</label>
-                <input list="ability-options" id="ability-filter" data-i18n-placeholder="searchPanel.abilityPlaceholder"
-                    placeholder="Select ability...">
-                <datalist id="ability-options"></datalist>
-            </div>
-
-            <div class="search-group">
-                <label for="egg-group-select" data-i18n="searchPanel.eggGroupLabel">Filter by Egg Group</label>
-                <select id="egg-group-select" class="filter-select"></select>
-            </div>
-
-            <div class="search-group">
-                <label for="sort-select" data-i18n="searchPanel.sortLabel">Sort by</label>
-                <select id="sort-select" class="filter-select">
-                    <option value="id" data-i18n="searchPanel.sortId">Pokédex Number</option>
-                    <option value="name" data-i18n="searchPanel.sortName">Name</option>
-                    <option value="bst" data-i18n="searchPanel.sortBst">Base Stat Total</option>
+                <label for="move-category-select" data-i18n="learnset.category">Category</label>
+                <select id="move-category-select">
+                    <option value="" data-i18n="moves.allCategories">All Categories</option>
+                    <option value="physical" data-i18n="learnset.physical">Physical</option>
+                    <option value="special" data-i18n="learnset.special">Special</option>
+                    <option value="status" data-i18n="learnset.status">Status</option>
                 </select>
             </div>
 
-            <button id="search-reset" data-i18n="searchPanel.clear">Clear Search</button>
+            <div id="moves-result"></div>
+
         </div>
 
-        <button id="load-previous-btn" class="load-btn hidden" data-i18n="load.previous">load previous</button>
-
-        <div id="pokemon-container" class="max-content"></div>
-
-        <button id="load-more-btn" class="load-btn hidden" data-i18n="load.more">load more</button>
-
     </main>
-
-    <dialog id="pokemon-dialog" closedby="any"></dialog>
 
     <footer>
         <div class="footer-content max-content">

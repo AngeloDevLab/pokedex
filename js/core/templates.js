@@ -1,5 +1,5 @@
 import { t } from './i18n.js';
-import { getTypeIcon, getTypes, getAbilities } from './ui.js';
+import { getTypeIcon, getTypes, getAbilities, formatSlug } from './ui.js';
 
 export function getPokemonCardTemplate({ id, name, image, gradient, types }) {
     return `
@@ -203,6 +203,22 @@ export function getInfoTabTemplate(pokemon, entry) {
         <a href="/pages/damage-calc.html?defender=${pokemon.name}" class="load-btn damage-calc-link">
             ${t('dialog.damageCalcLink', null, 'Open Damage Calculator')}
         </a>
+
+        <a href="/pages/breeding.html?pokemon=${pokemon.name}" class="load-btn breeding-link">
+            ${t('dialog.breedingLink', null, 'Open Breeding Guide')}
+        </a>
+
+        <a href="/pages/competitive.html?pokemon=${pokemon.name}" class="load-btn competitive-link">
+            ${t('dialog.competitiveLink', null, 'Open Competitive')}
+        </a>
+
+        <a href="/pages/forms.html?pokemon=${pokemon.name}" class="load-btn forms-link">
+            ${t('dialog.formsLink', null, 'Open Forms & Megas')}
+        </a>
+
+        <a href="/pages/shiny.html?pokemon=${pokemon.name}" class="load-btn shiny-link">
+            ${t('dialog.shinyLink', null, 'Open Shiny Hunting')}
+        </a>
     `;
 }
 
@@ -274,6 +290,33 @@ export function getArtworkTabTemplate(pokemon) {
                  alt="${t('dialog.artwork.spriteShiny', { name: pokemon.name }, `${pokemon.name} shiny sprite`)}">
         </div>
     `;
+}
+
+// Shared by learnset-page.js (per-move detail row) and moves-page.js
+// (Session 16) — both render the exact same power/accuracy/pp/category/
+// effect breakdown for a fully-fetched move object (from fetchMoveByUrl()),
+// extracted here once the second page needed it.
+export function getMoveDetailTemplate(move) {
+    return `
+        <table>
+            <tr><td>${t('learnset.power', null, 'Power')}</td><td>${move.power ?? "—"}</td></tr>
+            <tr><td>${t('learnset.accuracy', null, 'Accuracy')}</td><td>${move.accuracy ? `${move.accuracy}%` : "—"}</td></tr>
+            <tr><td>${t('learnset.pp', null, 'PP')}</td><td>${move.pp ?? "—"}</td></tr>
+            <tr><td>${t('learnset.category', null, 'Category')}</td><td>${getMoveCategoryLabel(move.damage_class.name)}</td></tr>
+        </table>
+        <p class="move-effect">${getMoveEffectText(move)}</p>
+    `;
+}
+
+export function getMoveCategoryLabel(damageClass) {
+    return t(`learnset.${damageClass}`, null, formatSlug(damageClass));
+}
+
+function getMoveEffectText(move) {
+    const entry = move.effect_entries.find(e => e.language.name === "en");
+    if (!entry) return "";
+
+    return entry.short_effect.replace("$effect_chance", move.effect_chance ?? "");
 }
 
 export function getNoResultTemplate() {

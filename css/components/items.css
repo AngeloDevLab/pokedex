@@ -1,0 +1,116 @@
+.items-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+#item-category-select {
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    border: none;
+    outline: none;
+    background: var(--secondary-color);
+    color: var(--color-white);
+}
+
+.items-result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.5rem;
+}
+
+.items-group h2 {
+    text-align: start;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+}
+
+.items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.item-row {
+    background: var(--secondary-color);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid transparent;
+}
+
+.item-row.highlighted {
+    border-left-color: var(--accent-color);
+}
+
+.item-row-toggle {
+    width: 100%;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all var(--transition-base);
+}
+
+.item-row-toggle:hover {
+    border-color: var(--accent-color);
+}
+
+.item-icon {
+    width: var(--space-5);
+    height: var(--space-5);
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.item-name {
+    flex: 1;
+    text-align: left;
+}
+
+.item-badge {
+    padding: var(--space-1) var(--space-2);
+    border: 2px solid var(--accent-color);
+    border-radius: var(--radius-full);
+    background: var(--primary-color);
+    font-weight: bold;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.item-chevron {
+    width: var(--space-3);
+    height: var(--space-3);
+    flex-shrink: 0;
+    transition: transform var(--transition-base);
+}
+
+.item-row-toggle.open .item-chevron {
+    transform: rotate(90deg);
+}
+
+.item-details {
+    padding: 0 var(--space-3) var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.item-effect {
+    font-size: 0.9rem;
+    color: var(--muted-color);
+}

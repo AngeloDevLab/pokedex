@@ -1,4 +1,8 @@
-import { activeList, currentMode, handleSearchInput, handleTypeInput, resetSearch } from './search.js';
+import {
+    activeList, currentMode, handleSearchInput, handleTypeInput,
+    handleGenerationInput, handleAbilityInput, handleEggGroupInput, handleSortInput,
+    resetSearch
+} from './search.js';
 import { visibleStart, visibleCount, hasMoreData, loadNext, loadPrevious, pokemonCache } from './pagination.js';
 import { openDialog, closeDialog, currentIndex, renderInfoTab, renderStatsTab, renderEvoTab, renderArtworkTab } from './dialog.js';
 import { t } from './i18n.js';
@@ -158,6 +162,13 @@ export function getGradient(types) {
 
 export function getTypeIcon(type) {
     return `/assets/icons/types/${type}.png`;
+}
+
+export function formatSlug(slug) {
+    return slug
+        .split("-")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 }
 
 export function getTabContent() {
@@ -331,12 +342,13 @@ function hasMoreVisible() {
 
 // ===== SEARCH UI =====
 export function bindSearchInputs() {
-    const searchInput = document.getElementById("search-name");
-    const typeInput = document.getElementById("filter-type");
-    const resetBtn = document.getElementById("search-reset");
-    resetBtn.addEventListener("click", resetSearch);
-    searchInput.addEventListener("input", handleSearchInput);
-    typeInput.addEventListener("input", handleTypeInput);
+    document.getElementById("search-reset").addEventListener("click", resetSearch);
+    document.getElementById("search-name").addEventListener("input", handleSearchInput);
+    document.getElementById("filter-type").addEventListener("input", handleTypeInput);
+    document.getElementById("generation-select").addEventListener("change", handleGenerationInput);
+    document.getElementById("ability-filter").addEventListener("input", handleAbilityInput);
+    document.getElementById("egg-group-select").addEventListener("change", handleEggGroupInput);
+    document.getElementById("sort-select").addEventListener("change", handleSortInput);
 }
 
 export function showSearchWarning(show) {

@@ -1,0 +1,84 @@
+.competitive-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.competitive-result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+}
+
+.tier-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.tier-label {
+    text-transform: uppercase;
+}
+
+.tier-badge {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-weight: bold;
+    background: var(--secondary-color);
+}
+
+.tier-badge.tier-ranked {
+    border: 2px solid var(--accent-color);
+}
+
+.tier-badge.tier-unranked {
+    color: var(--muted-color);
+}
+
+.tier-note {
+    color: var(--muted-color);
+    font-size: 0.9rem;
+}
+
+.smogon-link {
+    align-self: flex-start;
+}
+
+/* ===== TIER LEGEND ===== */
+.tier-legend h2 {
+    text-align: start;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+}
+
+.tier-legend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.tier-legend-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--secondary-color);
+}
+
+.tier-legend-code {
+    width: 4rem;
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+.tier-legend-desc {
+    color: var(--muted-color);
+    font-size: 0.9rem;
+}
