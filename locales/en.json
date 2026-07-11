@@ -51,6 +51,7 @@
         "breedingLink": "Open Breeding Guide",
         "competitiveLink": "Open Competitive",
         "formsLink": "Open Forms & Megas",
+        "shinyLink": "Open Shiny Hunting",
         "artwork": {
             "official": "{name} official artwork",
             "officialShiny": "{name} shiny official artwork",
@@ -211,5 +212,35 @@
         },
         "highlightBadge": "Popular",
         "viewOnSmogon": "View on Smogon"
+    },
+    "shiny": {
+        "title": "Shiny Hunting",
+        "navLink": "Shiny Hunting",
+        "recommendedTitle": "Recommended Method",
+        "locationsTitle": "Encounter Locations",
+        "noEncounters": "No wild encounter data available for this Pokémon in the games covered here (this includes Scarlet/Violet, which PokéAPI has no location data for at all) — it may only be obtainable via breeding, trade, evolution, or as a special/gift Pokémon.",
+        "versionLabel": "Game",
+        "methodsTitle": "Shiny-Hunting Methods & Odds",
+        "methodsIntro": "Base odds are 1/8192 in Gen 2–5 and 1/4096 from Gen 6 onward. Numbers below are verified against current community-documented data, not exact for every historical edge case.",
+        "methodHeader": "Method",
+        "gamesHeader": "Games",
+        "oddsHeader": "Odds",
+        "recommendWild": "This Pokémon has wild encounters — hunt at full odds with a Shiny Charm equipped, or (in Scarlet/Violet) stack a Sparkling Power Lvl. 3 sandwich. If it also appears in Mass Outbreaks, chaining 60+ catches boosts the odds further.",
+        "recommendBreeding": "No wild encounters in the data covered here, but this species can breed — the Masuda Method is the most efficient option. See the Breeding Guide for how it works.",
+        "recommendNone": "No wild encounters in the data covered here, and this species can't breed normally — it may only be obtainable via a special encounter, gift, trade, or event, where shiny odds usually can't be influenced.",
+        "methods": {
+            "fullOddsModern": { "name": "Full Odds (Gen 6+)", "games": "Any wild encounter or Sword/Shield Max Raid, no boosts" },
+            "fullOddsLegacy": { "name": "Full Odds (Gen 2–5)", "games": "Gold/Silver/Crystal through Black 2/White 2" },
+            "shinyCharm": { "name": "Shiny Charm", "games": "Key item for completing the Pokédex (Gen 6+)" },
+            "masuda": { "name": "Masuda Method", "games": "Breed two Pokémon from games with different language settings" },
+            "masudaCharm": { "name": "Masuda Method + Shiny Charm", "games": "Same as above, with the Shiny Charm equipped" },
+            "sparklingPower": { "name": "Sparkling Power Sandwich", "games": "Scarlet/Violet — Level 3 Sparkling Power picnic sandwich" },
+            "sparklingPowerCharm": { "name": "Sparkling Power + Shiny Charm", "games": "Scarlet/Violet" },
+            "sparklingPowerOutbreak": { "name": "Sparkling Power + Shiny Charm + Outbreak Chain", "games": "Scarlet/Violet — 60+ chained Mass Outbreak catches" },
+            "pokeRadar": { "name": "Poké Radar Chaining", "games": "Diamond/Pearl/Platinum, HeartGold/SoulSilver, Brilliant Diamond/Shining Pearl — chain of 40" },
+            "sosChain": { "name": "SOS Chaining", "games": "Sun/Moon, Ultra Sun/Ultra Moon — long SOS battle chains" },
+            "arceusOutbreak": { "name": "Mass Outbreak + Perfect Research", "games": "Legends: Arceus — Research Level 10 with a Perfect rating, plus Shiny Charm" },
+            "maxRaid": { "name": "Max Raid Battles", "games": "Sword/Shield — fixed rate, Shiny Charm has no effect here" }
+        }
     }
 }

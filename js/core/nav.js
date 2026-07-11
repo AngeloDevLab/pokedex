@@ -26,7 +26,8 @@ const NAV_LINKS = {
                 { href: "/pages/learnset.html", i18nKey: "learnset.navLink", fallback: "Learnset" },
                 { href: "/pages/breeding.html", i18nKey: "breeding.navLink", fallback: "Breeding Guide" },
                 { href: "/pages/competitive.html", i18nKey: "competitive.navLink", fallback: "Competitive" },
-                { href: "/pages/forms.html", i18nKey: "forms.navLink", fallback: "Forms & Megas" }
+                { href: "/pages/forms.html", i18nKey: "forms.navLink", fallback: "Forms & Megas" },
+                { href: "/pages/shiny.html", i18nKey: "shiny.navLink", fallback: "Shiny Hunting" }
             ]
         },
         {

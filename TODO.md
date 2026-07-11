@@ -213,7 +213,7 @@
 
 - [x] Kategorie-Struktur: 1 flacher Top-Level-Link (Search) + 3 Dropdown-Kategorien
   - Rechner: Statuswert-Rechner, Schadensrechner, Speed-Tiers, Typ-Matchup
-  - Pokémon-Guide: Lernset, Zucht-Guide, Competitive, Regionalformen & Megas (Shiny Hunting kommt erst mit Session 14 dazu)
+  - Pokémon-Guide: Lernset, Zucht-Guide, Competitive, Regionalformen & Megas, Shiny Hunting
   - Referenz: Items (seit Session 13; Moves & Abilities/VGC-Guide kommen mit Session 16/17 dazu) — bis Session 13 bewusst noch nicht angelegt, keine leere Dropdown-Kategorie auf Vorrat, gleiches Prinzip wie „keine toten Links" aus Session 4
   - Zucht-Guide/Shiny-Hunting sind Mischformen (Pokémon-Tool + allgemeiner Guide-Text) und könnten auch unter Referenz stehen — bei Bedarf beim tatsächlichen Umbau nochmal gegenchecken
 - [x] `NAV_LINKS` in `js/core/nav.js` von flacher Liste auf Kategorie-Struktur umbauen (`{ top: [...], categories: [...] }`)
@@ -258,13 +258,14 @@
 
 **Ziel:** Wo finde ich dieses Pokémon, wie shinye ich es effizient — eigene Seite `pages/shiny.html`, kein Dialog-Tab mehr (Fundorte-Teil wandert mit dazu statt eigener Dialog-Tab „Finden", siehe Zwischenschritt vor Session 5)
 
-- [ ] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
-- [ ] Fundorte je Spielversion (PokéAPI `/pokemon/{id}/encounters`)
-  - Hinweis wenn nur über Zucht / Trade / Event
-- [ ] Allgemeiner Teil (Pokémon-unabhängig, gleiche Seite):
-  - Methoden-Übersicht je Generation (Masuda, Radar-Kette, DexNav, Max-Raids, Massenausbrüche)
-  - Wahrscheinlichkeits-Tabelle (1/4096 Basis, mit Shiny Charm, mit Methode)
-  - Für jedes Pokémon: effizienteste Methode
+> Wichtige Datenlücke gegen die Live-API verifiziert und mit Nutzer abgestimmt, bevor gebaut wurde: PokéAPI hat **keinerlei Fundort-Daten für Scarlet/Violet** (Paldea existiert nur als `/region`-Metadaten-Eintrag, keine befüllten Location-Areas; getestet an Sprigatito/Fidough — leeres Array). Entscheidung: trotzdem bauen, mit echten Daten für alle abgedeckten Spiele (Gen 1 bis Sword/Shield) und einem klaren Hinweis statt einer leeren Seite, wenn für ein Pokémon nichts vorliegt.
+
+- [x] Pokémon-Suche/Auswahl auf der Seite + Deep-Link aus dem Dialog heraus
+- [x] Fundorte je Spielversion (PokéAPI `/pokemon/{id}/encounters`, per `pokemon.location_area_encounters`-URL) — Spiel-Dropdown (nur Versionen, die für dieses Pokémon tatsächlich Daten haben, Standard = neuestes abgedecktes Spiel), darunter Fundort-Gruppen mit Methode/Level-Spanne/relativer Chance
+  - Hinweis wenn nur über Zucht / Trade / Event — wenn das Encounters-Array leer ist, klarer Hinweistext statt leerer Seite (siehe Datenlücke oben)
+- [x] Allgemeiner Teil (Pokémon-unabhängig, gleiche Seite):
+  - Methoden-Übersicht je Generation (Masuda, Radar-Kette, DexNav, Max-Raids, Massenausbrüche) + Wahrscheinlichkeits-Tabelle (1/4096 Basis, mit Shiny Charm, mit Methode) — zusammengefasst in einer Tabelle (`js/data/shiny-methods.js`, 12 Methoden), da Methode und Odds ohnehin zusammengehören; Zahlen gegen aktuelle Community-Dokumentation verifiziert statt aus dem Gedächtnis geschrieben, u.a. SV-spezifische Sandwich-Mechanik (Glitzerkraft Lvl. 3, mit Schillerstein, mit 60er-Massenausbruchs-Kette), da das die aktuell relevante Methode ist; DexNav/Chain-Fishing/Friend-Safari-Feinheiten bewusst nicht mit Einzelzahlen versehen, da nicht mit vergleichbarer Sicherheit verifiziert
+  - Für jedes Pokémon: effizienteste Methode — datengetrieben statt geraten: hat das Pokémon Wildvorkommen in den abgedeckten Spielen → Vollchance/Sandwich/Ausbruchs-Empfehlung; keine Wildvorkommen aber Zucht möglich (gleiche Undiscovered-Ei-Gruppen-Prüfung wie im Zucht-Guide) → Masuda-Methode-Empfehlung mit Link zum Zucht-Guide; keins von beidem → Hinweis auf besondere Begegnung/Geschenk/Event ohne beeinflussbare Shiny-Chance
 
 ---
 

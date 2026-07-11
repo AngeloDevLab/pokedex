@@ -215,6 +215,10 @@ export function getInfoTabTemplate(pokemon, entry) {
         <a href="/pages/forms.html?pokemon=${pokemon.name}" class="load-btn forms-link">
             ${t('dialog.formsLink', null, 'Open Forms & Megas')}
         </a>
+
+        <a href="/pages/shiny.html?pokemon=${pokemon.name}" class="load-btn shiny-link">
+            ${t('dialog.shinyLink', null, 'Open Shiny Hunting')}
+        </a>
     `;
 }
 

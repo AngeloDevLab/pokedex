@@ -51,6 +51,7 @@
         "breedingLink": "Zucht-Guide öffnen",
         "competitiveLink": "Competitive öffnen",
         "formsLink": "Formen & Megas öffnen",
+        "shinyLink": "Shiny Hunting öffnen",
         "artwork": {
             "official": "{name} offizielles Artwork",
             "officialShiny": "{name} schillerndes offizielles Artwork",
@@ -211,5 +212,35 @@
         },
         "highlightBadge": "Beliebt",
         "viewOnSmogon": "Auf Smogon ansehen"
+    },
+    "shiny": {
+        "title": "Shiny Hunting",
+        "navLink": "Shiny Hunting",
+        "recommendedTitle": "Empfohlene Methode",
+        "locationsTitle": "Fundorte",
+        "noEncounters": "Für dieses Pokémon liegen in den hier abgedeckten Spielen keine Fundort-Daten vor (das schließt Scarlet/Violet ein, für das PokéAPI generell keine Fundort-Daten hat) — es ist eventuell nur über Zucht, Tausch, Entwicklung oder als besonderes/Geschenk-Pokémon erhältlich.",
+        "versionLabel": "Spiel",
+        "methodsTitle": "Shiny-Hunting-Methoden & Wahrscheinlichkeiten",
+        "methodsIntro": "Die Basis-Wahrscheinlichkeit liegt bei 1/8192 in Gen 2–5 und bei 1/4096 ab Gen 6. Die Zahlen unten sind gegen aktuell dokumentierte Community-Daten geprüft, nicht für jeden historischen Sonderfall exakt.",
+        "methodHeader": "Methode",
+        "gamesHeader": "Spiele",
+        "oddsHeader": "Wahrscheinlichkeit",
+        "recommendWild": "Dieses Pokémon hat Wildvorkommen — jage mit Vollchance und ausgerüstetem Schillerstein, oder (in Scarlet/Violet) mit einem Sandwich mit Glitzerkraft Lvl. 3. Falls es auch in Massenausbrüchen vorkommt, verbessert eine Kette von 60+ Fängen die Chancen zusätzlich.",
+        "recommendBreeding": "Keine Wildvorkommen in den hier abgedeckten Daten, aber diese Spezies kann gezüchtet werden — die Masuda-Methode ist hier am effizientesten. Wie das funktioniert, steht im Zucht-Guide.",
+        "recommendNone": "Keine Wildvorkommen in den hier abgedeckten Daten, und diese Spezies kann nicht normal gezüchtet werden — sie ist eventuell nur über eine besondere Begegnung, ein Geschenk, Tausch oder Event erhältlich, wo sich die Shiny-Chance meist nicht beeinflussen lässt.",
+        "methods": {
+            "fullOddsModern": { "name": "Vollchance (Gen 6+)", "games": "Jede Wildbegegnung oder Schwert/Schild-Max-Rambas, ohne Boosts" },
+            "fullOddsLegacy": { "name": "Vollchance (Gen 2–5)", "games": "Gold/Silber/Kristall bis Schwarz 2/Weiß 2" },
+            "shinyCharm": { "name": "Schillerstein", "games": "Schlüsselitem für einen vollständigen Pokédex (ab Gen 6)" },
+            "masuda": { "name": "Masuda-Methode", "games": "Zwei Pokémon aus Spielen mit unterschiedlicher Spracheinstellung züchten" },
+            "masudaCharm": { "name": "Masuda-Methode + Schillerstein", "games": "Wie oben, zusätzlich mit ausgerüstetem Schillerstein" },
+            "sparklingPower": { "name": "Sandwich mit Glitzerkraft", "games": "Scarlet/Violet — Picknick-Sandwich mit Glitzerkraft Lvl. 3" },
+            "sparklingPowerCharm": { "name": "Glitzerkraft + Schillerstein", "games": "Scarlet/Violet" },
+            "sparklingPowerOutbreak": { "name": "Glitzerkraft + Schillerstein + Ausbruchs-Kette", "games": "Scarlet/Violet — Kette von 60+ Fängen in einem Massenausbruch" },
+            "pokeRadar": { "name": "Pokéradar-Kette", "games": "Diamant/Perl/Platin, HeartGold/SoulSilver, Strahlender Diamant/Leuchtende Perle — Kette von 40" },
+            "sosChain": { "name": "SOS-Kette", "games": "Sonne/Mond, Ultrasonne/Ultramond — lange SOS-Kampfketten" },
+            "arceusOutbreak": { "name": "Massenausbruch + perfekte Forschung", "games": "Pokémon Legenden: Arceus — Forschungsstufe 10 mit Bewertung „Perfekt“, zusätzlich Schillerstein" },
+            "maxRaid": { "name": "Max-Rambas", "games": "Schwert/Schild — feste Chance, Schillerstein wirkt hier nicht" }
+        }
     }
 }

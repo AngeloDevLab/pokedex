@@ -169,6 +169,17 @@ function buildItem(item) {
     };
 }
 
+// ===== ENCOUNTERS =====
+let encountersCache = {};
+
+export async function fetchPokemonEncounters(url) {
+    if (encountersCache[url]) return encountersCache[url];
+
+    const data = await fetchJSON(url, "Failed to fetch pokemon encounters");
+    encountersCache[url] = data;
+    return data;
+}
+
 // ===== EGG GROUPS =====
 let eggGroupCache = {};
 
