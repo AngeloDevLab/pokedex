@@ -6,7 +6,8 @@
     },
     "nav": {
         "calculators": "Calculators",
-        "guide": "Pokémon Guide"
+        "guide": "Pokémon Guide",
+        "reference": "Reference"
     },
     "searchPanel": {
         "nameLabel": "Search by Name",
@@ -187,5 +188,28 @@
         "battleOnlyBadge": "Battle only",
         "gmaxMoveNote": "Gigantamax Pokémon also gain an exclusive G-Max Move in battle — that data isn't available through the API this site uses, so it can't be shown here.",
         "pickerHint": "Suggestions only include Pokémon with alternate forms — type any name to search directly."
+    },
+    "items": {
+        "title": "Items",
+        "navLink": "Items",
+        "searchLabel": "Search by Name",
+        "searchPlaceholder": "Enter item name...",
+        "categoryLabel": "Filter by Category",
+        "categoryAll": "All Categories",
+        "categories": {
+            "general": "General Held Items",
+            "choice": "Choice Items",
+            "berries": "Berries",
+            "typeEnhancement": "Type-Enhancing Items",
+            "plates": "Plates",
+            "speciesSpecific": "Species-Specific Items",
+            "megaStones": "Mega Stones",
+            "zCrystals": "Z-Crystals",
+            "jewels": "Gems",
+            "memories": "Memories",
+            "effortTraining": "EV Training Items"
+        },
+        "highlightBadge": "Popular",
+        "viewOnSmogon": "View on Smogon"
     }
 }

@@ -6,7 +6,8 @@
     },
     "nav": {
         "calculators": "Rechner",
-        "guide": "Pokémon-Guide"
+        "guide": "Pokémon-Guide",
+        "reference": "Referenz"
     },
     "searchPanel": {
         "nameLabel": "Suche nach Name",
@@ -187,5 +188,28 @@
         "battleOnlyBadge": "Nur im Kampf",
         "gmaxMoveNote": "Gigadynamax-Pokémon erhalten im Kampf außerdem eine exklusive G-Max-Attacke — diese Daten sind über die hier genutzte API nicht verfügbar und können deshalb nicht angezeigt werden.",
         "pickerHint": "Vorschläge zeigen nur Pokémon mit alternativen Formen — jeder andere Name kann trotzdem direkt eingegeben werden."
+    },
+    "items": {
+        "title": "Items",
+        "navLink": "Items",
+        "searchLabel": "Suche nach Name",
+        "searchPlaceholder": "Item-Namen eingeben...",
+        "categoryLabel": "Nach Kategorie filtern",
+        "categoryAll": "Alle Kategorien",
+        "categories": {
+            "general": "Allgemeine Held-Items",
+            "choice": "Choice-Items",
+            "berries": "Beeren",
+            "typeEnhancement": "Typ-verstärkende Items",
+            "plates": "Tafeln",
+            "speciesSpecific": "Spezies-spezifische Items",
+            "megaStones": "Mega-Steine",
+            "zCrystals": "Z-Kristalle",
+            "jewels": "Juwelen",
+            "memories": "Erinnerungen",
+            "effortTraining": "FP-Trainings-Items"
+        },
+        "highlightBadge": "Beliebt",
+        "viewOnSmogon": "Auf Smogon ansehen"
     }
 }

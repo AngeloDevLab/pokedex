@@ -6,7 +6,8 @@
     },
     "nav": {
         "calculators": "計算ツール",
-        "guide": "ポケモンガイド"
+        "guide": "ポケモンガイド",
+        "reference": "リファレンス"
     },
     "searchPanel": {
         "nameLabel": "名前で検索",
@@ -187,5 +188,28 @@
         "battleOnlyBadge": "バトル限定",
         "gmaxMoveNote": "キョダイマックスポケモンは専用のキョダイマックスわざも使用できますが、このサイトが利用するAPIにはそのデータがないため表示できません。",
         "pickerHint": "候補には別のフォームを持つポケモンのみ表示されます。それ以外の名前も直接入力できます。"
+    },
+    "items": {
+        "title": "どうぐ",
+        "navLink": "どうぐ",
+        "searchLabel": "名前で検索",
+        "searchPlaceholder": "どうぐの名前を入力...",
+        "categoryLabel": "カテゴリで絞り込み",
+        "categoryAll": "すべてのカテゴリ",
+        "categories": {
+            "general": "一般的な持ち物",
+            "choice": "こだわりアイテム",
+            "berries": "きのみ",
+            "typeEnhancement": "タイプ強化アイテム",
+            "plates": "プレート",
+            "speciesSpecific": "専用アイテム",
+            "megaStones": "メガストーン",
+            "zCrystals": "Zクリスタル",
+            "jewels": "ジュエル",
+            "memories": "メモリ",
+            "effortTraining": "努力値トレーニングアイテム"
+        },
+        "highlightBadge": "人気",
+        "viewOnSmogon": "Smogonで見る"
     }
 }

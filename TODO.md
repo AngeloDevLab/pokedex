@@ -211,10 +211,10 @@
 
 **Ziel:** Bevor Session 12+ weitere Seiten in die Navbar packen, die Navigation auf Kategorien mit Dropdown/Flyout umstellen. Aktuell schon 8 flache Links (Search, Stats-Rechner, Matchup, Lernset, Schadensrechner, Zucht-Guide, Speed-Tiers, Competitive), bis Session 17 kämen realistisch 5–6 weitere dazu (~13–14 total) — jetzt gemacht, damit jede künftige Session nur noch ihren Link in die passende Kategorie einträgt statt am Ende eine eigene große Nav-Umbau-Session zu brauchen (gleiches Muster wie der localStorage-Cache-Zwischenschritt vor Session 5).
 
-- [x] Kategorie-Struktur: 1 flacher Top-Level-Link (Search) + vorerst 2 Dropdown-Kategorien (Referenz erst ab Session 13, siehe unten)
+- [x] Kategorie-Struktur: 1 flacher Top-Level-Link (Search) + 3 Dropdown-Kategorien
   - Rechner: Statuswert-Rechner, Schadensrechner, Speed-Tiers, Typ-Matchup
   - Pokémon-Guide: Lernset, Zucht-Guide, Competitive, Regionalformen & Megas (Shiny Hunting kommt erst mit Session 14 dazu)
-  - Referenz (Items/Moves & Abilities/VGC-Guide) bewusst noch nicht angelegt — keine leere Dropdown-Kategorie auf Vorrat, gleiches Prinzip wie „keine toten Links" aus Session 4; wird mit Session 13 (erste Referenz-Seite) ergänzt
+  - Referenz: Items (seit Session 13; Moves & Abilities/VGC-Guide kommen mit Session 16/17 dazu) — bis Session 13 bewusst noch nicht angelegt, keine leere Dropdown-Kategorie auf Vorrat, gleiches Prinzip wie „keine toten Links" aus Session 4
   - Zucht-Guide/Shiny-Hunting sind Mischformen (Pokémon-Tool + allgemeiner Guide-Text) und könnten auch unter Referenz stehen — bei Bedarf beim tatsächlichen Umbau nochmal gegenchecken
 - [x] `NAV_LINKS` in `js/core/nav.js` von flacher Liste auf Kategorie-Struktur umbauen (`{ top: [...], categories: [...] }`)
 - [x] Desktop: Dropdown/Flyout per Klick auf Kategorie-Label (`.nav-category-toggle`) — bewusst kein Hover, um mit der Klick-Logik auf Touch/Tablet konsistent zu bleiben; schließt sich bei Klick auf eine andere Kategorie oder außerhalb (gleiches `document`-Click-Outside-Muster wie das Burger-Menü)
@@ -244,12 +244,13 @@
 
 **Ziel:** Seite `items.html` mit Fokus auf competitive relevante Items
 
-- [ ] Alle Held Items listbar + filterbar (Kategorie: Choice / Berry / Mega Stone / …)
-- [ ] Suchfeld nach Item-Name
-- [ ] Item-Detail: Effekt-Text, wann competitive sinnvoll
-- [ ] Competitive-relevante Items hervorheben:
-  - Choice Band / Specs / Scarf, Life Orb, Leftovers, Rocky Helmet, Eviolite, …
-- [ ] „Typisch gehalten von" — Verlinkung zu Pokémon die dieses Item nutzen
+> PokéAPI hat ~2200 `/item`-Ressourcen insgesamt, fast alles Shop-Heiltränke, Schlüsselitems, TMs-als-Item, Post und pro-Version-Duplikate von Pokébällen — nicht was mit „Held Items" gemeint ist. Statt einer handkuratierten Namensliste ist die Auswahl über echte, gegen die Live-API verifizierte `item-category`-Werte gescoped (Held Items, Choice, Beeren, Typ-Items, Tafeln, Spezies-spezifisch, Mega-Steine, Z-Kristalle, Juwelen, Memories, FP-Trainings-Items) — 16 Kategorien, ~300 Items, weiterhin datengetrieben statt geraten.
+
+- [x] Alle Held Items listbar + filterbar (Kategorie: Choice / Berry / Mega Stone / …) — `fetchItemList()` in `js/core/api.js` (Bulk-GraphQL wie `fetchSpeedTierList()`, permanent gecacht), auf der Seite zu 11 nutzerfreundlicheren Filter-Gruppen zusammengefasst (`CATEGORY_GROUPS` in `items-page.js`, z.B. alle Beeren-Kategorien → eine „Beeren"-Gruppe)
+- [x] Suchfeld nach Item-Name — client-seitiger Live-Filter über die bereits geladene, gecachte Liste (kein erneuter API-Call pro Tastenanschlag)
+- [x] Item-Detail: Effekt-Text, wann competitive sinnvoll — Klick zum Aufklappen (gleiches Akkordeon-Muster wie die Move-Zeilen im Lernset), `short_effect` aus der API; nur Englisch (gleiche bewusste Vereinfachung wie schon bei Move-Effekttexten im Lernset, siehe Session 7 — keine ungelöste Session-2-Altlast neu aufgemacht)
+- [x] Competitive-relevante Items hervorheben: Choice Band / Specs / Scarf, Life Orb, Leftovers, Rocky Helmet, Eviolite, … — handkuratierte, gegen die Live-API verifizierte Liste (`HIGHLIGHTED_ITEMS`), farbiger Rand + „Beliebt"-Badge (gleiches Highlight-Muster wie Egg Moves im Lernset)
+- [x] „Typisch gehalten von" — Verlinkung zu Pokémon die dieses Item nutzen — ersetzt durch Link zur echten Smogon-Item-Dex-Seite (`smogon.com/dex/sv/items/<name>/`), gleiches Prinzip wie der Smogon-Link in Session 11: PokéAPIs `held_by_pokemon`-Feld heißt „im Spiel wild mit diesem Item gefunden", nicht „competitive genutzt von" — gegen die Live-API verifiziert, dass es für praktisch jedes competitive-relevante Item leer ist (z.B. Choice Band), eigene Daten dafür zu erfinden hätte das gleiche Risiko wie ein selbst kuratiertes `counters.json` gehabt
 
 ---
 

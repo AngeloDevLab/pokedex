@@ -28,6 +28,13 @@ const NAV_LINKS = {
                 { href: "/pages/competitive.html", i18nKey: "competitive.navLink", fallback: "Competitive" },
                 { href: "/pages/forms.html", i18nKey: "forms.navLink", fallback: "Forms & Megas" }
             ]
+        },
+        {
+            i18nKey: "nav.reference",
+            fallback: "Reference",
+            links: [
+                { href: "/pages/items.html", i18nKey: "items.navLink", fallback: "Items" }
+            ]
         }
     ]
 };

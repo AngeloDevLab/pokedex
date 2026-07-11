@@ -18,6 +18,7 @@ const ALL_POKEMON_CACHE_KEY = "pokedex:allPokemonList:v1";
 const SPEED_TIER_CACHE_KEY = "pokedex:speedTierList:v1";
 const SMOGON_TIERS_CACHE_KEY = "pokedex:smogonTiers:v1";
 const SMOGON_TIERS_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+const ITEM_LIST_CACHE_KEY = "pokedex:itemList:v1";
 
 function readCache(key) {
     try {
@@ -99,6 +100,73 @@ export async function fetchPokemonForm(url) {
     const data = await fetchJSON(url, "Failed to fetch pokemon form");
     formCache[url] = data;
     return data;
+}
+
+// ===== ITEMS (bulk, GraphQL) =====
+// PokéAPI has ~2200 /item resources total, but the vast majority are shop
+// potions, key items, TMs-as-items, mail, and per-version Poké Ball
+// duplicates — not what "competitive held items" means. Rather than a
+// hand-picked item-name list, this restricts to a curated set of real
+// PokéAPI item-categories that are actually held/battle-relevant (verified
+// against the live API's /item-category list) — still data-driven, just
+// scoped. One bulk GraphQL request (same shape as fetchSpeedTierList()) for
+// name/category/effect/sprite/localized-names instead of ~300 individual
+// REST calls; permanently localStorage-cached like the rest of this app's
+// static Pokédex data.
+const ITEM_CATEGORIES = [
+    "held-items", "bad-held-items", "choice", "other", "type-protection",
+    "in-a-pinch", "picky-healing", "medicine", "type-enhancement", "plates",
+    "species-specific", "mega-stones", "z-crystals", "jewels", "memories",
+    "effort-training"
+];
+
+const ITEM_LANGUAGE_IDS = { en: 9, de: 6, ja: 11 };
+
+const ITEM_LIST_QUERY = `query {
+    item: pokemon_v2_item(
+        where: { pokemon_v2_itemcategory: { name: { _in: ${JSON.stringify(ITEM_CATEGORIES)} } } }
+    ) {
+        name
+        pokemon_v2_itemcategory { name }
+        pokemon_v2_itemeffecttexts(where: { language_id: { _eq: 9 } }) { short_effect }
+        pokemon_v2_itemnames(where: { language_id: { _in: [9, 6, 11] } }) { name language_id }
+        pokemon_v2_itemsprites { sprites }
+    }
+}`;
+
+export async function fetchItemList() {
+    const cached = readCache(ITEM_LIST_CACHE_KEY);
+    if (cached) return cached;
+
+    const res = await fetch(GRAPHQL_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: ITEM_LIST_QUERY })
+    });
+    if (!res.ok) throw new Error("Failed to fetch item list");
+
+    const { data } = await res.json();
+    const items = data.item.map(buildItem);
+    writeCache(ITEM_LIST_CACHE_KEY, items);
+    return items;
+}
+
+function buildItem(item) {
+    const namesByLang = Object.fromEntries(
+        item.pokemon_v2_itemnames.map(n => [n.language_id, n.name])
+    );
+
+    return {
+        name: item.name,
+        category: item.pokemon_v2_itemcategory.name,
+        effect: item.pokemon_v2_itemeffecttexts[0]?.short_effect ?? null,
+        sprite: item.pokemon_v2_itemsprites[0]?.sprites?.default ?? null,
+        names: {
+            en: namesByLang[ITEM_LANGUAGE_IDS.en],
+            de: namesByLang[ITEM_LANGUAGE_IDS.de],
+            ja: namesByLang[ITEM_LANGUAGE_IDS.ja]
+        }
+    };
 }
 
 // ===== EGG GROUPS =====
