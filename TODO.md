@@ -307,13 +307,15 @@
 
 **Ziel:** Redaktionelle Guide-Inhalte für Einsteiger ins Competitive
 
-- [ ] Guide-Sektion oder eigene Seite `guide.html`
-- [ ] VGC vs. Singles erklärt: Regelwerk, Teamgröße, Doubles-Mechaniken
-- [ ] Teambuilding-Archetypes:
-  - Hyper Offense / Balance / Stall kurz erklärt
-  - Regen / Sonne / Sand / Hagel / Schnee — Setter, Abuser, Synergien
-- [ ] Empfohlene Einstiegs-Teams mit Links zu den Pokémon
-- [ ] Aktuelles VGC-Format (Series/Regelset) — manuell gepflegt
+> Wichtiger Fund beim Recherchieren, mit Nutzer abgestimmt bevor gebaut wurde: VGC ist seit dem 8. April 2026 komplett von Scarlet/Violet auf ein neues Spiel umgezogen (Pokémon Champions, aktuell Regulation M-B mit Mega-Entwicklungen) — ein anderes Spiel als das, worauf der Rest dieser Seite ausgelegt ist (Schadensrechner, Competitive-Seite mit Smogon-„sv"-Tiers). Entscheidung: Guide bleibt im SV-Rahmen der restlichen Seite, zeigt Regulation I (SVs letztes Format) statt des tatsächlich aktuellen Turnier-Regelwerks, mit explizitem Hinweistext zur Umstellung. Zahlen zu Regulation I, Wettermechaniken (inkl. Schnee statt Hagel seit Gen 9) und Beispiel-Pokémon/Fähigkeit-Paarungen gegen Live-Quellen bzw. die eigene PokéAPI-Daten verifiziert, nicht aus dem Gedächtnis geschrieben (gleiches Prinzip wie bei den Shiny-Odds in Session 14).
+
+- [x] Guide-Sektion oder eigene Seite `guide.html` — eigene Seite, kein Pokémon-Picker (Pokémon-unabhängiger Inhalt wie Items/Moves/Abilities), daher auch kein Dialog-Link
+- [x] VGC vs. Singles erklärt: Regelwerk, Teamgröße, Doubles-Mechaniken — inkl. Flächenattacken, Umleitung (Helfer An/Lockblüte), Initiative-Kontrolle (Wunderraum/Tailwind), Bedroher im Doppelkampf, Schutzschild-Varianten
+- [x] Teambuilding-Archetypes:
+  - Hyper Offense / Balance / Stall kurz erklärt — mit ehrlichem Hinweis, dass Hyper Offense/Stall vor allem Einzelkampf-Konzepte sind (VGCs Best-of-3 + 4-von-6-Auswahl + Zeitlimit sprechen gegen reines Stall/HO in Doppelkämpfen), statt so zu tun als wären alle drei gleich häufig in VGC
+  - Regen / Sonne / Sand / Schnee — Setter, Abuser, Synergien (Hagel bewusst als „Schnee" bezeichnet — seit Gen 9 eigene Mechanik mit Verteidigungs- statt Rundenschaden-Bonus, keine veraltete Gen-1-8-Beschreibung recycelt)
+- [x] Empfohlene Einstiegs-Teams mit Links zu den Pokémon — je Wetter-Team ein Beispiel-Kern (Setter + Abuser, z.B. Pelipper + Barraskewda für Regen), jedes verlinkt zu `/pages/competitive.html?pokemon=<name>`; bewusst illustrative Archetyp-Beispiele statt eines Anspruchs auf „aktuell optimales Team", da sich das Meta schneller ändert als dieser Guide gepflegt werden kann
+- [x] Aktuelles VGC-Format (Series/Regelset) — manuell gepflegt — Regulation I (SV-Regeln: bis zu 2 Restricted Legendaries, alle Mystischen Pokémon verboten, Paldea-Dex-Nummer-Klausel, Item-Klausel), mit Hinweistext dass der Abschnitt Handarbeit ist und veralten kann
 
 ---
 

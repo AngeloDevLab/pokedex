@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex | Guide</title>
+
+    <link rel="icon" href="../assets/images/pokeball.png">
+
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/standard.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/guide.css">
+    <link rel="stylesheet" href="../css/components/nav.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <script type="module" src="../js/pages/guide-page.js"></script>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content max-content">
+            <div class="header-left">
+                <div class="header-brand">
+                    <a href="../index.html">
+                        <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+                        <p>Pokédex</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div id="header-lang-slot" class="nav-desktop-only"></div>
+
+                <div id="header-nav-slot" class="nav-desktop-only"></div>
+
+                <button id="nav-toggle" class="svg-button nav-mobile-trigger">
+
+                    <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 5h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 19h16" />
+                    </svg>
+
+                    <svg id="menu-close-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar"></div>
+
+    <main>
+
+        <div class="guide-content max-content">
+
+            <h1 data-i18n="guide.title">Competitive Guide</h1>
+
+            <nav class="guide-toc">
+                <a href="#formats" data-i18n="guide.formatsTitle">VGC (Doubles) vs. Singles</a>
+                <a href="#archetypes" data-i18n="guide.archetypesTitle">Teambuilding Archetypes</a>
+                <a href="#current-format" data-i18n="guide.currentFormatTitle">Current Format</a>
+            </nav>
+
+            <section id="formats" class="guide-section">
+                <h2 data-i18n="guide.formatsTitle">VGC (Doubles) vs. Singles</h2>
+                <p data-i18n="guide.formatsIntro">
+                    The Competitive page and Smogon tiers used throughout this site are Singles data. VGC is a
+                    different format built around doubles — the two play quite differently.
+                </p>
+
+                <h3 data-i18n="guide.singlesTitle">Singles</h3>
+                <p data-i18n="guide.singlesText">
+                    One Pokémon per side is active at a time. This is the format Smogon's OU/UU/RU/... tiers (used
+                    on this site's Competitive page) are built around. Team size is 6, no restricted-Legendary limit
+                    beyond what each tier itself bans.
+                </p>
+
+                <h3 data-i18n="guide.vgcTitle">VGC (Doubles)</h3>
+                <p data-i18n="guide.vgcText">
+                    Two Pokémon per side are active at once, best-of-3 with Team Preview. Bring 6 Pokémon, pick 4
+                    for each game. Matches run on a shared timer (20 minutes in the current format).
+                </p>
+
+                <h3 data-i18n="guide.doublesMechanicsTitle">Doubles-Specific Mechanics</h3>
+                <ul class="guide-list">
+                    <li data-i18n="guide.doublesMechanic1">
+                        Spread moves (Earthquake, Rock Slide, Heat Wave, ...) hit both opposing Pokémon at once, at
+                        reduced power (around 75%) per target.
+                    </li>
+                    <li data-i18n="guide.doublesMechanic2">
+                        Redirection: moves and abilities like Follow Me and Rage Powder force single-target moves
+                        onto the user, protecting a fragile partner.
+                    </li>
+                    <li data-i18n="guide.doublesMechanic3">
+                        Speed control: Trick Room (slowest moves first) and Tailwind (team Speed doubled for 4
+                        turns) can flip an entire team's game plan.
+                    </li>
+                    <li data-i18n="guide.doublesMechanic4">
+                        Intimidate and other single-target debuffs hit both opposing Pokémon when used in a double
+                        battle.
+                    </li>
+                    <li data-i18n="guide.doublesMechanic5">
+                        Protect variants (Protect, Wide Guard, Quick Guard) shield against single-target, spread, or
+                        priority moves respectively.
+                    </li>
+                </ul>
+            </section>
+
+            <section id="archetypes" class="guide-section">
+                <h2 data-i18n="guide.archetypesTitle">Teambuilding Archetypes</h2>
+
+                <h3 data-i18n="guide.hyperOffenseTitle">Hyper Offense</h3>
+                <p data-i18n="guide.hyperOffenseText">
+                    Maximizes damage output and Speed, with little to no defensive investment — the goal is to
+                    knock out the opponent's team before they can respond. Choice Band/Specs/Scarf are staples.
+                    Mainly a Singles-format concept; VGC's best-of-3 structure and 4-of-6 selection make pure Hyper
+                    Offense less common there, though fast, high-power cores still show up.
+                </p>
+
+                <h3 data-i18n="guide.balanceTitle">Balance</h3>
+                <p data-i18n="guide.balanceText">
+                    Mixes offensive threats with defensive and utility Pokémon (hazard control, status support,
+                    redirection). The most common archetype overall — flexible enough to adapt mid-game rather than
+                    committing fully to one game plan.
+                </p>
+
+                <h3 data-i18n="guide.stallTitle">Stall</h3>
+                <p data-i18n="guide.stallText">
+                    Wins through attrition: Toxic, burns, and entry hazards chip the opponent down while recovery
+                    moves (Recover, Leech Seed, Leftovers) keep the stall team's own Pokémon alive. Almost
+                    exclusively a Singles-tier concept — VGC's timer and doubles pace work against a strategy built
+                    around outlasting the opponent.
+                </p>
+
+                <h3 data-i18n="guide.weatherTitle">Weather Teams</h3>
+                <p data-i18n="guide.weatherIntro">
+                    A weather-setting Pokémon plus "abuser" Pokémon that get a Speed or power boost under that
+                    weather — a classic archetype in both Singles and VGC, and especially strong in doubles since
+                    more of the team benefits at once.
+                </p>
+
+                <div class="guide-weather-grid">
+                    <div class="guide-weather-card">
+                        <h4 data-i18n="guide.rainTitle">Rain</h4>
+                        <p data-i18n="guide.rainText">
+                            Drizzle sets rain automatically on switch-in. Water-type moves get a 50% boost,
+                            Fire-type moves are weakened, Thunder and Hurricane gain 100% accuracy, and Swift Swim
+                            doubles Speed for the abuser.
+                        </p>
+                        <p class="guide-example">
+                            <span data-i18n="guide.exampleLabel">Example core:</span>
+                            <a href="/pages/competitive.html?pokemon=pelipper">Pelipper</a> +
+                            <a href="/pages/competitive.html?pokemon=barraskewda">Barraskewda</a>
+                        </p>
+                    </div>
+
+                    <div class="guide-weather-card">
+                        <h4 data-i18n="guide.sunTitle">Sun</h4>
+                        <p data-i18n="guide.sunText">
+                            Drought sets sun automatically on switch-in. Fire-type moves get a 50% boost,
+                            Water-type moves are weakened, Solar Beam skips its charge turn, and Chlorophyll doubles
+                            Speed for the abuser.
+                        </p>
+                        <p class="guide-example">
+                            <span data-i18n="guide.exampleLabel">Example core:</span>
+                            <a href="/pages/competitive.html?pokemon=torkoal">Torkoal</a> +
+                            <a href="/pages/competitive.html?pokemon=venusaur">Venusaur</a>
+                        </p>
+                    </div>
+
+                    <div class="guide-weather-card">
+                        <h4 data-i18n="guide.sandTitle">Sand</h4>
+                        <p data-i18n="guide.sandText">
+                            Sand Stream sets sandstorm automatically on switch-in. Rock-types get a 50% Special
+                            Defense boost, non-Rock/Ground/Steel types take chip damage each turn, and Sand Rush
+                            doubles Speed for the abuser.
+                        </p>
+                        <p class="guide-example">
+                            <span data-i18n="guide.exampleLabel">Example core:</span>
+                            <a href="/pages/competitive.html?pokemon=tyranitar">Tyranitar</a> +
+                            <a href="/pages/competitive.html?pokemon=excadrill">Excadrill</a>
+                        </p>
+                    </div>
+
+                    <div class="guide-weather-card">
+                        <h4 data-i18n="guide.snowTitle">Snow</h4>
+                        <p data-i18n="guide.snowText">
+                            Snow Warning sets snow automatically on switch-in. Ice-types get a 50% Defense boost
+                            (Snow replaced the old Hail's chip damage in Generation 9), Blizzard gains 100%
+                            accuracy, and Slush Rush doubles Speed for the abuser.
+                        </p>
+                        <p class="guide-example">
+                            <span data-i18n="guide.exampleLabel">Example core:</span>
+                            <a href="/pages/competitive.html?pokemon=abomasnow">Abomasnow</a> +
+                            <a href="/pages/competitive.html?pokemon=cetitan">Cetitan</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="current-format" class="guide-section">
+                <h2 data-i18n="guide.currentFormatTitle">Current Format</h2>
+                <p data-i18n="guide.currentFormatText">
+                    Regulation Set I, Scarlet &amp; Violet's final VGC ruleset: Doubles, Level 50, up to 2
+                    Restricted Legendary Pokémon per team, all Mythical Pokémon banned, no two Pokémon sharing a
+                    Paldea Pokédex number, no two Pokémon holding the same item.
+                </p>
+                <p class="guide-note" data-i18n="guide.currentFormatNote">
+                    Since April 2026, official VGC tournaments run on Pokémon Champions (currently Regulation M-B,
+                    with Mega Evolution) rather than Scarlet/Violet. This guide — like the rest of the site — stays
+                    scoped to Scarlet/Violet, so Regulation I is shown as SV's last format rather than the actual
+                    current tournament ruleset. This section is maintained by hand and may go stale — verify
+                    against official sources before relying on it competitively.
+                </p>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-content max-content">
+            <img src="../assets/images/pokeball.png" alt="Pokeball Image">
+            <a href="imprint.html" data-i18n="footer.imprint">Imprint</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

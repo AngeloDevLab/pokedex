@@ -47,4 +47,8 @@
     .damage-calc-side {
         flex: 1;
     }
+
+    .guide-weather-grid {
+        grid-template-columns: 1fr 1fr;
+    }
 }
