@@ -10,6 +10,20 @@ export async function fetchJSON(url, errorMessage) {
     return res.json();
 }
 
+// Shared by every GraphQL bulk query that fetches localized names
+// (items/moves/abilities/search index) — PokéAPI's language ids for the
+// three languages this app supports.
+const GRAPHQL_LANGUAGE_IDS = { en: 9, de: 6, ja: 11 };
+
+function namesByLanguage(rawNames) {
+    const byId = Object.fromEntries(rawNames.map(n => [n.language_id, n.name]));
+    return {
+        en: byId[GRAPHQL_LANGUAGE_IDS.en],
+        de: byId[GRAPHQL_LANGUAGE_IDS.de],
+        ja: byId[GRAPHQL_LANGUAGE_IDS.ja]
+    };
+}
+
 // ===== CACHE =====
 let speciesCache = {};
 let moveCache = {};
@@ -20,6 +34,8 @@ const SMOGON_TIERS_CACHE_KEY = "pokedex:smogonTiers:v1";
 const SMOGON_TIERS_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const ITEM_LIST_CACHE_KEY = "pokedex:itemList:v1";
 const SEARCH_INDEX_CACHE_KEY = "pokedex:searchIndex:v1";
+const MOVE_LIST_CACHE_KEY = "pokedex:moveList:v1";
+const ABILITY_LIST_CACHE_KEY = "pokedex:abilityList:v1";
 
 function readCache(key) {
     try {
@@ -121,8 +137,6 @@ const ITEM_CATEGORIES = [
     "effort-training"
 ];
 
-const ITEM_LANGUAGE_IDS = { en: 9, de: 6, ja: 11 };
-
 const ITEM_LIST_QUERY = `query {
     item: pokemon_v2_item(
         where: { pokemon_v2_itemcategory: { name: { _in: ${JSON.stringify(ITEM_CATEGORIES)} } } }
@@ -153,20 +167,12 @@ export async function fetchItemList() {
 }
 
 function buildItem(item) {
-    const namesByLang = Object.fromEntries(
-        item.pokemon_v2_itemnames.map(n => [n.language_id, n.name])
-    );
-
     return {
         name: item.name,
         category: item.pokemon_v2_itemcategory.name,
         effect: item.pokemon_v2_itemeffecttexts[0]?.short_effect ?? null,
         sprite: item.pokemon_v2_itemsprites[0]?.sprites?.default ?? null,
-        names: {
-            en: namesByLang[ITEM_LANGUAGE_IDS.en],
-            de: namesByLang[ITEM_LANGUAGE_IDS.de],
-            ja: namesByLang[ITEM_LANGUAGE_IDS.ja]
-        }
+        names: namesByLanguage(item.pokemon_v2_itemnames)
     };
 }
 
@@ -279,12 +285,121 @@ export async function fetchMoveByUrl(url) {
     return data;
 }
 
+// Bulk overview for pages/moves.html (Session 16) — PokéAPI has 937 moves
+// total; ~937 individual REST calls just to populate a filterable list
+// would be far too slow (same reasoning as fetchSpeedTierList()). Only
+// covers what the list/filter view needs (name, type, category, power/
+// accuracy/pp, localized names); full detail (effect text, which Pokémon
+// learn it) is fetched lazily per move on expand via the existing
+// fetchMoveByUrl() REST call, same as learnset-page.js already does.
+const MOVE_LIST_QUERY = `query {
+    move: pokemon_v2_move {
+        id
+        name
+        power
+        pp
+        accuracy
+        pokemon_v2_movedamageclass { name }
+        pokemon_v2_type { name }
+        pokemon_v2_movenames(where: { language_id: { _in: [9, 6, 11] } }) { name language_id }
+    }
+}`;
+
+export async function fetchMoveList() {
+    const cached = readCache(MOVE_LIST_CACHE_KEY);
+    if (cached) return cached;
+
+    const res = await fetch(GRAPHQL_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: MOVE_LIST_QUERY })
+    });
+    if (!res.ok) throw new Error("Failed to fetch move list");
+
+    const { data } = await res.json();
+    const moves = data.move.map(buildMoveListEntry);
+    writeCache(MOVE_LIST_CACHE_KEY, moves);
+    return moves;
+}
+
+function buildMoveListEntry(m) {
+    return {
+        id: m.id,
+        name: m.name,
+        url: `${API_BASE}/move/${m.id}/`,
+        power: m.power,
+        pp: m.pp,
+        accuracy: m.accuracy,
+        category: m.pokemon_v2_movedamageclass.name,
+        type: m.pokemon_v2_type.name,
+        names: namesByLanguage(m.pokemon_v2_movenames)
+    };
+}
+
+// ===== ABILITIES =====
+let abilityCache = {};
+
+export async function fetchAbilityByUrl(url) {
+    if (abilityCache[url]) return abilityCache[url];
+
+    const data = await fetchJSON(url, "Failed to fetch ability");
+    abilityCache[url] = data;
+    return data;
+}
+
+// Bulk overview for pages/abilities.html (Session 16) — same reasoning as
+// fetchMoveList(): 307 main-series abilities is too many for individual
+// REST calls just to populate a list. `pokemonCount` is a Hasura aggregate
+// (how many Pokémon have this ability) so the list can show it without
+// fetching each ability's full `pokemon` array; the actual names are
+// fetched lazily on expand via fetchAbilityByUrl().
+const ABILITY_LIST_QUERY = `query {
+    ability: pokemon_v2_ability(where: { is_main_series: { _eq: true } }) {
+        id
+        name
+        pokemon_v2_abilityeffecttexts(where: { language_id: { _eq: 9 } }) { short_effect }
+        pokemon_v2_abilitynames(where: { language_id: { _in: [9, 6, 11] } }) { name language_id }
+        pokemon_v2_pokemonabilities_aggregate { aggregate { count } }
+    }
+}`;
+
+export async function fetchAbilityList() {
+    const cached = readCache(ABILITY_LIST_CACHE_KEY);
+    if (cached) return cached;
+
+    const res = await fetch(GRAPHQL_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: ABILITY_LIST_QUERY })
+    });
+    if (!res.ok) throw new Error("Failed to fetch ability list");
+
+    const { data } = await res.json();
+    const abilities = data.ability.map(buildAbilityListEntry);
+    writeCache(ABILITY_LIST_CACHE_KEY, abilities);
+    return abilities;
+}
+
+function buildAbilityListEntry(a) {
+    return {
+        id: a.id,
+        name: a.name,
+        url: `${API_BASE}/ability/${a.id}/`,
+        effect: a.pokemon_v2_abilityeffecttexts[0]?.short_effect ?? null,
+        pokemonCount: a.pokemon_v2_pokemonabilities_aggregate.aggregate.count,
+        names: namesByLanguage(a.pokemon_v2_abilitynames)
+    };
+}
+
 // ===== SPEED TIERS (GraphQL) =====
-// The only GraphQL call in the project — the speed-tier page needs base
-// stats for every Pokémon at once to build a sorted list, and doing that as
-// ~1300 individual REST /pokemon/{id} requests (like fetchPokemonByUrl)
-// would be far too slow/heavy. PokéAPI's GraphQL beta endpoint returns
-// exactly the fields we need for every Pokémon form in a single request.
+// The speed-tier page needs base stats for every Pokémon at once to build a
+// sorted list, and doing that as ~1300 individual REST /pokemon/{id}
+// requests (like fetchPokemonByUrl) would be far too slow/heavy. PokéAPI's
+// GraphQL beta endpoint returns exactly the fields we need for every
+// Pokémon form in a single request. (Was the only GraphQL call in the
+// project when first written — several more have followed since, see
+// fetchPokemonNamesWithForms()/fetchItemList()/fetchSearchIndex()/
+// fetchMoveList()/fetchAbilityList().)
 const SPEED_TIER_QUERY = `query {
     pokemon: pokemon_v2_pokemon {
         id

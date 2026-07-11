@@ -34,7 +34,9 @@ const NAV_LINKS = {
             i18nKey: "nav.reference",
             fallback: "Reference",
             links: [
-                { href: "/pages/items.html", i18nKey: "items.navLink", fallback: "Items" }
+                { href: "/pages/items.html", i18nKey: "items.navLink", fallback: "Items" },
+                { href: "/pages/moves.html", i18nKey: "moves.navLink", fallback: "Moves" },
+                { href: "/pages/abilities.html", i18nKey: "abilities.navLink", fallback: "Abilities" }
             ]
         }
     ]

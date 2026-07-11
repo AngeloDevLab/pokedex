@@ -252,5 +252,22 @@
             "arceusOutbreak": { "name": "Massenausbruch + perfekte Forschung", "games": "Pokémon Legenden: Arceus — Forschungsstufe 10 mit Bewertung „Perfekt“, zusätzlich Schillerstein" },
             "maxRaid": { "name": "Max-Rambas", "games": "Schwert/Schild — feste Chance, Schillerstein wirkt hier nicht" }
         }
+    },
+    "moves": {
+        "title": "Attacken",
+        "navLink": "Attacken",
+        "searchLabel": "Suche nach Name",
+        "searchPlaceholder": "Attackenname eingeben...",
+        "allCategories": "Alle Kategorien",
+        "learnedBy": "Von {count} Pokémon erlernbar"
+    },
+    "abilities": {
+        "title": "Fähigkeiten",
+        "navLink": "Fähigkeiten",
+        "searchLabel": "Suche nach Name",
+        "searchPlaceholder": "Fähigkeitsname eingeben...",
+        "usedBy": "{count} Pokémon",
+        "highlightBadge": "Beliebt",
+        "hasAbility": "{count} Pokémon haben diese Fähigkeit"
     }
 }

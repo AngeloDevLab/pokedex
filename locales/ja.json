@@ -252,5 +252,22 @@
             "arceusOutbreak": { "name": "大量発生 + パーフェクト調査", "games": "Legends アルセウス — 調査レベル10かつパーフェクト評価、加えてひかるおまもり" },
             "maxRaid": { "name": "マックスレイドバトル", "games": "ソード・シールド — 固定確率、ひかるおまもりは効果なし" }
         }
+    },
+    "moves": {
+        "title": "わざ",
+        "navLink": "わざ",
+        "searchLabel": "名前で検索",
+        "searchPlaceholder": "わざの名前を入力...",
+        "allCategories": "すべてのカテゴリ",
+        "learnedBy": "{count}匹のポケモンが習得可能"
+    },
+    "abilities": {
+        "title": "とくせい",
+        "navLink": "とくせい",
+        "searchLabel": "名前で検索",
+        "searchPlaceholder": "とくせいの名前を入力...",
+        "usedBy": "{count}匹",
+        "highlightBadge": "人気",
+        "hasAbility": "{count}匹のポケモンがこのとくせいを持つ"
     }
 }

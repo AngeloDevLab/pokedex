@@ -252,5 +252,22 @@
             "arceusOutbreak": { "name": "Mass Outbreak + Perfect Research", "games": "Legends: Arceus — Research Level 10 with a Perfect rating, plus Shiny Charm" },
             "maxRaid": { "name": "Max Raid Battles", "games": "Sword/Shield — fixed rate, Shiny Charm has no effect here" }
         }
+    },
+    "moves": {
+        "title": "Moves",
+        "navLink": "Moves",
+        "searchLabel": "Search by Name",
+        "searchPlaceholder": "Enter move name...",
+        "allCategories": "All Categories",
+        "learnedBy": "Learned by {count} Pokémon"
+    },
+    "abilities": {
+        "title": "Abilities",
+        "navLink": "Abilities",
+        "searchLabel": "Search by Name",
+        "searchPlaceholder": "Enter ability name...",
+        "usedBy": "{count} Pokémon",
+        "highlightBadge": "Popular",
+        "hasAbility": "{count} Pokémon have this ability"
     }
 }

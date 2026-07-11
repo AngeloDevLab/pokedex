@@ -1,9 +1,10 @@
-import { initI18n, t, getCurrentLang } from '../core/i18n.js';
+import { initI18n, getCurrentLang } from '../core/i18n.js';
 import { initNavShell } from '../core/nav.js';
 import { initPokemonPicker } from '../core/pokemon-picker.js';
 import { withLoader } from '../core/pagination.js';
 import { fetchMoveset } from '../core/moveset.js';
 import { getTypeIcon, formatSlug } from '../core/ui.js';
+import { getMoveDetailTemplate } from '../core/templates.js';
 
 const METHODS = ["level-up", "machine", "egg", "tutor"];
 
@@ -83,13 +84,7 @@ function renderMoveRow({ move, level }, method) {
             </button>
 
             <div class="move-details hidden">
-                <table>
-                    <tr><td>${t('learnset.power', null, 'Power')}</td><td>${move.power ?? "—"}</td></tr>
-                    <tr><td>${t('learnset.accuracy', null, 'Accuracy')}</td><td>${move.accuracy ? `${move.accuracy}%` : "—"}</td></tr>
-                    <tr><td>${t('learnset.pp', null, 'PP')}</td><td>${move.pp ?? "—"}</td></tr>
-                    <tr><td>${t('learnset.category', null, 'Category')}</td><td>${getCategoryLabel(move.damage_class.name)}</td></tr>
-                </table>
-                <p class="move-effect">${getMoveEffect(move)}</p>
+                ${getMoveDetailTemplate(move)}
             </div>
         </li>
     `;
@@ -101,17 +96,6 @@ function getMoveName(move) {
         ?? move.names.find(n => n.language.name === "en");
 
     return localized ? localized.name : formatSlug(move.name);
-}
-
-function getCategoryLabel(damageClass) {
-    return t(`learnset.${damageClass}`, null, formatSlug(damageClass));
-}
-
-function getMoveEffect(move) {
-    const entry = move.effect_entries.find(e => e.language.name === "en");
-    if (!entry) return "";
-
-    return entry.short_effect.replace("$effect_chance", move.effect_chance ?? "");
 }
 
 // ===== EXPAND/COLLAPSE =====

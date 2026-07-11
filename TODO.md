@@ -291,11 +291,15 @@
 
 **Ziel:** Vollständige Referenz für Moves und Abilities
 
-- [ ] `moves.html` — alle Moves filterbar nach Typ / Kategorie (Physisch/Speziell/Status)
-  - Move-Detail: Power, Accuracy, PP, Effekt-Text, welche Pokémon lernen ihn
-- [ ] `abilities.html` — alle Abilities listbar
+> Beide Seiten brauchen Bulk-Daten für ~900+ Einträge (937 Moves, 307 Main-Series-Abilities) — Einzel-REST-Calls wären wieder zu langsam (gleiche Begründung wie Speed-Tiers/Items/Search-Index). `fetchMoveList()`/`fetchAbilityList()` in `js/core/api.js` decken nur die Listen-/Filter-Ansicht ab (Name/Typ/Kategorie/Power/Accuracy/PP bzw. Name/Kurz-Effekt/Pokémon-Anzahl); volles Detail (Effekt-Text mit `$effect_chance`, welche Pokémon es lernen/haben) wird erst beim Aufklappen einzeln nachgeladen (`fetchMoveByUrl()` aus Session 7, neu: `fetchAbilityByUrl()`).
+>
+> Beim Bauen zwei Wiederverwendungen gefunden statt neu geschrieben: die Power/Accuracy/PP/Kategorie/Effekt-Detailtabelle war in `learnset-page.js` schon exakt so vorhanden — jetzt als `getMoveDetailTemplate()`/`getMoveCategoryLabel()` nach `templates.js` extrahiert (gleiche „beim zweiten Verbraucher extrahieren"-Regel wie bei `pokemon-picker.js`), `learnset-page.js` nutzt sie jetzt auch. `abilities.html` braucht keine eigene CSS-Datei — das Zeilen/Toggle/Badge-Muster ist identisch zu `items.css`, einfach mitverlinkt (gleiches Prinzip wie `breeding.html`, das schon seit Session 9 `learnset.css` mitverlinkt).
+
+- [x] `moves.html` — alle Moves filterbar nach Typ / Kategorie (Physisch/Speziell/Status) — Name-Suche zusätzlich, nicht nur die zwei geforderten Filter
+  - Move-Detail: Power, Accuracy, PP, Effekt-Text, welche Pokémon lernen ihn — Klick zum Aufklappen (gleiches Akkordeon-Muster wie Lernset/Items), „Gelernt von N Pokémon"-Liste
+- [x] `abilities.html` — alle Abilities listbar
   - Ability-Detail: Effekt, welche Pokémon haben sie
-  - Competitive relevante Abilities hervorheben (Speed Boost, Intimidate, …)
+  - Competitive relevante Abilities hervorheben (Speed Boost, Intimidate, …) — handkuratierte, gegen die Live-API verifizierte Liste (14 Abilities), gleiches Highlight-Muster wie die Items-Seite
 
 ---
 
