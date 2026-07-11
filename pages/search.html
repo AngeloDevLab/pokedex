@@ -106,6 +106,32 @@
                 </datalist>
             </div>
 
+            <div class="search-group">
+                <label for="generation-select" data-i18n="searchPanel.generationLabel">Generation</label>
+                <select id="generation-select" class="filter-select"></select>
+            </div>
+
+            <div class="search-group">
+                <label for="ability-filter" data-i18n="searchPanel.abilityLabel">Search by Ability</label>
+                <input list="ability-options" id="ability-filter" data-i18n-placeholder="searchPanel.abilityPlaceholder"
+                    placeholder="Select ability...">
+                <datalist id="ability-options"></datalist>
+            </div>
+
+            <div class="search-group">
+                <label for="egg-group-select" data-i18n="searchPanel.eggGroupLabel">Filter by Egg Group</label>
+                <select id="egg-group-select" class="filter-select"></select>
+            </div>
+
+            <div class="search-group">
+                <label for="sort-select" data-i18n="searchPanel.sortLabel">Sort by</label>
+                <select id="sort-select" class="filter-select">
+                    <option value="id" data-i18n="searchPanel.sortId">Pokédex Number</option>
+                    <option value="name" data-i18n="searchPanel.sortName">Name</option>
+                    <option value="bst" data-i18n="searchPanel.sortBst">Base Stat Total</option>
+                </select>
+            </div>
+
             <button id="search-reset" data-i18n="searchPanel.clear">Clear Search</button>
         </div>
 

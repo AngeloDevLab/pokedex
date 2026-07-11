@@ -15,6 +15,16 @@
         "warning": "3文字以上入力してください",
         "typeLabel": "タイプで絞り込む",
         "typePlaceholder": "タイプを選択...",
+        "generationLabel": "世代",
+        "allGenerations": "すべての世代",
+        "abilityLabel": "とくせいで検索",
+        "abilityPlaceholder": "とくせいを選択...",
+        "eggGroupLabel": "タマゴグループで絞り込む",
+        "allEggGroups": "すべてのタマゴグループ",
+        "sortLabel": "並び替え",
+        "sortId": "図鑑番号",
+        "sortName": "名前",
+        "sortBst": "種族値合計",
         "clear": "検索をクリア"
     },
     "results": {

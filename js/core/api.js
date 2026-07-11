@@ -19,6 +19,7 @@ const SPEED_TIER_CACHE_KEY = "pokedex:speedTierList:v1";
 const SMOGON_TIERS_CACHE_KEY = "pokedex:smogonTiers:v1";
 const SMOGON_TIERS_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const ITEM_LIST_CACHE_KEY = "pokedex:itemList:v1";
+const SEARCH_INDEX_CACHE_KEY = "pokedex:searchIndex:v1";
 
 function readCache(key) {
     try {
@@ -213,11 +214,60 @@ export async function fetchPokemonByUrl(url) {
     return fetchJSON(url, "Failed to fetch pokemon details");
 }
 
-export async function fetchPokemonByType(type) {
-    return fetchJSON(
-        `${API_BASE}/type/${type}`,
-        "Failed to fetch pokemon type"
-    );
+// ===== SEARCH INDEX (bulk, GraphQL) =====
+// One bulk request (same shape as fetchSpeedTierList()) covering every
+// /pokemon entry's type/generation/ability/egg-group/base-stat-total —
+// everything search.js's combinable filters (Session 15: name, type,
+// generation, ability, egg group, sort by ID/name/BST) need to run
+// entirely client-side against a single cached dataset, instead of
+// juggling separate REST endpoints per filter (/type/{x}, /generation/{x},
+// /ability/{x}, ...) that return incompatible shapes and can't be
+// intersected without N more requests. Permanently localStorage-cached
+// like the rest of this app's static Pokédex data. `url` is constructed
+// directly from `id` (`{API_BASE}/pokemon/{id}/`) rather than fetched,
+// since that's PokéAPI's own stable REST URL pattern.
+const SEARCH_INDEX_QUERY = `query {
+    pokemon: pokemon_v2_pokemon {
+        id
+        name
+        pokemon_v2_pokemonspecy {
+            generation_id
+            pokemon_v2_pokemonegggroups { pokemon_v2_egggroup { name } }
+        }
+        pokemon_v2_pokemonabilities { pokemon_v2_ability { name } }
+        pokemon_v2_pokemonstats(order_by: { stat_id: asc }) { base_stat }
+        pokemon_v2_pokemontypes(order_by: { slot: asc }) { pokemon_v2_type { name } }
+    }
+}`;
+
+export async function fetchSearchIndex() {
+    const cached = readCache(SEARCH_INDEX_CACHE_KEY);
+    if (cached) return cached;
+
+    const res = await fetch(GRAPHQL_BASE, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: SEARCH_INDEX_QUERY })
+    });
+    if (!res.ok) throw new Error("Failed to fetch search index");
+
+    const { data } = await res.json();
+    const index = data.pokemon.map(buildSearchIndexEntry);
+    writeCache(SEARCH_INDEX_CACHE_KEY, index);
+    return index;
+}
+
+function buildSearchIndexEntry(p) {
+    return {
+        id: p.id,
+        name: p.name,
+        url: `${API_BASE}/pokemon/${p.id}/`,
+        generation: p.pokemon_v2_pokemonspecy?.generation_id ?? null,
+        eggGroups: p.pokemon_v2_pokemonspecy?.pokemon_v2_pokemonegggroups.map(g => g.pokemon_v2_egggroup.name) ?? [],
+        abilities: p.pokemon_v2_pokemonabilities.map(a => a.pokemon_v2_ability.name),
+        types: p.pokemon_v2_pokemontypes.map(t => t.pokemon_v2_type.name),
+        bst: p.pokemon_v2_pokemonstats.reduce((sum, s) => sum + s.base_stat, 0)
+    };
 }
 
 // ===== MOVES =====

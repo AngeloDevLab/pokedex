@@ -15,6 +15,16 @@
         "warning": "mind. 3 Zeichen",
         "typeLabel": "Nach Typ filtern",
         "typePlaceholder": "Typ wählen...",
+        "generationLabel": "Generation",
+        "allGenerations": "Alle Generationen",
+        "abilityLabel": "Suche nach Fähigkeit",
+        "abilityPlaceholder": "Fähigkeit wählen...",
+        "eggGroupLabel": "Nach Ei-Gruppe filtern",
+        "allEggGroups": "Alle Ei-Gruppen",
+        "sortLabel": "Sortieren nach",
+        "sortId": "Pokédex-Nummer",
+        "sortName": "Name",
+        "sortBst": "Basis-Gesamtwert",
         "clear": "Suche zurücksetzen"
     },
     "results": {

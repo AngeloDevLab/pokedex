@@ -15,6 +15,16 @@
         "warning": "min. 3 characters",
         "typeLabel": "Filter by Type",
         "typePlaceholder": "Select type...",
+        "generationLabel": "Generation",
+        "allGenerations": "All Generations",
+        "abilityLabel": "Search by Ability",
+        "abilityPlaceholder": "Select ability...",
+        "eggGroupLabel": "Filter by Egg Group",
+        "allEggGroups": "All Egg Groups",
+        "sortLabel": "Sort by",
+        "sortId": "Pokédex Number",
+        "sortName": "Name",
+        "sortBst": "Base Stat Total",
         "clear": "Clear Search"
     },
     "results": {

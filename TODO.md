@@ -275,11 +275,15 @@
 
 > Hinweis: Die Suche ist bereits in Session 4 auf eine eigene Seite (`pages/search.html`) umgezogen, vorgezogen im Zuge des Nav-Shell-Umbaus. Die Punkte hier sind die noch offenen Erweiterungen.
 
-- [ ] Filter nach Generation (Gen 1–9) — PokéAPI `/generation/{id}`
-- [ ] Filter nach Ei-Gruppe
-- [ ] Suche nach Ability
-- [ ] Sortierung: nach ID / Name / Basis-Gesamt-Wert (BST)
-- [ ] URL-Parameter (`?type=fire&gen=1`) für Deep-Links und Sharing
+> Vor dem Bauen geklärt: Name- und Typ-Suche waren bisher gegenseitig exklusiv (`currentMode`: entweder `search` oder `type`, nie beides). Die `?type=fire&gen=1`-Zeile unten impliziert aber kombinierbare Filter — das war die eigentliche Scope-Entscheidung dieser Session, nicht nur "ein paar Filter dazu". Entschieden: alle Filter kombinierbar (UND-Verknüpfung), größerer Umbau von `search.js` in Kauf genommen.
+>
+> Umsetzung: Ein einziger Bulk-GraphQL-Request (`fetchSearchIndex()` in `js/core/api.js`, gleiche Bauart wie `fetchSpeedTierList()`) lädt für alle ~1300 Pokémon-Einträge Typ/Generation/Fähigkeiten/Ei-Gruppen/Basis-Gesamtwert in einem Rutsch, permanent gecacht. Alle Filter + Sortierung laufen danach komplett clientseitig gegen diesen einen Datensatz (`computeFilteredResults()` in `search.js`) — kein Jonglieren mehr mit einzelnen, inkompatibel geformten REST-Endpunkten (`/type/{x}`, `/generation/{x}`, `/ability/{x}`, …) die sich nicht sauber schneiden ließen. Nur die tatsächlich angezeigte Seite der gefilterten Treffer wird als volles REST-Objekt nachgeladen (`loadSearchBatch()`, unverändert), Netzwerkkosten bleiben an das gebunden was wirklich gerendert wird. `fetchPokemonByType()` (REST) dadurch überflüssig geworden und entfernt.
+
+- [x] Filter nach Generation (Gen 1–9) — PokéAPI-Daten über `fetchSearchIndex()`, `<select>` mit 9 Optionen (statisches, kleines Set)
+- [x] Filter nach Ei-Gruppe — `<select>`, Optionen aus dem Bulk-Datensatz abgeleitet (keine feste Liste im Code); ein paar Slugs (`water1`/`water2`/`water3`/`humanshape`/`indeterminate`) bekommen eine kleine manuelle Label-Korrektur in `search-page.js`, da PokéAPIs Ei-Gruppen-Listen-Endpunkt selbst keine lokalisierten Namen liefert (nur die einzelne Ressource, 15 Extra-Requests nur fürs Dropdown wären es nicht wert)
+- [x] Suche nach Ability — Datalist-Input, gleiches UX-Muster wie der bestehende Typ-Filter
+- [x] Sortierung: nach ID / Name / Basis-Gesamt-Wert (BST) — `<select>`, rein clientseitig über den Bulk-Datensatz (BST wird dort direkt mitgeliefert)
+- [x] URL-Parameter (`?name=&type=&gen=&ability=&eggGroup=&sort=`) für Deep-Links und Sharing — `history.replaceState` (kein Verlauf-Spam pro Tastenanschlag), gleiches Grundprinzip wie `pokemon-picker.js`s `?pokemon=`, nur für mehrere Parameter gleichzeitig; wird beim Laden aufgelöst und bei jeder Filteränderung aktualisiert
 
 ---
 
